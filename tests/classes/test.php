@@ -6,11 +6,11 @@ use Formulaic\Text;
 use Formulaic\Button\Submit;
 use Formulaic\Fieldset;
 
-class EmptyForm extends Get implements Simple
+class EmptyForm extends Get
 {
 }
 
-class SimpleForm extends Get implements Simple
+class SimpleForm extends Get
 {
     public function __construct()
     {
@@ -19,13 +19,21 @@ class SimpleForm extends Get implements Simple
     }
 }
 
-class FieldsetForm extends Get implements Simple
+class FieldsetForm extends Get
 {
     public function __construct()
     {
         $this[] = new Fieldset('Hello world!', function($fieldset) {
             $fieldset[] = new Text;
         });
+    }
+}
+
+class SimpleFormWithName extends Get
+{
+    public function __construct()
+    {
+        $this[] = new Text('mytextfield');
     }
 }
 
