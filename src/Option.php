@@ -5,6 +5,13 @@ namespace Formulaic;
 class Option extends Element
 {
     protected $type = 'option', $renderOptions = ['value'];
+    protected $label;
+
+    public function __construct($value, $label)
+    {
+        $this->value = $value;
+        $this->label = $label;
+    }
 
     public function selected()
     {
@@ -24,8 +31,13 @@ class Option extends Element
 
     public function __toString()
     {
-        unset($this->options['id'], $this->options['name']);
-        return parent::__toString();
+        return '<option value="'
+            .$this->value
+            .'"'
+            .$this->attributes()
+            .'">'
+            .$this->label
+            .'</option>';
     }
 }
 
