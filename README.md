@@ -18,8 +18,8 @@ Define a form with some fields and other requirements:
     {
         public function __construct()
         {
-            $this->add(new Search('q'))->isRequired();
-            $this->add(new Submit('submit', 'Go!'));
+            $this[] = (new Search)->isRequired();
+            $this[] = new Submit('submit', 'Go!');
         }
     }
 
@@ -39,8 +39,9 @@ You can `__toString` individual fields:
 
     ?>
     <form name="search" method="get">
-        <?=$form['q']?>
-        <?=$form['submit']?>
+        <!-- These two yield identical output: -->
+        <?=$form[0]?>
+        <?=$form->field('q')?>
     </form>
 
 To validate your form:
@@ -72,22 +73,22 @@ Forms can contain fieldsets:
     {
         public function __construct()
         {
-            $this->add(new Fieldset('Global search', function($fieldset) {
-                $fieldset->add(new Search('q'));
+            $this[] = new Fieldset('Global search', function($fieldset) {
+                $fieldset[] = new Search('q');
             });
-            $this->add(new Fieldset('Search by ID', function($fieldset) {
-                $fieldset->add(new Search('id'));
+            $this[] = new Fieldset('Search by ID', function($fieldset) {
+                $fieldset[] = new Search('id');
             });
-            $this->add(new Submit('submit', 'Go!'));
+            $this[] = new Submit('Go!');
         }
     }
 
 And in your output:
 
     <form method="get">
-        <?=$form['Global search']?>
-        <?=$form['Search by ID']?>
-        <?=$form['submit']?>
+        <?=$form->fieldset('Global search')?>
+        <?=$form->fieldset('Search by ID')?>
+        <?=$form->button('submit')?>
     </form>
 
 See the full documentation for all other options: (link)
