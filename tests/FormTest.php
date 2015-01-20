@@ -13,8 +13,8 @@ class FormTest extends PHPUnit_Framework_TestCase
     {
         $this->expectOutputString(<<<EOT
 <form method="get">
-<input type="text">
-<button type="submit"></button>
+<div><input type="text"></div>
+<div><button type="submit"></button></div>
 </form>
 EOT
         );
@@ -28,7 +28,7 @@ EOT
 <form method="get">
 <fieldset>
 <legend>Hello world!</legend>
-<input type="text">
+<div><input type="text"></div>
 </fieldset>
 </form>
 EOT
