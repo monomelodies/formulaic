@@ -7,6 +7,7 @@ use ErrorException;
 abstract class Form extends ArrayObject
 {
     use Attributes;
+    use Form\Tostring;
 
     const BUTTON_SUBMIT = 1;
     const BUTTON_RESET = 2;
@@ -394,15 +395,22 @@ abstract class Form extends ArrayObject
         }
     }
 
-    public function __toString()
+    public function offsetGet($index)
     {
-        $out = '<form'.$this->attributes().'>';
-        $fields = (array)$this;
-        if ($fields) {
-            $out .= "\n".implode("\n", $fields)."\n";
+        if (!isset($this[$index])) {
+            foreach ((array)$this as $element) {
+                if ($element->name() == $index) {
+                    return $element;
+                }
+                if ($element instanceof Fieldset) {
+                    foreach ((array)$element as $field) {
+                        if ($field->name() == $index) {
+                            return $field;
+                        }
+                    }
+                }
+            }
         }
-        $out .= '</form>';
-        return $out;
     }
 }
 
