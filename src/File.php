@@ -4,45 +4,26 @@ namespace Formulaic;
 
 class File extends Element
 {
-    protected $type = 'file';
+    protected $attributes = ['type' => 'file'];
 
-    public function __get($name)
+    public function setValue($value)
     {
-        if ($name != 'value') {
-            return null;
-        }
-        return $this->value && isset($this->value['name']) ?
-            $this->value['name'] :
-            null;
     }
 
-    public function __set($name, $value)
-    {
-        return null;
-    }
-
-    public function renderOptions()
-    {
-        unset($this->options['value']);
-        foreach ($this->renderOptions as $i => $value) {
-            if ($value == 'value') {
-                unset($this->renderOptions[$i]);
-            }
-        }
-        return parent::renderOptions();
-    }
-
-    /** This is a required field. */
     public function isRequired()
     {
-        $this->options['required'] = true;
-        $this->renderOptions[] = 'required';
-        $error = self::ERROR_MISSING;
-        return $this->addTest(function($value) use ($error) {
+        $this->attributes['required'] = true;
+        return $this->addTest(function($value) {
             return strlen(trim($value)) || isset($_FILES[$this->name]) ?
                 null :
-                $error;
+                'error.required';
         });
+    }
+
+    public function __toString()
+    {
+        unset($this->attributes['value']);
+        return parent::__toString();
     }
 }
 
