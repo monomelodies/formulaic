@@ -12,7 +12,6 @@ Define a form with some fields and other requirements:
     <?php
 
     use Formulaic\Get;
-    use Formulaic\Simple;
 
     class MyForm extends Get
     {
@@ -67,7 +66,6 @@ Forms can contain fieldsets:
     <?php
 
     use Formulaic\Get;
-    use Formulaic\Simple;
 
     class MyForm extends Get
     {
