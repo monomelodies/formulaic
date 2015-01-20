@@ -6,11 +6,14 @@ use ErrorException;
 
 abstract class Form extends ArrayObject
 {
+    use Attributes;
+
     const BUTTON_SUBMIT = 1;
     const BUTTON_RESET = 2;
     const BUTTON_CANCEL = 3;
     const BUTTON_BUTTON = 4;
 
+    /*
     private $controller, $done = false;
     protected $method = 'post', $fieldsets = [], $buttons = [],
               $errors = [], $action = '', $class = null, $sources = [],
@@ -21,9 +24,12 @@ abstract class Form extends ArrayObject
                 'textarea' => 'monolyth\render\form\rowvertical',
                 'texthtml' => 'monolyth\render\form\rowvertical',
            ];
+    */
+    protected $attributes = [];
 
     public function __construct($id = null)
     {
+        /*
         if (!isset($this->id)) {
             $this->id = isset($id) ? $id : $this->getId();
         }
@@ -33,20 +39,7 @@ abstract class Form extends ArrayObject
             'method' => &$this->method,
             'action' => &$this->action,
         ];
-    }
-
-    public function usePlaceholders($use = true)
-    {
-        $this->placeholders = $use;
-    }
-
-    public function attributes()
-    {
-        $return = [];
-        foreach ($this->attributes as $name => $value) {
-            $return[] = sprintf('%s="%s"', $name, htmlentities($value));
-        }
-        return implode(' ', $return);
+        */
     }
 
     public function text($id)
@@ -399,6 +392,17 @@ abstract class Form extends ArrayObject
             $this[$element->getName()] = $element;
             return $element;
         }
+    }
+
+    public function __toString()
+    {
+        $out = '<form'.$this->attributes().'>';
+        $fields = (array)$this;
+        if ($fields) {
+            $out .= "\n".implode("\n", $fields)."\n";
+        }
+        $out .= '</form>';
+        return $out;
     }
 }
 
