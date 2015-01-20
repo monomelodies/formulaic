@@ -12,7 +12,10 @@ trait Tostring
         }
         $fields = (array)$this;
         if ($fields) {
-            $out .= "\n".implode("\n", $fields)."\n";
+            $out .= "\n";
+            foreach ($fields as $field) {
+                $out .= "<div>$field</div>\n";
+            }
         }
         $out .= '</fieldset>';
         return $out;
