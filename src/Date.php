@@ -4,7 +4,7 @@ namespace Formulaic;
 
 class Date extends Datetime
 {
-    protected $type = 'date';
+    protected $attributes = ['type' => 'date'];
     protected $format = 'Y-m-d';
 }
 
