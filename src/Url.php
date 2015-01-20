@@ -4,37 +4,28 @@ namespace Formulaic;
 
 class Url extends Text
 {
-    protected $type = 'url';
+    protected $attributes = ['type' => 'url'];
 
-    public function prepare($name, array $options = [])
+    public function __construct($name = null)
     {
-        parent::prepare($name, $options);
+        parent::__construct($name);
         $this->setPlaceholder('http://');
-        $this->isUrl();
-    }
-
-    public function isUrl()
-    {
-        $error = self::ERROR_INVALID;
-        return $this->addTest(function($value) use ($error) {
+        $this->addTest(function($value) {
             if (!strlen(trim($value))) {
                 return null;
             }
-            return filter_var($value, FILTER_VALIDATE_URL) ? null : $error;
-        });
+            return filter_var($value, FILTER_VALIDATE_URL) ?
+                null :
+                'error.filter';
+        }
     }
 
-    public function __set($name, $value)
+    public function setValue($value)
     {
-        if ($name != 'value') {
-            return;
-        }
-        if (strlen(trim($value)) &&
-            !preg_match("@^(https?|ftp)://@", $value)
-        ) {
+        if ($value && !preg_match("@^(https?|ftp)://@", $value)) {
             $value = "http://$value";
         }
-        return parent::__set($name, $value);
+        return parent::setValue($value);
     }
 }
 
