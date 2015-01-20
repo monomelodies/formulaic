@@ -21,5 +21,20 @@ EOT
         $form = new SimpleForm;
         echo $form;
     }
+
+    public function testFormWithFieldset()
+    {
+        $this->expectOutputString(<<<EOT
+<form method="get">
+<fieldset>
+<legend>Hello world!</legend>
+<input type="text">
+</fieldset>
+</form>
+EOT
+        );
+        $form = new FieldsetForm;
+        echo $form;
+    }
 }
 
