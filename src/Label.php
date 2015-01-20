@@ -15,6 +15,11 @@ class Label extends Element
         $this->element = $element;
     }
 
+    public function name()
+    {
+        return $this->label;
+    }
+
     public function getElement()
     {
         return $this->element;
