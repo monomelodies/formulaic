@@ -4,7 +4,6 @@ namespace Formulaic;
 
 class Option extends Element
 {
-    protected $type = 'option', $renderOptions = ['value'];
     protected $label;
 
     public function __construct($value, $label)
