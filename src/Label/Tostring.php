@@ -2,7 +2,7 @@
 
 namespace Formulaic\Label;
 
-class Tostring
+trait Tostring
 {
     public function __toString()
     {
