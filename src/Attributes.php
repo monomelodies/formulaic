@@ -9,6 +9,9 @@ trait Attributes
         $return = [];
         foreach ($this->attributes as $name => $value) {
             if (is_null($value)) {
+                if ($name == 'value') {
+                    continue;
+                }
                 $return[] = $name;
             } else {
                 $return[] = sprintf('%s="%s"', $name, htmlentities($value));
