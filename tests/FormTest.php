@@ -36,5 +36,15 @@ EOT
         $form = new FieldsetForm;
         echo $form;
     }
+
+    public function testReferenceByName()
+    {
+        $this->expectOutputString(<<<EOT
+<input type="text" name="mytextfield">
+EOT
+        );
+        $form = new SimpleFormWithName;
+        echo $form['mytextfield'];
+    }
 }
 
