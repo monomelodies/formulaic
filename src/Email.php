@@ -4,24 +4,19 @@ namespace Formulaic;
 
 class Email extends Text
 {
-    protected $type = 'email';
+    protected $attributes = ['type' => 'email'];
 
-    public function prepare($name, array $options = [])
+    public function __construct($name = null)
     {
-        parent::prepare($name, $options);
-        $this->isEmail();
-    }
-
-    public function isEmail()
-    {
-        $error = self::ERROR_INVALID;
-        return $this->addTest(function($value) use ($error) {
+        parent::prepare($name);
+        $this->addTest(function($value) {
             if (!strlen(trim($value))) {
                 return null;
             }
             return filter_var($value, FILTER_VALIDATE_EMAIL)
                 && preg_match("/.*@.*\..*/", $value) ?
-                null : $error;
+                    null :
+                    'error.filter';
         });
     }
 }
