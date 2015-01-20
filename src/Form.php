@@ -356,45 +356,6 @@ abstract class Form extends ArrayObject
         return $this->class;
     }
 
-    public function __call($method, $args)
-    {
-        if (preg_match("@^add([A-Z]\w+)$@", $method, $match)) {
-            $class = "\\monolyth\\Form\\{$match[1]}";
-            $element = new $class;
-            if (!($element instanceof Element)) {
-                throw new UnknownElementException($match[1]);
-            }
-            $element->setParent($this);
-            if (!isset($args[1])) {
-                $args[1] = null;
-            }
-            if (!is_null($args[1])) {
-                if ($this->placeholders) {
-                    $element->setPlaceholder($args[1]);
-                } else {
-                    $element->setLabel($args[1]);
-                }
-            }
-            unset($args[1]);
-            $args = array_values($args);
-            call_user_func_array([$element, 'prepare'], $args);
-            $element->prependFormname($this->getId());
-            if ($element instanceof File) {
-                $this->addSource($_FILES);
-            }
-            if ($element instanceof Radio
-                && !array_key_exists($args[0], $this->sources[0])
-                && (($this instanceof Get_Form && $_GET)
-                    || ($this instanceof Post_Form && $_POST)
-                )
-            ) {
-                $this->sources[0][$args[0]] = '';
-            }
-            $this[$element->getName()] = $element;
-            return $element;
-        }
-    }
-
     public function offsetGet($index)
     {
         if (!isset($this[$index])) {
