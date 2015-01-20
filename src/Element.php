@@ -24,10 +24,37 @@ abstract class Element
 
     protected $name, $id, $basename, $label, $type, $options = [],
         $renderOptions = ['id', 'name', 'value', 'type'],
-        $value, $original, $parent;
+        $original, $parent;
     private $tests = [];
     public $selfClosing = false, $expandAttributes = false, $_Label,
            $language, $config;
+
+    protected $attributes = [];
+    protected $value;
+
+    public function __construct($name = null)
+    {
+        if (isset($name)) {
+            $this->attributes['name'] = $name;
+        }
+    }
+
+    public function name()
+    {
+        return isset($this->attributes['name']) ?
+            $this->attributes['name'] :
+            null;
+    }
+
+    public function setValue($value)
+    {
+        $this->value = $value;
+    }
+
+    public function getValue()
+    {
+        return $this->value;
+    }
 
     public function prepare($name, array $options = [])
     {

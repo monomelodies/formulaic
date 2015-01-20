@@ -4,6 +4,8 @@ namespace Formulaic;
 
 abstract class Post extends Form
 {
+    protected $attributes = ['method' => 'post'];
+
     public function __construct($id = null)
     {
         parent::__construct($id);
