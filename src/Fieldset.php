@@ -8,6 +8,7 @@ class Fieldset extends ArrayObject
 {
     use Attributes;
 
+    protected $attributes = [];
     private $legend;
 
     public function __construct($legend = null, callable $callback)
@@ -20,7 +21,7 @@ class Fieldset extends ArrayObject
     {
         $out = '<fieldset'.$this->attributes().'>';
         if (isset($this->legend)) {
-            $out .= "\n<legend>{$this->legend}";
+            $out .= "\n<legend>{$this->legend}</legend>";
         }
         $fields = (array)$this;
         if ($fields) {
