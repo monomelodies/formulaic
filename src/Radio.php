@@ -4,8 +4,7 @@ namespace Formulaic;
 
 class Radio extends Element
 {
-    protected $type = 'radio',
-        $renderOptions = ['id', 'name', 'type', 'value'];
+    protected $attributes = ['type' => 'radio'];
 
     public function prepare($name, array $options = [])
     {
@@ -68,20 +67,6 @@ class Radio extends Element
         return $this->addTest(function($value) use ($error) {
             return $this->isChecked() ? null : $error;
         });
-    }
-
-    public function showLabel()
-    {
-        return isset($this->options['label']) && $this->options['label'];
-    }
-
-    public function showInverted($set = null)
-    {
-        static $status = false;
-        if (isset($set)) {
-            $status = $set;
-        }
-        return $status;
     }
 }
 
