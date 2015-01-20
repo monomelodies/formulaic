@@ -7,24 +7,22 @@ class Select extends Element
     public $_Option;
     protected $type = 'select', $renderOptions = ['id', 'name'], $choices = [];
 
-    public function prepare($name, array $choices, array $options = [])
+    protected $attributes = ['type' => 'select'];
+
+    public function __construct($name, $options)
     {
-        parent::prepare($name, $options);
-        if (!isset($choices)) {
-            $choices = [];
-        }
-        foreach ($choices as $value => $text) {
-            if (is_null($text)) {
-                $text = $value;
+        if (is_callable($options)) {
+            $options($this);
+        } else {
+            foreach ($options as $value => $txt) {
+                $option = new Option($txt);
+                $option->setValue($value);
+                $this[] = $option;
             }
-            $o = new Option;
-            $o->prepare($name);
-            $o->setLabel($text);
-            $o->value = $value;
-            $this->choices[] = $o;
         }
     }
 
+    /*
     public function getChoices()
     {
         return $this->choices;
@@ -57,5 +55,6 @@ class Select extends Element
             unset($this->choices[0]);
         }
     }
+    */
 }
 
