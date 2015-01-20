@@ -14,7 +14,7 @@ Define a form with some fields and other requirements:
     use Formulaic\Get;
     use Formulaic\Simple;
 
-    class MyForm extends Get implements Simple
+    class MyForm extends Get
     {
         public function __construct()
         {
@@ -69,7 +69,7 @@ Forms can contain fieldsets:
     use Formulaic\Get;
     use Formulaic\Simple;
 
-    class MyForm extends Get implements Simple
+    class MyForm extends Get
     {
         public function __construct()
         {

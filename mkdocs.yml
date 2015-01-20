@@ -1,0 +1,13 @@
+site_name: Formulaic
+
+pages:
+
+- [index.md, Introduction, Quickstart]
+
+- [basic/forms.md, Basic usage, Create forms]
+- [basic/validation.md, Basic usage, Validation]
+- [basic/rendering.md, Basic usage, Custom rendering]
+
+- [api/select.md, API reference, Select boxes]
+
+theme: readthedocs
