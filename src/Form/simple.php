@@ -1,6 +1,6 @@
 <?php
 
-namespace monolyth\Form;
+namespace Formulaic;
 
 use Improse\Render\Html;
 

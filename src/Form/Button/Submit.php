@@ -1,8 +1,8 @@
 <?php
 
-namespace monolyth\Form\Button;
+namespace Formulaic\Button;
 
-use monolyth\Form\Button;
+use Formulaic\Button;
 
 class Submit extends Button
 {

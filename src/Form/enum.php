@@ -1,6 +1,6 @@
 <?php
 
-namespace monolyth\render\form;
+namespace Formulaic;
 
 var_dump($o);
 

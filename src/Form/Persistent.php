@@ -1,13 +1,9 @@
 <?php
 
-namespace monolyth\Form;
-
-use monolyth\Session_Access;
+namespace Formulaic;
 
 class Persistent extends Post
 {
-    use Session_Access;
-
     public function __construct()
     {
         parent::__construct();

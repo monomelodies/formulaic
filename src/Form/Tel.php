@@ -1,6 +1,6 @@
 <?php
 
-namespace monolyth\render\form;
+namespace Formulaic;
 
 class Tel extends Text
 {

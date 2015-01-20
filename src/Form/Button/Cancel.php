@@ -1,8 +1,10 @@
 <?php
 
-namespace monolyth\render\form;
+namespace Formulaic\Button;
 
-class Cancel_Button extends Button
+use Formulaic\Button;
+
+class Cancel extends Button
 {
     private $name = 'act_cancel';
     protected static $type = 'submit';

@@ -1,7 +1,7 @@
 <?php
 
-namespace monolyth\render\form;
-use monolyth\User_Access;
+namespace Formulaic;
+
 use ErrorException;
 
 class Password extends Text

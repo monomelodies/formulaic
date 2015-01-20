@@ -1,6 +1,8 @@
 <?php
 
-namespace monolyth\render\form;
+namespace Formulaic\Button;
+
+use Formulaic\Button;
 
 class Reset_Button extends Button
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace monolyth\Form;
+namespace Formulaic;
 
-class TextHTML extends Textarea
+class TextHtml extends Textarea
 {
     public function prepare($name, array $options = [])
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace monolyth\render\form;
+namespace Formulaic;
 
 if (!($fieldsets = $form->getFieldsets())) {
     $fieldsets = [$form->getPublicFields()];

@@ -1,2 +1,2 @@
-<?php namespace monolyth\render ?>
+<?php namespace Formulaic ?>
 <option <?=$o->renderOptions()?>><?=$o->getLabel()->raw()?></option>

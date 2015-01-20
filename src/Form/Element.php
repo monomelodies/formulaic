@@ -1,6 +1,7 @@
 <?php
 
-namespace monolyth\Form;
+namespace Formulaic;
+
 use monolyth\Utils\Translatable;
 use monolyth\Utils\Helper\Name;
 use ErrorException;

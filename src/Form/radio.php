@@ -1,4 +1,4 @@
-<?php namespace monolyth\render\form ?>
+<?php namespace Formulaic ?>
 <div>
     <input <?=$o->renderOptions()?>> <?=$o->showLabel() ? $o->getLabel() : ''?>
 </div>

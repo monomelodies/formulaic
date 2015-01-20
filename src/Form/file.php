@@ -1,3 +1,3 @@
-<?php namespace monolyth\render\form ?>
+<?php namespace Formulaic ?>
 <input <?=$o->renderOptions()?>>
 

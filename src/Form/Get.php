@@ -1,8 +1,6 @@
 <?php
 
-namespace monolyth\Form;
-
-use monolyth\Form;
+namespace Formulaic;
 
 class Get extends Form
 {

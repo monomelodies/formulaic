@@ -1,4 +1,4 @@
-<?php namespace monolyth\render\form ?>
+<?php namespace Formulaic ?>
 <fieldset>
 <?php   if (!is_numeric($legend) && $legend) { ?>
     <legend><?=$legend?></legend>

@@ -1,4 +1,4 @@
-<?php namespace monolyth\render\form ?>
+<?php namespace Formulaic ?>
 <div class="media">
     <iframe src="<?=$url(
         'monolyth/render/edit_media',

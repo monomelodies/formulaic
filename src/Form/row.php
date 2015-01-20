@@ -1,6 +1,6 @@
 <?php
 
-namespace monolyth\render\form;
+namespace Formulaic;
 $class = strtolower(get_class($row));
 $class = substr($class, strrpos($class, '\\') + 1);
 if (!is_array($row)) {

@@ -1,6 +1,7 @@
 <?php
 
-namespace monolyth\render\form;
+namespace Formulaic;
+
 $has = false;
 foreach ($fields as $f) {
     if (!($f instanceof Hidden || is_string($f))) {
