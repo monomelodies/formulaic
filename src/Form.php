@@ -402,6 +402,11 @@ abstract class Form extends ArrayObject
                 if ($element->name() == $index) {
                     return $element;
                 }
+                if ($element instanceof Label
+                    && $element->getElement()->name() == $index
+                ) {
+                    return $element;
+                }
                 if ($element instanceof Fieldset) {
                     foreach ((array)$element as $field) {
                         if ($field->name() == $index) {
