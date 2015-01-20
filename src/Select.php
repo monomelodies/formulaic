@@ -15,8 +15,7 @@ class Select extends Element
             $options($this);
         } else {
             foreach ($options as $value => $txt) {
-                $option = new Option($txt);
-                $option->setValue($value);
+                $option = new Option($value, $txt);
                 $this[] = $option;
             }
         }
