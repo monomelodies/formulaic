@@ -17,7 +17,7 @@ Define a form with some fields and other requirements:
     {
         public function __construct()
         {
-            $this[] = (new Search)->isRequired();
+            $this[] = (new Search('q'))->isRequired();
             $this[] = new Submit('submit', 'Go!');
         }
     }
@@ -38,9 +38,9 @@ You can `__toString` individual fields:
 
     ?>
     <form name="search" method="get">
-        <!-- These two yield identical output: -->
+        <!-- These two yield identical output using MyForm above: -->
         <?=$form[0]?>
-        <?=$form->field('q')?>
+        <?=$form['q']?>
     </form>
 
 To validate your form:
@@ -84,9 +84,9 @@ Forms can contain fieldsets:
 And in your output:
 
     <form method="get">
-        <?=$form->fieldset('Global search')?>
-        <?=$form->fieldset('Search by ID')?>
-        <?=$form->button('submit')?>
+        <?=$form['Global search']?>
+        <?=$form['Search by ID']?>
+        <?=$form['submit']?>
     </form>
 
 See the full documentation for all other options: (link)
