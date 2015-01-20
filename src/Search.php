@@ -4,6 +4,6 @@ namespace Formulaic;
 
 class Search extends Text
 {
-    protected $type = 'search';
+    protected $attributes = ['type' => 'search'];
 }
 
