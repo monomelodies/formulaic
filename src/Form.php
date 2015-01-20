@@ -1,23 +1,11 @@
 <?php
 
-namespace monolyth;
+namespace Formulaic;
 use ArrayObject;
 use ErrorException;
-use monolyth\Utils\Translatable;
-use monolyth\Utils\Helper\Name;
-use monolyth\Form\UnknownElement_Exception;
-use monolyth\Form\File;
-use monolyth\Form\Radio;
-use monolyth\Form\Hidden;
-use monolyth\Form\Media;
-use monolyth\Form\Element;
 
 abstract class Form extends ArrayObject
 {
-    use Name, Translatable {
-        Translatable::text as _text;
-    }
-
     const BUTTON_SUBMIT = 1;
     const BUTTON_RESET = 2;
     const BUTTON_CANCEL = 3;
