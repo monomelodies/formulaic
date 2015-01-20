@@ -61,3 +61,33 @@ To get a list of errors:
         // ...Do error handling, or give feedback...
     }
 
+Forms can contain fieldsets:
+
+    <?php
+
+    use Formulaic\Get;
+    use Formulaic\Simple;
+
+    class MyForm extends Get implements Simple
+    {
+        public function __construct()
+        {
+            $this->add(new Fieldset('Global search', function($fieldset) {
+                $fieldset->add(new Search('q'));
+            });
+            $this->add(new Fieldset('Search by ID', function($fieldset) {
+                $fieldset->add(new Search('id'));
+            });
+            $this->add(new Submit('submit', 'Go!'));
+        }
+    }
+
+And in your output:
+
+    <form method="get">
+        <?=$form['Global search']?>
+        <?=$form['Search by ID']?>
+        <?=$form['submit']?>
+    </form>
+
+See the full documentation for all other options: (link)
