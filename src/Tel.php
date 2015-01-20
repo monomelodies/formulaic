@@ -4,20 +4,17 @@ namespace Formulaic;
 
 class Tel extends Text
 {
-    protected $type = 'tel';
+    protected $attributes = ['type' => 'tel'];
 
-    public function __set($name, $value)
+    public function setValue($value)
     {
-        if ($name != 'value') {
-            return;
-        }
         $value = preg_replace('/^\d/', '', $value);
         if (strlen($value)) {
             if ($value{0} != '0') {
                 $value = "0$value";
             }
         }
-        return parent::__set($name, $value);
+        return parent::setValue($name, $value);
     }
 }
 
