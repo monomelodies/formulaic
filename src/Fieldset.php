@@ -7,6 +7,7 @@ use ArrayObject;
 class Fieldset extends ArrayObject
 {
     use Attributes;
+    use Fieldset\Tostring;
 
     protected $attributes = [];
     private $legend;
@@ -17,18 +18,9 @@ class Fieldset extends ArrayObject
         $callback($this);
     }
 
-    public function __toString()
+    public function name()
     {
-        $out = '<fieldset'.$this->attributes().'>';
-        if (isset($this->legend)) {
-            $out .= "\n<legend>{$this->legend}</legend>";
-        }
-        $fields = (array)$this;
-        if ($fields) {
-            $out .= "\n".implode("\n", $fields)."\n";
-        }
-        $out .= '</fieldset>';
-        return $out;
+        return isset($this->legend) ? $this->legend : null;
     }
 }
 
