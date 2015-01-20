@@ -4,9 +4,6 @@ namespace Formulaic;
 
 class Select extends Element
 {
-    public $_Option;
-    protected $type = 'select', $renderOptions = ['id', 'name'], $choices = [];
-
     protected $attributes = ['type' => 'select'];
 
     public function __construct($name, $options)
