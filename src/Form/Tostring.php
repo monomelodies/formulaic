@@ -1,8 +1,8 @@
 <?php
 
 namespace Formulaic\Form;
-use ArrayObject;
-use ErrorException;
+
+use Formulaic\Fieldset;
 
 trait Tostring
 {
@@ -11,7 +11,14 @@ trait Tostring
         $out = '<form'.$this->attributes().'>';
         $fields = (array)$this;
         if ($fields) {
-            $out .= "\n".implode("\n", $fields)."\n";
+            $out .= "\n";
+            foreach ($fields as $field) {
+                if ($field instanceof Fieldset) {
+                    $out .= "$field\n";
+                } else {
+                    $out .= "<div>$field</div>\n";
+                }
+            }
         }
         $out .= '</form>';
         return $out;
