@@ -29,6 +29,22 @@ abstract class Element
     public $selfClosing = false, $expandAttributes = false, $_Label,
            $language, $config;
 
+    protected $attributes = [];
+
+    public function __construct($name = null)
+    {
+        if (isset($name)) {
+            $this->attributes['name'] = $name;
+        }
+    }
+
+    public function name()
+    {
+        return isset($this->attributes['name']) ?
+            $this->attributes['name'] :
+            null;
+    }
+
     public function prepare($name, array $options = [])
     {
         $this->name = $name;
