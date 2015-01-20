@@ -1,0 +1,20 @@
+{
+    "name": "monomelodies/formulaic",
+    "description": "Object oriented PHP5 form tools",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marijn Ophorst",
+            "email": "marijn@monomelodies.nl"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "4.0.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Formulaic\\": "src"
+        }
+    }
+}
