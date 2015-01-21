@@ -52,5 +52,28 @@ EOT
         $form[] = new Formulaic\Text('mytextfield');
         echo $form['mytextfield'];
     }
+
+    public function testPostForm()
+    {
+        $this->expectOutputString(<<<EOT
+<form method="post"></form>
+EOT
+        );
+        $form = new PostForm;
+        echo $form;
+    }
+
+    public function testPostFormWithFile()
+    {
+        $this->expectOutputString(<<<EOT
+<form method="post" enctype="multipart/form-data">
+<div><input type="file"></div>
+</form>
+EOT
+        );
+        $form = new PostForm;
+        $form[] = new Formulaic\File;
+        echo $form;
+    }
 }
 
