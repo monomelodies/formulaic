@@ -21,28 +21,5 @@ abstract class Form extends ArrayObject
             $this->attributes['name'] :
             null;
     }
-
-    public function offsetGet($index)
-    {
-        if (!isset($this[$index])) {
-            foreach ((array)$this as $element) {
-                if ($element->name() == $index) {
-                    return $element;
-                }
-                if ($element instanceof Label
-                    && $element->getElement()->name() == $index
-                ) {
-                    return $element;
-                }
-                if ($element instanceof ArrayObject) {
-                    foreach ((array)$element as $field) {
-                        if ($field->name() == $index) {
-                            return $field;
-                        }
-                    }
-                }
-            }
-        }
-    }
 }
 
