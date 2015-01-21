@@ -86,6 +86,13 @@ class ElementTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($input->valid());
     }
 
+    public function testFile()
+    {
+        $this->expectOutputString('<input type="file">');
+        $input = new Formulaic\File;
+        echo $input;
+    }
+
     public function testNumber()
     {
         $this->expectOutputString('<input type="number" step="1" value="42">');
