@@ -149,9 +149,9 @@ abstract class Element
         $this->attributes['tabindex'] = (int)$tabindex;
     }
 
-    public function addTest($fn)
+    public function addTest($name, $fn)
     {
-        $this->tests[] = $fn;
+        $this->tests[$name] = $fn;
         return $this;
     }
 
@@ -296,13 +296,8 @@ abstract class Element
     public function errors()
     {
         $errors = [];
-        foreach ($this->tests as $test) {
-            if ($error = $test($this->value)) {
-                if ($error != 'missing' && !isset($this->value)) {
-                    // Empty elements that aren't required shouldn't
-                    // throw errors.
-                    continue;
-                }
+        foreach ($this->tests as $error => $test) {
+            if (!$test($this->value)) {
                 $errors[] = $error;
             }
         }
