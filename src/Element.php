@@ -8,18 +8,14 @@ use Exception as E;
 abstract class Element
 {
     use Element\Tostring;
+    use Element\Identify;
     use Attributes;
     use Validate\Test;
     use Validate\Required;
     use Validate\Element;
 
-    protected $name, $id, $basename, $type, $options = [],
-        $renderOptions = ['id', 'name', 'value', 'type'],
-        $original, $parent;
     private $tests = [];
-    public $selfClosing = false, $expandAttributes = false, $_Label,
-           $language, $config;
-
+    private $prefix;
     protected $attributes = [];
     protected $value = null;
 
@@ -29,13 +25,6 @@ abstract class Element
             $this->attributes['name'] = $name;
         }
         $this->attributes['value'] =& $this->value;
-    }
-
-    public function name()
-    {
-        return isset($this->attributes['name']) ?
-            $this->attributes['name'] :
-            null;
     }
 
     public function setValue($value)
