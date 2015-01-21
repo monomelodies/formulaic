@@ -9,6 +9,8 @@ pages:
 - [basic/rendering.md, Basic usage, Custom rendering]
 
 - [advanced/select.md, Advanced topics, Select boxes]
+- [advanced/checkboxes.md, Advanced topics, Groups of checkboxes or radio buttons]
+- [advanced/bitflags.md, Advanced topics, Bitflag fields]
 
 - [api/form.md, API reference, Form]
 - [api/get.md, API reference, Get]
