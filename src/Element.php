@@ -7,6 +7,7 @@ use Exception as E;
 
 abstract class Element
 {
+    use Element\Tostring;
     use Attributes;
 
     /** {{{ Default form-element errors. */
@@ -30,13 +31,14 @@ abstract class Element
            $language, $config;
 
     protected $attributes = [];
-    protected $value;
+    protected $value = null;
 
     public function __construct($name = null)
     {
         if (isset($name)) {
             $this->attributes['name'] = $name;
         }
+        $this->attributes['value'] =& $this->value;
     }
 
     public function name()
@@ -383,11 +385,6 @@ abstract class Element
         return isset($this->options['maxlength']) ?
             $this->options['maxlength'] :
             null;
-    }
-
-    public function __toString()
-    {
-        return '<input'.$this->attributes().'>';
     }
 
     public function getErrors()
