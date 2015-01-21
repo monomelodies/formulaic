@@ -20,7 +20,9 @@ class Datetime extends Text
 
     public function setValue($value)
     {
-        if ($time = strtotime($value)) {
+        if (is_int($value)) {
+            $value = date($this->format, $value);
+        } elseif ($time = strtotime($value)) {
             $value = date($this->format, $time);
         }
         return parent::setValue($value);
