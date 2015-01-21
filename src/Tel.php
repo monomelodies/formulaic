@@ -9,10 +9,8 @@ class Tel extends Text
     public function __construct($name = null)
     {
         parent::__construct($name);
-        $this->addTest(function ($value) {
-            return preg_replace('/[^\d]/', '', $value) == $value ?
-                null :
-                'error.nonnumeric';
+        $this->addTest('numeric', function ($value) {
+            return preg_replace('/[^\d]/', '', $value) == $value;
         });
     }
 
