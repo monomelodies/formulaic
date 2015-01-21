@@ -10,19 +10,6 @@ abstract class Element
     use Element\Tostring;
     use Attributes;
 
-    /** {{{ Default form-element errors. */
-    /** Error: field is required. */
-    const ERROR_MISSING = 'missing';
-    /** Error: invalid value. */
-    const ERROR_INVALID = 'invalid';
-    /** Error: field should match something, but it doesn't. */
-    const ERROR_NOMATCH = 'nomatch';
-    /** Error: field should be different, but is the same. */
-    const ERROR_MATCH = 'match';
-    /** Error: field should be unique, but isn't. */
-    const ERROR_EXISTS = 'exists';
-    /** }}} */
-
     protected $name, $id, $basename, $label, $type, $options = [],
         $renderOptions = ['id', 'name', 'value', 'type'],
         $original, $parent;
@@ -65,13 +52,13 @@ abstract class Element
             $options['id'] :
             self::nameToId($name);
         $options += ['name' => $name, 'id' => $this->id];
-        $this->options = $options + $this->options;
+        $this->attributes = $options + $this->attributes;
     }
 
     public function prependFormname($id)
     {
-        if (isset($this->options['id'])) {
-            $this->id = $this->options['id'] = "$id-{$this->options['id']}";
+        if (isset($this->attributes['id'])) {
+            $this->id = $this->attributes['id'] = "$id-{$this->attributes['id']}";
         } else {
             $this->id = self::nameToId("{$id}[{$this->name}]");
         }
@@ -82,8 +69,8 @@ abstract class Element
         if ($name != 'value') {
             return null;
         }
-        if (!(isset($this->options['required'])
-            && $this->options['required']
+        if (!(isset($this->attributes['required'])
+            && $this->attributes['required']
         )) {
             if (is_scalar($this->value) && !strlen(trim($this->value))) {
                 return null;
@@ -100,8 +87,8 @@ abstract class Element
         if ($name != 'value') {
             return null;
         }
-        if (!(isset($this->options['required'])
-            && $this->options['required']
+        if (!(isset($this->attributes['required'])
+            && $this->attributes['required']
         )) {
             if ((is_array($value) && !$value)
                 || (!is_array($value) && !strlen(trim($value)))
@@ -111,7 +98,7 @@ abstract class Element
         }
         $this->original = $this->value;
         $this->value = $value;
-        unset($this->options[$name]);
+        unset($this->attributes[$name]);
         return $value;
     }
 
@@ -136,60 +123,20 @@ abstract class Element
         return $this->setOption('disabled', $set);
     }
 
-    public function setOption($name, $value)
-    {
-        $this->options[$name] = $value;
-        return $this;
-    }
-
-    public function getOption($name)
-    {
-        return isset($this->options[$name]) ?
-            $this->options[$name] :
-            null;
-    }
-
-    public function setClass($class)
-    {
-        $this->options['class'] = $class;
-        $this->renderOptions[] = 'class';
-        return $this;
-    }
-
     public function addClass($class)
     {
         $classes = [];
-        if (isset($this->options['class'])) {
-            $classes = explode(' ', $this->options['class']);
+        if (isset($this->attributes['class'])) {
+            $classes = explode(' ', $this->attributes['class']);
         }
         $classes = array_unique(array_merge($classes, explode(' ', $class)));
-        $this->options['class'] = implode(' ', $classes);
+        $this->attributes['class'] = implode(' ', $classes);
     }
 
     public function setPlaceholder($text)
     {
-        $this->options['placeholder'] = $text;
-        $this->renderOptions[] = 'placeholder';
+        $this->attributes['placeholder'] = $text;
         return $this;
-    }
-
-    public function setLabel($label)
-    {
-        $l = new Label;
-        if (substr($label, 0, 3) == ':t:') {
-            $me = preg_replace('@\[.*?\]@', '', $this->name);
-            $label = "./$me/".substr($label, 3);
-            $label = $this->generate($this->parent, $label);
-            $label = $this->text($label);
-        }
-        $l->prepare($this, $label);
-        $this->label = $l;
-        return $this;
-    }
-
-    public function getLabel()
-    {
-        return $this->label;
     }
 
     public function setParent($form)
@@ -197,55 +144,9 @@ abstract class Element
         $this->parent = is_object($form) ? get_class($form) : $form;
     }
 
-    public function setMessage($message)
-    {
-        $this->options['data-message'] = $message;
-        return $this;
-    }
-
     public function setTabindex($tabindex)
     {
-        $this->options['tabindex'] = (int)$tabindex;
-        $this->renderOptions[] = 'tabindex';
-    }
-
-    public function renderOptions()
-    {
-        foreach (array_unique($this->renderOptions) as $prop) {
-            if (!isset($this->options[$prop])) {
-                try {
-                    $this->options[$prop] = $this->$prop;
-                } catch (ErrorException $e) {
-                    $this->options[$prop] = $prop;
-                }
-            }
-        }
-        $tmp = $this->options;
-        foreach ($tmp as $name => $value) {
-            if ($name == 'label') {
-                unset($tmp[$name]);
-                continue;
-            }
-            if ($name == 'type') {
-                $value = array_shift(explode('/', $value));
-            }
-            if (is_bool($value)) {
-                if ($value) {
-                    if (!$this->expandAttributes) {
-                        $tmp[$name] = $name;
-                    } else {
-                        $tmp[$name] = sprintf('%s="%s"', $name, $name);
-                    }
-                }
-            } else {
-                $tmp[$name] = sprintf(
-                    '%s="%s"',
-                    $name,
-                    htmlspecialchars($value)
-                );
-            }
-        }
-        return implode(' ', $tmp);
+        $this->attributes['tabindex'] = (int)$tabindex;
     }
 
     public function addTest($fn)
@@ -262,13 +163,13 @@ abstract class Element
 
     public function nullAllowed()
     {
-        return !(isset($this->options['required'])
-            && $this->options['required']);
+        return !(isset($this->attributes['required'])
+            && $this->attributes['required']);
     }
 
     public function isDisabled()
     {
-        return isset($this->options['disabled']) && $this->options['disabled'];
+        return isset($this->attributes['disabled']) && $this->attributes['disabled'];
     }
 
     /**
@@ -280,7 +181,7 @@ abstract class Element
     /** This is a required field. */
     public function isRequired()
     {
-        $this->options['required'] = true;
+        $this->attributes['required'] = true;
         $this->renderOptions[] = 'required';
         $error = self::ERROR_MISSING;
         return $this->addTest(function($value) use ($error) {
@@ -331,7 +232,7 @@ abstract class Element
     public function matchesField(Form $form, $name)
     {
         $error = self::ERROR_NOMATCH;
-        $this->options['data-equals'] = $form[$name]->getName();
+        $this->attributes['data-equals'] = $form[$name]->getName();
         return $this->addTest(function($value) use ($error, $form, $name) {
             return $value == $form[$name]->value ? null : $error;
         });
@@ -341,7 +242,7 @@ abstract class Element
     public function differsFromField(Form $form, $name)
     {
         $error = self::ERROR_MATCH;
-        $this->options['data-notequals'] = $form[$name]->getName();
+        $this->attributes['data-notequals'] = $form[$name]->getName();
         return $this->addTest(function($value) use ($error, $form, $name) {
             if (!isset($form[$name]->value)) {
                 return null;
@@ -354,7 +255,7 @@ abstract class Element
     public function mustMatch($pattern)
     {
         $error = self::ERROR_INVALID;
-        $this->options['pattern'] = $pattern;
+        $this->attributes['pattern'] = $pattern;
         return $this->addTest(function($value) use ($error, $pattern) {
             if (!strlen(trim($value))) {
                 return null;
@@ -370,8 +271,8 @@ abstract class Element
         if (!isset($size)) {
             $size = min(32, $length);
         }
-        $this->options['maxlength'] = (int)$length;
-        $this->options['size'] = (int)$size;
+        $this->attributes['maxlength'] = (int)$length;
+        $this->attributes['size'] = (int)$size;
         return $this->addTest(function($value) use ($error, $length) {
             return mb_strlen(trim($value), 'UTF-8') <= (int)$length ?
                 null :
@@ -382,24 +283,30 @@ abstract class Element
 
     public function hasMaxLength()
     {
-        return isset($this->options['maxlength']) ?
-            $this->options['maxlength'] :
+        return isset($this->attributes['maxlength']) ?
+            $this->attributes['maxlength'] :
             null;
     }
 
-    public function getErrors()
+    public function valid()
     {
+        return $this->errors() ? false : true;
+    }
+
+    public function errors()
+    {
+        $errors = [];
         foreach ($this->tests as $test) {
             if ($error = $test($this->value)) {
                 if ($error != 'missing' && !isset($this->value)) {
                     // Empty elements that aren't required shouldn't
                     // throw errors.
-                    return null;
+                    continue;
                 }
-                return $error;
+                $errors[] = $error;
             }
         }
-        return null;
+        return $errors ? $errors : null;
     }
 }
 
