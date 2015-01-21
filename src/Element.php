@@ -2,9 +2,6 @@
 
 namespace Formulaic;
 
-use ErrorException;
-use Exception as E;
-
 abstract class Element
 {
     use Element\Tostring;
@@ -15,7 +12,7 @@ abstract class Element
     use Validate\Element;
 
     private $tests = [];
-    private $prefix;
+    private $prefix = [];
     protected $attributes = [];
     protected $value = null;
 
