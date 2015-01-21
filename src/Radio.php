@@ -4,7 +4,8 @@ namespace Formulaic;
 
 class Radio extends Element
 {
-    protected $attributes = ['type' => 'radio', 'value' => 1];
+    protected $attributes = ['type' => 'radio'];
+    protected $value = 1;
 
     public function checked()
     {
