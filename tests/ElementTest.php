@@ -2,6 +2,19 @@
 
 class ElementTest extends PHPUnit_Framework_TestCase
 {
+    public function testDefaultTests()
+    {
+        $input = new Formulaic\Text;
+        $this->assertTrue($input->valid());
+
+        // Required:
+        $input->isRequired();
+        $input->setValue('foo');
+        $this->assertTrue($input->valid());
+        $input->setValue(null);
+        $this->assertNotTrue($input->valid());
+    }
+
     public function testButton()
     {
         $this->expectOutputString('<button type="button">B</button>');
@@ -33,11 +46,29 @@ class ElementTest extends PHPUnit_Framework_TestCase
 
     public function testNumber()
     {
-        $this->expectOutputString('<input type="number" value="42">');
+        $this->expectOutputString('<input type="number" step="1" value="42">');
         $input = new Formulaic\Number;
         $input->setValue('42');
         echo $input;
         $input->setValue('foo');
+        $this->assertNotTrue($input->valid());
+        $input->setMin(9);
+        $input->setValue(8);
+        $this->assertNotTrue($input->valid());
+        $input->setValue(15);
+        $this->assertTrue($input->valid());
+        $input->setMax(14);
+        $this->assertNotTrue($input->valid());
+        $input->setValue(13);
+        $this->assertTrue($input->valid());
+        $input->setStep(2);
+        $this->assertTrue($input->valid());
+        $input->setValue(12);
+        $this->assertNotTrue($input->valid());
+        $input->setStep(.5);
+        $input->setValue(12.5);
+        $this->assertTrue($input->valid());
+        $input->setValue(12.4);
         $this->assertNotTrue($input->valid());
     }
 
