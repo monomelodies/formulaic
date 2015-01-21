@@ -10,13 +10,11 @@ class Url extends Text
     {
         parent::__construct($name);
         $this->attributes['placeholder'] = 'http://';
-        $this->addTest(function($value) {
+        $this->addTest('url', function($value) {
             if (!strlen(trim($value))) {
-                return null;
+                return true;
             }
-            return filter_var($value, FILTER_VALIDATE_URL) ?
-                null :
-                'error.filter';
+            return filter_var($value, FILTER_VALIDATE_URL);
         });
     }
 
