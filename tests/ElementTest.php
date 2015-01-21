@@ -93,6 +93,13 @@ class ElementTest extends PHPUnit_Framework_TestCase
         echo $input;
     }
 
+    public function testHidden()
+    {
+        $this->expectOutputString('<input type="hidden">');
+        $input = new Formulaic\Hidden;
+        echo $input;
+    }
+
     public function testNumber()
     {
         $this->expectOutputString('<input type="number" step="1" value="42">');
