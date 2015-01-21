@@ -10,7 +10,7 @@ class Fieldset extends Element\Group
 
     protected $attributes = [];
     private $legend;
-    private $prefix;
+    private $prefix = [];
 
     public function __construct($legend = null, callable $callback)
     {
