@@ -32,7 +32,7 @@ abstract class Post extends Form
                     }
                 }
             } elseif ($element instanceof Label
-                && $element->element() instanceof File
+                && $element->getElement() instanceof File
             ) {
                 return true;
             } elseif ($element instanceof File) {
