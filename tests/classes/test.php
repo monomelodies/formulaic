@@ -11,3 +11,11 @@ class PostForm extends Post
 {
 }
 
+class NamedForm extends Get
+{
+    public function __construct()
+    {
+        $this->attributes['name'] = 'test';
+    }
+}
+
