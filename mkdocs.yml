@@ -7,13 +7,14 @@ pages:
 - [basic/forms.md, Basic usage, Create forms]
 - [basic/validation.md, Basic usage, Validation]
 - [basic/rendering.md, Basic usage, Custom rendering]
+- [basic/select.md, Basic usage, Select boxes]
 
-- [advanced/select.md, Advanced topics, Select boxes]
+- [advanced/arrays.md, Advanced topics, Handling complex arrays]
 - [advanced/checkboxes.md, Advanced topics, Groups of checkboxes or radio buttons]
 - [advanced/bitflags.md, Advanced topics, Bitflag fields]
 
-- [api/form.md, API reference, Form]
 - [api/get.md, API reference, Get]
+- [api/form.md, API reference, Form]
 - [api/post.md, API reference, Post]
 - [api/select.md, API reference, Select]
 
