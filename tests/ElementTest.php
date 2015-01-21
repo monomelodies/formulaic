@@ -150,6 +150,35 @@ class ElementTest extends PHPUnit_Framework_TestCase
         echo $input;
     }
 
+    public function testSelectSimple()
+    {
+        $this->expectOutputString(<<<EOT
+<select>
+<option value="1">foo</option>
+<option value="2">bar</option>
+</select>
+EOT
+        );
+        $input = new Formulaic\Select(null, [1 => 'foo', 2 => 'bar']);
+        echo $input;
+    }
+
+    public function testSelectManual()
+    {
+        $this->expectOutputString(<<<EOT
+<select>
+<option value="1">foo</option>
+<option value="2">bar</option>
+</select>
+EOT
+        );
+        $input = new Formulaic\Select(null, function ($select) {
+            $select[] = new Formulaic\Select\Option(1, 'foo');
+            $select[] = new Formulaic\Select\Option(2, 'bar');
+        });
+        echo $input;
+    }
+
     public function testTel()
     {
         $this->expectOutputString('<input type="tel" value="0612345678">');
