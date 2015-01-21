@@ -10,11 +10,14 @@ abstract class Form extends ArrayObject
     use Form\Tostring;
     use Validate\Group;
 
-    /*
-    protected $errors = [], $action = '', $class = null, $sources = [],
-              $placeholders = false;
-    */
     protected $attributes = [];
+
+    public function name()
+    {
+        return isset($this->attributes['name']) ?
+            $this->attributes['name'] :
+            null;
+    }
 
     public function prepare()
     {
