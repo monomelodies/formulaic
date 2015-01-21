@@ -4,6 +4,6 @@ namespace Formulaic;
 
 class Checkbox extends Radio
 {
-    protected $attributes = ['type' => 'checkbox', 'value' => 1];
+    protected $attributes = ['type' => 'checkbox'];
 }
 
