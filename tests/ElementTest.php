@@ -47,8 +47,8 @@ class ElementTest extends PHPUnit_Framework_TestCase
     {
         $this->expectOutputString(<<<EOT
 <div>
-<label><input type="checkbox" value="1"> Option 1</label>
-<label><input type="checkbox" value="2"> Option 2</label>
+<label for="test-1"><input id="test-1" name="test[1]" type="checkbox" value="1"> Option 1</label>
+<label for="test-2"><input id="test-2" name="test[2]" type="checkbox" value="2"> Option 2</label>
 </div>
 EOT
         );
