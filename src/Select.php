@@ -7,6 +7,7 @@ use ArrayObject;
 class Select extends ArrayObject
 {
     use Attributes;
+    use Element\Identify;
     use Validate\Test;
     use Validate\Required;
     use Validate\Element;
