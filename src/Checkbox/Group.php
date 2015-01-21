@@ -18,6 +18,7 @@ class Group extends Element\Group
     
     protected $attributes = [];
     private $prefix = [];
+    private $prefixId = null;
     
     public function __construct($name, $options)
     {

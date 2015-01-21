@@ -13,6 +13,7 @@ abstract class Element
 
     private $tests = [];
     private $prefix = [];
+    private $prefixId = null;
     protected $attributes = [];
     protected $value = null;
 
