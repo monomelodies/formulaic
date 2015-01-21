@@ -9,14 +9,12 @@ class Time extends Element
     public function __construct($name = null)
     {
         parent::__construct($name);
-        $this->addTest(function ($value) {
+        $this->addTest('time', function ($value) {
             if (is_null($value)) {
-                return null;
+                return true;
             }
             $current = str_replace(':', '', $value);
-            return $current > '000000' && $current < '235959' ?
-                null :
-                'error.invalid';
+            return $current > '000000' && $current < '235959';
         });
     }
 
@@ -31,19 +29,15 @@ class Time extends Element
 
     public function isInPast()
     {
-        return $this->addTest(function ($value) { 
-            return str_replace(':', '', $value) < date('His') ?
-                null :
-                'error.notinpast';
+        return $this->addTest('inpast', function ($value) { 
+            return str_replace(':', '', $value) < date('His');
         });
     }
 
     public function isInFuture()
     {
-        return $this->addTest(function ($value) {
-            return str_replace(':', '', $value) > date('His') ?
-                null :
-                'error.notinfuture';
+        return $this->addTest('infuture', function ($value) {
+            return str_replace(':', '', $value) > date('His');
         });
     }
 }
