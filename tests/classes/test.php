@@ -1,12 +1,13 @@
 <?php
 
 use Formulaic\Get;
-use Formulaic\Simple;
-use Formulaic\Text;
-use Formulaic\Button\Submit;
-use Formulaic\Fieldset;
+use Formulaic\Post;
 
 class Form extends Get
+{
+}
+
+class PostForm extends Post
 {
 }
 

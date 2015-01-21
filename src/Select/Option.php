@@ -1,0 +1,33 @@
+<?php
+
+namespace Formulaic\Select;
+
+use Formulaic\Element;
+
+class Option extends Element
+{
+    private $label;
+
+    public function __construct($value, $label)
+    {
+        $this->value = $value;
+        $this->label = $label;
+        parent::__construct();
+    }
+
+    public function getName()
+    {
+        return $this->label;
+    }
+
+    public function selected()
+    {
+        $this->attributes['selected'] = null;
+    }
+
+    public function __toString()
+    {
+        return '<option'.$this->attributes().'>'.$this->label.'</option>';
+    }
+}
+

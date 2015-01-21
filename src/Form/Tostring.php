@@ -2,7 +2,7 @@
 
 namespace Formulaic\Form;
 
-use Formulaic\Fieldset;
+use ArrayObject;
 
 trait Tostring
 {
@@ -13,7 +13,7 @@ trait Tostring
         if ($fields) {
             $out .= "\n";
             foreach ($fields as $field) {
-                if ($field instanceof Fieldset) {
+                if ($field instanceof ArrayObject) {
                     $out .= "$field\n";
                 } else {
                     $out .= "<div>$field</div>\n";

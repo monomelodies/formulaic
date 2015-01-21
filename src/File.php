@@ -13,10 +13,8 @@ class File extends Element
     public function isRequired()
     {
         $this->attributes['required'] = true;
-        return $this->addTest(function($value) {
-            return strlen(trim($value)) || isset($_FILES[$this->name]) ?
-                null :
-                'error.required';
+        return $this->addTest('required', function ($value) {
+            return strlen(trim($value)) || isset($_FILES[$this->name]);
         });
     }
 

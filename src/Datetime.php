@@ -4,71 +4,57 @@ namespace Formulaic;
 
 class Datetime extends Text
 {
-    const ERROR_DATENOTINPAST = 'notinpast';
-    const ERROR_DATENOTINFUTURE = 'notinfuture';
-    const ERROR_MIN = 'min';
-    const ERROR_MAX = 'max';
-
     protected $attributes = ['type' => 'datetime'];
     protected $format = 'Y-m-d H:i:s';
 
+    public function __construct($name = null)
+    {
+        parent::__construct($name);
+        $this->addTest('valid', function ($value) {
+            if (is_null($value)) {
+                return true;
+            }
+            return strtotime($value);
+        });
+    }
+
     public function setValue($value)
     {
-        if (!($value = strtotime($value))) {
-            $value = null;
-        } else {
+        if (is_int($value)) {
             $value = date($this->format, $value);
+        } elseif ($time = strtotime($value)) {
+            $value = date($this->format, $time);
         }
         return parent::setValue($value);
     }
 
-    public function isValidDate()
+    public function isInPast()
     {
-        $error = self::ERROR_INVALID;
-        return $this->addTest(function ($value) use ($error) {
-            if (!$value) {
-                return null;
-            }
-            return strtotime($value) ? null : 'error.invalid';
+        return $this->addTest('inpast', function ($value) {
+            return strtotime($value) < time();
         });
     }
 
-    public function isDateInPast()
+    public function isInFuture()
     {
-        $error = self::ERROR_DATENOTINPAST;
-        return $this->addTest(function ($value) use ($error) {
-            return strtotime($value) < time() ?
-                null :
-                'error.notinpast';
+        return $this->addTest('infuture', function ($value) {
+            return strtotime($value) > time();
         });
     }
 
-    public function isDateInFuture()
-    {
-        $error = self::ERROR_DATENOTINFUTURE;
-        return $this->addTest(function ($value) use ($error) {
-            $e = $this->getElements();
-            return strtotime($value) > time() ?
-                null :
-                'error.notinfuture';
-        });
-    }
-
-    public function min($min)
+    public function setMin($min)
     {
         $this->attributes['min'] = $min;
-        $error = self::ERROR_MIN;
-        return $this->addTest(function ($value) use ($min) {
-            return $value >= $min ? null : 'error.min';
+        return $this->addTest('min', function ($value) use ($min) {
+            return $value >= $min;
         });
     }
 
-    public function max($max)
+    public function setMax($max)
     {
         $this->attributes['max'] = $max;
-        $error = self::ERROR_MAX;
-        return $this->addTest(function ($value) use ($max) {
-            return $value <= $max ? null : 'error.max';
+        return $this->addTest('max', function ($value) use ($max) {
+            return $value <= $max;
         });
     }
 }

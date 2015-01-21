@@ -1,13 +1,14 @@
 <?php
 
 namespace Formulaic;
+
 use ArrayObject;
-use ErrorException;
 
 abstract class Form extends ArrayObject
 {
     use Attributes;
     use Form\Tostring;
+    use Validate\Group;
 
     /*
     protected $errors = [], $action = '', $class = null, $sources = [],
@@ -17,9 +18,6 @@ abstract class Form extends ArrayObject
 
     public function prepare()
     {
-        if ($this->hasFiles()) {
-            $this->attributes += ['enctype' => 'multipart/form-data'];
-        }
         if ($class = $this->classname()) {
             $this->attributes += compact('class');
         }
@@ -115,25 +113,6 @@ abstract class Form extends ArrayObject
         return $this;
     }
 
-    public function validate()
-    {
-        $errors = [];
-        foreach ((array)$this as $name => $field) {
-            if ($fielderrors = $field->getErrors()) {
-                $errors[$name] = $fielderrors;
-            }
-        }
-        return $errors ? $errors : null;
-    }
-
-    public function errors(array $errors = null)
-    {
-        if ($errors) {
-            $this->errors = $errors;
-        }
-        return $this->errors;
-    }
-
     public function offsetGet($index)
     {
         if (!isset($this[$index])) {
@@ -146,7 +125,7 @@ abstract class Form extends ArrayObject
                 ) {
                     return $element;
                 }
-                if ($element instanceof Fieldset) {
+                if ($element instanceof ArrayObject) {
                     foreach ((array)$element as $field) {
                         if ($field->name() == $index) {
                             return $field;

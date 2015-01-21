@@ -40,7 +40,63 @@ class ElementTest extends PHPUnit_Framework_TestCase
     {
         $this->expectOutputString('<input type="checkbox" value="1">');
         $input = new Formulaic\Checkbox;
-        $input->setValue(1);
+        echo $input;
+    }
+
+    public function testDate()
+    {
+        $this->expectOutputString('<input type="date">');
+        $input = new Formulaic\Date;
+        echo $input;
+        $input->setMin('2010-01-01')->setMax('2012-01-01');
+        $input->setValue('2009-01-01');
+        $this->assertNotTrue($input->valid());
+        $input->setValue('2013-01-01');
+        $this->assertNotTrue($input->valid());
+        $input->setValue('2011-01-01');
+        $this->assertTrue($input->valid());
+        $input->setValue('something illegal');
+        $this->assertNotTrue($input->valid());
+    }
+
+    public function testDatetime()
+    {
+        $this->expectOutputString('<input type="datetime">');
+        $input = new Formulaic\Datetime;
+        echo $input;
+        $input->setMin('2009-01-01 12:00:00')->setMax('2009-01-02 12:00:00');
+        $input->setValue('2009-01-01');
+        $this->assertNotTrue($input->valid());
+        $input->setValue('2009-01-02 13:00:00');
+        $this->assertNotTrue($input->valid());
+        $input->setValue('2009-01-01 13:59:00');
+        $this->assertTrue($input->valid());
+        $input->setValue('something illegal');
+        $this->assertNotTrue($input->valid());
+    }
+
+    public function testEmail()
+    {
+        $this->expectOutputString('<input type="email">');
+        $input = new Formulaic\Email;
+        echo $input;
+        $input->setValue('not an email');
+        $this->assertNotTrue($input->valid());
+        $input->setValue('foo@bar.com');
+        $this->assertTrue($input->valid());
+    }
+
+    public function testFile()
+    {
+        $this->expectOutputString('<input type="file">');
+        $input = new Formulaic\File;
+        echo $input;
+    }
+
+    public function testHidden()
+    {
+        $this->expectOutputString('<input type="hidden">');
+        $input = new Formulaic\Hidden;
         echo $input;
     }
 
@@ -84,7 +140,6 @@ class ElementTest extends PHPUnit_Framework_TestCase
     {
         $this->expectOutputString('<input type="radio" value="1">');
         $input = new Formulaic\Radio;
-        $input->setValue(1);
         echo $input;
     }
 
@@ -92,6 +147,35 @@ class ElementTest extends PHPUnit_Framework_TestCase
     {
         $this->expectOutputString('<input type="search">');
         $input = new Formulaic\Search;
+        echo $input;
+    }
+
+    public function testSelectSimple()
+    {
+        $this->expectOutputString(<<<EOT
+<select>
+<option value="1">foo</option>
+<option value="2">bar</option>
+</select>
+EOT
+        );
+        $input = new Formulaic\Select(null, [1 => 'foo', 2 => 'bar']);
+        echo $input;
+    }
+
+    public function testSelectManual()
+    {
+        $this->expectOutputString(<<<EOT
+<select>
+<option value="1">foo</option>
+<option value="2">bar</option>
+</select>
+EOT
+        );
+        $input = new Formulaic\Select(null, function ($select) {
+            $select[] = new Formulaic\Select\Option(1, 'foo');
+            $select[] = new Formulaic\Select\Option(2, 'bar');
+        });
         echo $input;
     }
 

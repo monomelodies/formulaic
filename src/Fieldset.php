@@ -8,6 +8,7 @@ class Fieldset extends ArrayObject
 {
     use Attributes;
     use Fieldset\Tostring;
+    use Validate\Group;
 
     protected $attributes = [];
     private $legend;

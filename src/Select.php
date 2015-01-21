@@ -2,9 +2,17 @@
 
 namespace Formulaic;
 
-class Select extends Element
+use ArrayObject;
+
+class Select extends ArrayObject
 {
-    protected $attributes = ['type' => 'select'];
+    use Attributes;
+    use Validate\Test;
+    use Validate\Required;
+    use Validate\Element;
+    use Select\Tostring;
+
+    protected $attributes = [];
 
     public function __construct($name, $options)
     {
@@ -12,10 +20,18 @@ class Select extends Element
             $options($this);
         } else {
             foreach ($options as $value => $txt) {
-                $option = new Option($value, $txt);
+                $option = new Select\Option($value, $txt);
                 $this[] = $option;
             }
         }
+        $this->addTest('valid', function ($value) {
+            foreach ((array)$this as $option) {
+                if ($option->getValue() == $value) {
+                    return true;
+                }
+            }
+            return false;
+        });
     }
 
     /*
