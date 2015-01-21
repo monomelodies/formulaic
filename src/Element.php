@@ -134,8 +134,8 @@ abstract class Element
     public function matchPattern($pattern)
     {
         $this->attributes['pattern'] = $pattern;
-        return $this->addTest(function ($value) use ($pattern) {
-            if (!strlen(trim($value))) {
+        return $this->addTest('pattern', function ($value) use ($pattern) {
+            if (!isset($value)) {
                 return true;
             }
             return preg_match("@^$pattern$@", trim($value));
