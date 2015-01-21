@@ -9,8 +9,11 @@ abstract class Element
 {
     use Element\Tostring;
     use Attributes;
+    use Validate\Test;
+    use Validate\Required;
+    use Validate\Element;
 
-    protected $name, $id, $basename, $label, $type, $options = [],
+    protected $name, $id, $basename, $type, $options = [],
         $renderOptions = ['id', 'name', 'value', 'type'],
         $original, $parent;
     private $tests = [];
@@ -86,18 +89,6 @@ abstract class Element
      *     The isSomething methods therefore all return $this.
      */
 
-    /** This is a required field. */
-    public function isRequired()
-    {
-        $this->attributes['required'] = true;
-        return $this->addTest('required', function ($value) {
-            if (is_array($value)) {
-                return $value;
-            }
-            return strlen(trim($value));
-        });
-    }
-
     /** The field must contain an integer. */
     public function isInteger()
     {
@@ -155,21 +146,5 @@ abstract class Element
         });
     }
     /** }}} */
-
-    public function valid()
-    {
-        return $this->errors() ? false : true;
-    }
-
-    public function errors()
-    {
-        $errors = [];
-        foreach ($this->tests as $error => $test) {
-            if (!$test($this->value)) {
-                $errors[] = $error;
-            }
-        }
-        return $errors ? $errors : null;
-    }
 }
 
