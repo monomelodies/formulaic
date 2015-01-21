@@ -52,24 +52,6 @@ abstract class Element
         $this->attributes['tabindex'] = (int)$tabindex;
     }
 
-    public function addTest($name, callable $fn)
-    {
-        $this->tests[$name] = $fn;
-        return $this;
-    }
-
-    public function nullAllowed()
-    {
-        return !(isset($this->attributes['required'])
-            && $this->attributes['required']);
-    }
-
-    public function isDisabled()
-    {
-        return isset($this->attributes['disabled'])
-            && $this->attributes['disabled'];
-    }
-
     /**
      * {{{ Some default tests, for use in Forms. These can all be chained,
      *     e.g. $element->isRequired()->isInteger()->isGreaterThanZero();
