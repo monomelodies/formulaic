@@ -19,8 +19,8 @@ anything fancy with your `<option>`s anyway.
     <?php
 
     $this[] = new Formulaic\Select('selectname', function($select) {
-        $select[] = new Formulaic\Option(1, 'option 1');
-        $select[] = new Formulaic\Option(2, 'option 2');
+        $select[] = new Formulaic\Select\Option(1, 'option 1');
+        $select[] = new Formulaic\Select\Option(2, 'option 2');
     });
 
 More typing, but the `Option` class extends `Element` so you get most of the
