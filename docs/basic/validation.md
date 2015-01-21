@@ -26,14 +26,17 @@ Adding a test is simple:
 
     <?php
 
-    $this[] = (new Formulaic\Text('mycustomlogic'))->addTest(function($value) {
-        return isThisOkay() ? null : 'some.error.code';
-    });
+    $this[] = (new Formulaic\Text('mycustomlogic'))->addTest(
+        'notokay',
+        function($value) {
+            return isThisOkay();
+        }
+    );
 
-The callback receives the element's current value and should either return null
-("no errors") or an error code. The error code is just a string and could be
-anything, but you'll probably want to give it a descriptive value for handling
-elsewhere.
+The callback receives the element's current value and should true if the test
+passes, or else false. The name of the test is the error returned, so you should
+give it a descriptive value. Note that subsequent tests of the same name
+overwrite existing tests.
 
 ## Loading data
 
