@@ -40,7 +40,6 @@ class ElementTest extends PHPUnit_Framework_TestCase
     {
         $this->expectOutputString('<input type="checkbox" value="1">');
         $input = new Formulaic\Checkbox;
-        $input->setValue(1);
         echo $input;
     }
 
@@ -84,7 +83,6 @@ class ElementTest extends PHPUnit_Framework_TestCase
     {
         $this->expectOutputString('<input type="radio" value="1">');
         $input = new Formulaic\Radio;
-        $input->setValue(1);
         echo $input;
     }
 
