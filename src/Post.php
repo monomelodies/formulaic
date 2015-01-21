@@ -4,25 +4,6 @@ namespace Formulaic;
 
 abstract class Post extends Form
 {
-    use Form\Tostring {
-        Form\Tostring::__toString as private __parentToString;
-    }
-
-    protected $attributes = ['method' => 'post'];
-
-    /*
-    public function __construct($id = null)
-    {
-        parent::__construct($id);
-        $this->addSource($_POST);
-    }
-    
-    public function cancelled()
-    {
-        return isset($_POST['act_cancel']);
-    }
-    */
-
     public function __toString()
     {
         $files = false;
@@ -44,9 +25,10 @@ abstract class Post extends Form
             }
         }
         if ($files) {
-            $this->attributes += ['enctype' => 'multipart/form-data'];
+            $this->attributes['enctype'] = 'multipart/form-data';
         }
-        return $this->__parentToString();
+        $this->attributes['method'] = 'post';
+        return parent::__toString();
     }
 }
 
