@@ -75,6 +75,17 @@ class ElementTest extends PHPUnit_Framework_TestCase
         $this->assertNotTrue($input->valid());
     }
 
+    public function testEmail()
+    {
+        $this->expectOutputString('<input type="email">');
+        $input = new Formulaic\Email;
+        echo $input;
+        $input->setValue('not an email');
+        $this->assertNotTrue($input->valid());
+        $input->setValue('foo@bar.com');
+        $this->assertTrue($input->valid());
+    }
+
     public function testNumber()
     {
         $this->expectOutputString('<input type="number" step="1" value="42">');
