@@ -45,7 +45,7 @@ EOT
     public function testReferenceByName()
     {
         $this->expectOutputString(<<<EOT
-<input type="text" name="mytextfield">
+<input type="text" name="mytextfield" id="mytextfield">
 EOT
         );
         $form = new Form;
@@ -73,6 +73,19 @@ EOT
         );
         $form = new PostForm;
         $form[] = new Formulaic\File;
+        echo $form;
+    }
+
+    public function testNamedFormInherits()
+    {
+        $this->expectOutputString(<<<EOT
+<form method="get" name="test" id="test">
+<div><input type="text" name="bla" id="test-bla"></div>
+</form>
+EOT
+        );
+        $form = new NamedForm;
+        $form[] = new Formulaic\Text('bla');
         echo $form;
     }
 }
