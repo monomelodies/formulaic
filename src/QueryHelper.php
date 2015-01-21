@@ -15,9 +15,8 @@ trait QueryHelper
             ) { 
                 return $element;
             }
-            if ($element instanceof Element\Group && isset($element[$field])) {
-                var_dump($elment[$field]);
-                return $element[$field];
+            if ($element instanceof Element\Group && isset($element[$index])) {
+                return $element[$index];
             }
         }
     }
