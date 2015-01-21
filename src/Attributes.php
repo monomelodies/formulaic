@@ -15,6 +15,9 @@ trait Attributes
                 }
                 $return[] = $name;
             } else {
+                if ($name == 'name') {
+                    $value = preg_replace("@^\[(.*?)\]@", '$1', $value);
+                }
                 $return[] = sprintf(
                     '%s="%s"',
                     $name,
