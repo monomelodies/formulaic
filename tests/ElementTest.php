@@ -197,6 +197,18 @@ EOT
         });
         echo $input;
     }
+    
+    public function testSelectWithName()
+    {
+        $this->expectOutputString(<<<EOT
+<select id="test" name="test">
+<option value="1">foo</option>
+</select>
+EOT
+        );
+        $input = new Formulaic\Select('test', [1 => 'foo']);
+        echo $input;
+    }
 
     public function testTel()
     {
