@@ -8,26 +8,7 @@ class Radio extends Element
 
     public function checked()
     {
-        $this->attributes['checked'] = 'checked';
-    }
-
-    public function unchecked()
-    {
-        unset($this->attributes['checked']);
-    }
-
-    public function setValue($value)
-    {
-        if ($value == $this->attributes['value']) {
-            $this->checked();
-        } else {
-            $this->unchecked();
-        }
-    }
-
-    public function isChecked()
-    {
-        return isset($this->attributes['checked']);
+        return array_key_exists('checked', $this->attributes);
     }
 
     /** This is a required field. */
@@ -35,7 +16,7 @@ class Radio extends Element
     {
         $this->attributes['required'] = true;
         return $this->addTest('required', function($value) {
-            return $this->isChecked();
+            return $this->checked();
         });
     }
 }
