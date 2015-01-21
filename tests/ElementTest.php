@@ -43,6 +43,38 @@ class ElementTest extends PHPUnit_Framework_TestCase
         echo $input;
     }
 
+    public function testDate()
+    {
+        $this->expectOutputString('<input type="date">');
+        $input = new Formulaic\Date;
+        echo $input;
+        $input->setMin('2010-01-01')->setMax('2012-01-01');
+        $input->setValue('2009-01-01');
+        $this->assertNotTrue($input->valid());
+        $input->setValue('2013-01-01');
+        $this->assertNotTrue($input->valid());
+        $input->setValue('2011-01-01');
+        $this->assertTrue($input->valid());
+        $input->setValue('something illegal');
+        $this->assertNotTrue($input->valid());
+    }
+
+    public function testDatetime()
+    {
+        $this->expectOutputString('<input type="datetime">');
+        $input = new Formulaic\Datetime;
+        echo $input;
+        $input->setMin('2009-01-01 12:00:00')->setMax('2009-01-02 12:00:00');
+        $input->setValue('2009-01-01');
+        $this->assertNotTrue($input->valid());
+        $input->setValue('2009-01-02 13:00:00');
+        $this->assertNotTrue($input->valid());
+        $input->setValue('2009-01-01 13:59:00');
+        $this->assertTrue($input->valid());
+        $input->setValue('something illegal');
+        $this->assertNotTrue($input->valid());
+    }
+
     public function testNumber()
     {
         $this->expectOutputString('<input type="number" step="1" value="42">');
