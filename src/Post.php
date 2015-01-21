@@ -6,29 +6,40 @@ abstract class Post extends Form
 {
     public function __toString()
     {
-        $files = false;
+        if ($this->hasFiles()) {
+            $this->attributes['enctype'] = 'multipart/form-data';
+        }
+        $this->attributes['method'] = 'post';
+        return parent::__toString();
+    }
+
+    public function populate()
+    {
+        $this->source($_POST);
+        if ($this->hasFiles()) {
+            $this->source($_FILES);
+        }
+        parent::populate();
+    }
+
+    private function hasFiles()
+    {
         foreach ((array)$this as $element) {
-            if ($element instanceof Fieldset) {
+            if (is_array($element)) {
                 foreach ((array)$element as $field) {
                     if ($field instanceof File) {
-                        $files = true;
-                        break 2;
+                        return true;
                     }
                 }
             } elseif ($element instanceof Label
                 && $element->element() instanceof File
             ) {
-                $files = true;
+                return true;
             } elseif ($element instanceof File) {
-                $files = true;
-                break;
+                return true;
             }
         }
-        if ($files) {
-            $this->attributes['enctype'] = 'multipart/form-data';
-        }
-        $this->attributes['method'] = 'post';
-        return parent::__toString();
+        return false;
     }
 }
 
