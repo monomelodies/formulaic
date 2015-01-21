@@ -8,7 +8,7 @@ class Email extends Text
 
     public function __construct($name = null)
     {
-        parent::prepare($name);
+        parent::__construct($name);
         $this->addTest('valid', function ($value) {
             if (is_null($value)) {
                 return true;
