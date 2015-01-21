@@ -17,6 +17,7 @@ class Select extends ArrayObject
 
     public function __construct($name, $options)
     {
+        parent::__construct($name);
         if (is_callable($options)) {
             $options($this);
         } else {
