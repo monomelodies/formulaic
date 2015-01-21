@@ -8,6 +8,11 @@ pages:
 - [basic/validation.md, Basic usage, Validation]
 - [basic/rendering.md, Basic usage, Custom rendering]
 
-- [api/select.md, API reference, Select boxes]
+- [advanced/select.md, Advanced topics, Select boxes]
+
+- [api/form.md, API reference, Form]
+- [api/get.md, API reference, Get]
+- [api/post.md, API reference, Post]
+- [api/select.md, API reference, Select]
 
 theme: readthedocs
