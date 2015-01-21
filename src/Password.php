@@ -10,8 +10,11 @@ class Password extends Text
 
     public function __toString()
     {
+        $old = $this->value;
         $this->value = null;
-        return parent::__toString();
+        $out = parent::__toString();
+        $this->value = $old;
+        return $out;
     }
 }
 

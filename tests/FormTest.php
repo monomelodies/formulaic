@@ -5,7 +5,7 @@ class FormTest extends PHPUnit_Framework_TestCase
     public function testEmptyForm()
     {
         $this->expectOutputString('<form method="get"></form>');
-        $form = new EmptyForm;
+        $form = new Form;
         echo $form;
     }
 
@@ -18,7 +18,9 @@ class FormTest extends PHPUnit_Framework_TestCase
 </form>
 EOT
         );
-        $form = new SimpleForm;
+        $form = new Form;
+        $form[] = new Formulaic\Text;
+        $form[] = new Formulaic\Button\Submit;
         echo $form;
     }
 
@@ -33,7 +35,10 @@ EOT
 </form>
 EOT
         );
-        $form = new FieldsetForm;
+        $form = new Form;
+        $form[] = new Formulaic\Fieldset('Hello world!', function($fieldset) {
+            $fieldset[] = new Formulaic\Text;
+        });
         echo $form;
     }
 
@@ -43,7 +48,8 @@ EOT
 <input type="text" name="mytextfield">
 EOT
         );
-        $form = new SimpleFormWithName;
+        $form = new Form;
+        $form[] = new Formulaic\Text('mytextfield');
         echo $form['mytextfield'];
     }
 }
