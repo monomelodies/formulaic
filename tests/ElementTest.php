@@ -43,6 +43,25 @@ class ElementTest extends PHPUnit_Framework_TestCase
         echo $input;
     }
 
+    public function testCheckboxGroup()
+    {
+        $this->expectOutputString(<<<EOT
+<div>
+<label><input type="checkbox" value="1"> Option 1</label>
+<label><input type="checkbox" value="2"> Option 2</label>
+</div>
+EOT
+        );
+        $group = new Formulaic\Checkbox\Group(
+            'test',
+            [
+                1 => 'Option 1',
+                2 => 'Option 2',
+            ]
+        );
+        echo $group;
+    }
+
     public function testDate()
     {
         $this->expectOutputString('<input type="date">');
