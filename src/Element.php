@@ -62,7 +62,7 @@ abstract class Element
         $this->attributes['tabindex'] = (int)$tabindex;
     }
 
-    public function addTest($name, $fn)
+    public function addTest($name, callable $fn)
     {
         $this->tests[$name] = $fn;
         return $this;
