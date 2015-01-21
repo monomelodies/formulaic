@@ -31,6 +31,16 @@ class ElementTest extends PHPUnit_Framework_TestCase
         echo $input;
     }
 
+    public function testNumber()
+    {
+        $this->expectOutputString('<input type="number" value="42">');
+        $input = new Formulaic\Number;
+        $input->setValue('42');
+        echo $input;
+        $input->setValue('foo');
+        $this->assertNotTrue($input->valid());
+    }
+
     public function testPassword()
     {
         $this->expectOutputString('<input type="password">');
@@ -52,6 +62,16 @@ class ElementTest extends PHPUnit_Framework_TestCase
         $this->expectOutputString('<input type="search">');
         $input = new Formulaic\Search;
         echo $input;
+    }
+
+    public function testTel()
+    {
+        $this->expectOutputString('<input type="tel" value="0612345678">');
+        $input = new Formulaic\Tel;
+        $input->setValue('612345678');
+        echo $input;
+        $input->setValue('foo');
+        $this->assertFalse($input->valid());
     }
 
     public function testText()
