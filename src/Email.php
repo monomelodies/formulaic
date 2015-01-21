@@ -9,14 +9,12 @@ class Email extends Text
     public function __construct($name = null)
     {
         parent::prepare($name);
-        $this->addTest(function($value) {
-            if (!strlen(trim($value))) {
-                return null;
+        $this->addTest('valid', function ($value) {
+            if (is_null($value)) {
+                return true;
             }
             return filter_var($value, FILTER_VALIDATE_EMAIL)
-                && preg_match("/.*@.*\..*/", $value) ?
-                    null :
-                    'error.filter';
+                && preg_match("/.*@.*\..*/", $value);
         });
     }
 }
