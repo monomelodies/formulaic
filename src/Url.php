@@ -9,7 +9,7 @@ class Url extends Text
     public function __construct($name = null)
     {
         parent::__construct($name);
-        $this->setPlaceholder('http://');
+        $this->attributes['placeholder'] = 'http://';
         $this->addTest(function($value) {
             if (!strlen(trim($value))) {
                 return null;
@@ -17,7 +17,7 @@ class Url extends Text
             return filter_var($value, FILTER_VALIDATE_URL) ?
                 null :
                 'error.filter';
-        }
+        });
     }
 
     public function setValue($value)
