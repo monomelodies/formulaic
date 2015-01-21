@@ -2,13 +2,10 @@
 
 namespace Formulaic;
 
-use ArrayObject;
-
-class Fieldset extends ArrayObject
+class Fieldset extends Element\Group
 {
     use Attributes;
     use Fieldset\Tostring;
-    use Validate\Group;
     use Element\Identify;
 
     protected $attributes = [];
