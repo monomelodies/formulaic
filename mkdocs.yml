@@ -13,9 +13,7 @@ pages:
 - [advanced/checkboxes.md, Advanced topics, Groups of checkboxes or radio buttons]
 - [advanced/bitflags.md, Advanced topics, Bitflag fields]
 
-- [api/get.md, API reference, Get]
-- [api/form.md, API reference, Form]
-- [api/post.md, API reference, Post]
-- [api/select.md, API reference, Select]
+- [api/forms.md, API reference, Forms]
+- [api/elements.md, API reference, Elements]
 
 theme: readthedocs
