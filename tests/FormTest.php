@@ -88,5 +88,34 @@ EOT
         $form[] = new Formulaic\Text('bla');
         echo $form;
     }
+
+    public function testPopulateGet()
+    {
+        $form = new Form;
+        $form[] = new Formulaic\Search('q');
+        $_GET['q'] = 'query';
+        $form->populate();
+        $this->assertEquals('query', $form['q']->getValue());
+    }
+
+    public function testPopulatePost()
+    {
+        $form = new PostForm;
+        $form[] = new Formulaic\Search('q');
+        $_POST['q'] = 'query';
+        $form->populate();
+        $this->assertEquals('query', $form['q']->getValue());
+    }
+
+    public function testPopulateGrouped()
+    {
+        $form = new PostForm;
+        $form[] = new Formulaic\Element\Group('foo', function($group) {
+            $group[] = new Formulaic\Text('bar');
+        });
+        $_POST['foo'] = ['bar' => 'baz'];
+        $form->populate();
+        $this->assertEquals('baz', $form['foo']['bar']->getValue());
+    }
 }
 
