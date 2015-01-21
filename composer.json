@@ -2,6 +2,7 @@
     "name": "monomelodies/formulaic",
     "description": "Object oriented PHP5 form tools",
     "license": "MIT",
+    "keywords": ["PHP","OO","Form","HTML5","validation"],
     "authors": [
         {
             "name": "Marijn Ophorst",
