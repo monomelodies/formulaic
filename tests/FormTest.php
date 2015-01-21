@@ -45,7 +45,7 @@ EOT
     public function testReferenceByName()
     {
         $this->expectOutputString(<<<EOT
-<input type="text" name="mytextfield" id="mytextfield">
+<input id="mytextfield" name="mytextfield" type="text">
 EOT
         );
         $form = new Form;
@@ -66,7 +66,7 @@ EOT
     public function testPostFormWithFile()
     {
         $this->expectOutputString(<<<EOT
-<form method="post" enctype="multipart/form-data">
+<form enctype="multipart/form-data" method="post">
 <div><input type="file"></div>
 </form>
 EOT
@@ -79,8 +79,8 @@ EOT
     public function testNamedFormInherits()
     {
         $this->expectOutputString(<<<EOT
-<form method="get" name="test" id="test">
-<div><input type="text" name="bla" id="test-bla"></div>
+<form id="test" method="get" name="test">
+<div><input id="test-bla" name="bla" type="text"></div>
 </form>
 EOT
         );

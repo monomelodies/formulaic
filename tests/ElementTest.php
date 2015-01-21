@@ -121,7 +121,7 @@ EOT
 
     public function testNumber()
     {
-        $this->expectOutputString('<input type="number" step="1" value="42">');
+        $this->expectOutputString('<input step="1" type="number" value="42">');
         $input = new Formulaic\Number;
         $input->setValue('42');
         echo $input;
@@ -254,8 +254,8 @@ EOT
     public function testUrl()
     {
         $this->expectOutputString(<<<EOT
-<input type="url" placeholder="http://">
-<input type="url" value="http://google.com" placeholder="http://">
+<input placeholder="http://" type="url">
+<input placeholder="http://" type="url" value="http://google.com">
 EOT
         );
         $input = new Formulaic\Url;

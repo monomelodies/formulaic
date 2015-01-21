@@ -18,7 +18,7 @@ EOT
     {
         $this->expectOutputString(<<<EOT
 <label for="test">Label</label>
-<input type="text" name="test" id="test">
+<input id="test" name="test" type="text">
 EOT
         );
         $input = new Formulaic\Text('test');
