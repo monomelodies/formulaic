@@ -14,6 +14,9 @@ trait Tostring
         if ($fields) {
             $out .= "\n";
             foreach ($fields as $field) {
+                if (isset($this->prefix)) {
+                    $field->prefix($this->prefix);
+                }
                 $out .= "<div>$field</div>\n";
             }
         }
