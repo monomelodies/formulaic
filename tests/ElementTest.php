@@ -47,6 +47,13 @@ class ElementTest extends PHPUnit_Framework_TestCase
         echo $input;
     }
 
+    public function testSearch()
+    {
+        $this->expectOutputString('<input type="search">');
+        $input = new Formulaic\Search;
+        echo $input;
+    }
+
     public function testText()
     {
         $this->expectOutputString('<input type="text" value="&quot;">');
@@ -61,6 +68,49 @@ class ElementTest extends PHPUnit_Framework_TestCase
         $input = new Formulaic\Textarea;
         $input->setValue('"');
         echo $input;
+    }
+
+    public function testTime()
+    {
+        $this->expectOutputString('<input type="time" value="12:00:00">');
+        $input = new Formulaic\Time;
+        $input->setValue('bla');
+        $this->assertNotTrue($input->valid());
+        $input->setValue('12:00:00');
+        $this->assertTrue($input->valid());
+        echo $input;
+
+        // Test require past time
+        $input = new Formulaic\Time;
+        $input->isInPast();
+        $input->setValue(time() + 100);
+        $this->assertNotTrue($input->valid());
+        $input->setValue(time() - 100);
+        $this->assertTrue($input->valid());
+
+        // Test require future time
+        $input = new Formulaic\Time;
+        $input->isInFuture();
+        $input->setValue(time() - 100);
+        $this->assertNotTrue($input->valid());
+        $input->setValue(time() + 100);
+        $this->assertTrue($input->valid());
+    }
+
+    public function testUrl()
+    {
+        $this->expectOutputString(<<<EOT
+<input type="url" placeholder="http://">
+<input type="url" value="http://google.com" placeholder="http://">
+EOT
+        );
+        $input = new Formulaic\Url;
+        echo $input;
+        $input->setValue('not an url');
+        $this->assertNotTrue($input->valid());
+        $input->setValue('http://google.com');
+        $this->assertTrue($input->valid());
+        echo "\n$input";
     }
 }
 
