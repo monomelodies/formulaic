@@ -1,8 +1,8 @@
 <?php
 
 namespace Formulaic;
+
 use ArrayObject;
-use ErrorException;
 
 abstract class Form extends ArrayObject
 {
@@ -143,7 +143,7 @@ abstract class Form extends ArrayObject
                 ) {
                     return $element;
                 }
-                if ($element instanceof Fieldset) {
+                if ($element instanceof ArrayObject) {
                     foreach ((array)$element as $field) {
                         if ($field->name() == $index) {
                             return $field;
