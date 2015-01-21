@@ -4,68 +4,38 @@ namespace Formulaic;
 
 class Radio extends Element
 {
-    protected $attributes = ['type' => 'radio'];
-
-    public function prepare($name, array $options = [])
-    {
-        parent::prepare($name, $options);
-        $this->unchecked();
-        if (!isset($this->options['value'])) {
-            $this->options['value'] = 1;
-        }
-        if (!isset($this->options['label'])) {
-            $this->options['label'] = true;
-        }
-        $this->value =& $this->options['value'];
-    }
+    protected $attributes = ['type' => 'radio', 'value' => 1];
 
     public function checked()
     {
-        $this->options['checked'] = 'checked';
-        $this->renderOptions[] = 'checked';
+        $this->attributes['checked'] = 'checked';
     }
 
     public function unchecked()
     {
-        unset($this->options['checked']);
-        foreach ($this->renderOptions as $key => $value) {
-            if ($value == 'checked') {
-                unset($this->renderOptions[$key]);
-            }
-        }
+        unset($this->attributes['checked']);
     }
 
-    public function makeInline()
+    public function setValue($value)
     {
-        $this->type = 'radio/inline';
-    }
-
-    public function __set($name, $value)
-    {
-        if ($name != 'value') {
-            return null;
-        }
-        if ($value == $this->options['value']) {
+        if ($value == $this->attributes['value']) {
             $this->checked();
         } else {
             $this->unchecked();
         }
-        return $value;
     }
 
     public function isChecked()
     {
-        return isset($this->options['checked']);
+        return isset($this->attributes['checked']);
     }
 
     /** This is a required field. */
     public function isRequired()
     {
-        $this->options['required'] = true;
-        $this->renderOptions[] = 'required';
-        $error = self::ERROR_MISSING;
-        return $this->addTest(function($value) use ($error) {
-            return $this->isChecked() ? null : $error;
+        $this->attributes['required'] = true;
+        return $this->addTest('required', function($value) {
+            return $this->isChecked();
         });
     }
 }
