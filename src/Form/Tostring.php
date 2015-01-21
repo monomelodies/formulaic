@@ -16,7 +16,6 @@ trait Tostring
         if ($fields) {
             $out .= "\n";
             foreach ($fields as $field) {
-                $field->prefix($name);
                 if ($field instanceof ArrayObject) {
                     $out .= "$field\n";
                 } else {
