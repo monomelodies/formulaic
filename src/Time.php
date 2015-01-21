@@ -9,7 +9,7 @@ class Time extends Element
     public function __construct($name = null)
     {
         parent::__construct($name);
-        $this->addTest('time', function ($value) {
+        $this->addTest('valid', function ($value) {
             if (is_null($value)) {
                 return true;
             }
