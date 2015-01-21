@@ -14,10 +14,16 @@ class Select extends ArrayObject
     use Select\Tostring;
 
     protected $attributes = [];
+    protected $value;
+    protected $name;
+    protected $prefix = [];
+    protected $prefixId;
 
     public function __construct($name, $options)
     {
-        parent::__construct($name);
+        if (isset($name)) {
+            $this->attributes['name'] = $name;
+        }
         if (is_callable($options)) {
             $options($this);
         } else {
