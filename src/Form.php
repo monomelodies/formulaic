@@ -17,9 +17,6 @@ abstract class Form extends ArrayObject
 
     public function prepare()
     {
-        if ($this->hasFiles()) {
-            $this->attributes += ['enctype' => 'multipart/form-data'];
-        }
         if ($class = $this->classname()) {
             $this->attributes += compact('class');
         }
