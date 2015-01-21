@@ -8,6 +8,7 @@ abstract class Form extends ArrayObject
 {
     use Attributes;
     use Form\Tostring;
+    use Validate\Group;
 
     /*
     protected $errors = [], $action = '', $class = null, $sources = [],
@@ -110,25 +111,6 @@ abstract class Form extends ArrayObject
         }
         $this->sources[] = $source;
         return $this;
-    }
-
-    public function validate()
-    {
-        $errors = [];
-        foreach ((array)$this as $name => $field) {
-            if ($fielderrors = $field->getErrors()) {
-                $errors[$name] = $fielderrors;
-            }
-        }
-        return $errors ? $errors : null;
-    }
-
-    public function errors(array $errors = null)
-    {
-        if ($errors) {
-            $this->errors = $errors;
-        }
-        return $this->errors;
     }
 
     public function offsetGet($index)
