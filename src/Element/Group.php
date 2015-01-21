@@ -13,26 +13,37 @@ class Group extends ArrayObject
     use InputHelper;
     use QueryHelper;
 
-    private $prefix;
+    private $prefix = [];
     private $source = [];
+    private $name;
 
-    public function __construct($prefix = null, callable $callback)
+    public function __construct($name = null, callable $callback)
     {
-        $this->prefix = $prefix;
+        if ($name) {
+            $this->name = $name;
+        }
         $callback($this);
+        foreach ((array)$this as $element) {
+            $element->prefix($name);
+        }
+    }
+
+    public function prefix($prefix)
+    {
+        $this->prefix[] = $prefix;
+        foreach ((array)$this as $element) {
+            $element->prefix($prefix);
+        }
     }
 
     public function name()
     {
-        return isset($this->prefix) ? $this->prefix : null;
+        return isset($this->name) ? $this->name : null;
     }
 
     public function __toString()
     {
-        foreach ((array)$this as $element) {
-            $element->prefix($this->prefix);
-            echo "$element\n";
-        }
+        return trim(implode("\n", (array)$this));
     }
 }
 
