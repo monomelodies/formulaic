@@ -129,5 +129,16 @@ EOT
         $form->populate();
         $this->assertTrue($form->valid());
     }
+
+    public function testComplexForm()
+    {
+        $form = new ComplexForm;
+        $_POST = [];
+        $form->populate();
+        $this->assertNotTrue($form->valid());
+        $_POST = ['foo' => 'Foo', 'radios' => 1, 'checkboxes' => [2, 3]];
+        $form->populate();
+        $this->assertTrue($form->valid());
+    }
 }
 
