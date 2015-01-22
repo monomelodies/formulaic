@@ -8,9 +8,10 @@ use Formulaic\Radio;
 use Formulaic\Checkbox;
 use Formulaic\Element;
 use Formulaic\Label;
+use Formulaic\Labelable;
 use Formulaic\InputHelper;
 
-class Group extends Element\Group
+class Group extends Element\Group implements Labelable
 {
     use Attributes;
     use Validate\Group;

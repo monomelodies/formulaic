@@ -2,7 +2,7 @@
 
 namespace Formulaic;
 
-abstract class Element
+abstract class Element implements Labelable
 {
     use Element\Tostring;
     use Element\Identify;
