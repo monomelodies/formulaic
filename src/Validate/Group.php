@@ -22,7 +22,7 @@ trait Group
         $errors = $this->_errors();
         foreach ((array)$this as $element) {
             if ($error = $element->errors()) {
-                $errors = array_merge($errors, $error);
+                $errors = array_merge($errors, [$element->name() => $error]);
             }
         }
         return $errors;
