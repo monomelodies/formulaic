@@ -16,5 +16,13 @@ class Textarea extends Element
             .htmlentities($this->value, ENT_COMPAT, 'UTF-8')
             .'</textarea>';
     }
+
+    /** The maximum length of the field. */                                                                                                                      public function maxLength($length)
+    {
+        $this->attributes['maxlength'] = (int)$length;
+        return $this->addTest('maxlength', function($value) use ($length) {
+            return mb_strlen(trim($value), 'UTF-8') <= (int)$length;
+        });
+    }
 }
 
