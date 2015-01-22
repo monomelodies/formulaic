@@ -11,12 +11,7 @@ trait InputHelper
             if (!isset($field)) {
                 continue;
             }
-            if ($field instanceof Element) {
-                $field->setValue($value);
-            } elseif ($field instanceof Element\Group) {
-                $field->source($value);
-                $field->populate();
-            }
+            $field->setValue($value);
         }
     }
 
