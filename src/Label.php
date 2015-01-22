@@ -30,6 +30,16 @@ class Label extends Element
         return call_user_func_array([$this->element, $function], $arguments);
     }
 
+    public function errors()
+    {
+        return $this->element->errors();
+    }
+    
+    public function valid()
+    {
+        return $this->element->valid();
+    }
+
     public function raw()
     {
         return $this->txt;
