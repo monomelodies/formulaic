@@ -6,10 +6,6 @@ class File extends Element
 {
     protected $attributes = ['type' => 'file'];
 
-    public function setValue($value)
-    {
-    }
-
     public function isRequired()
     {
         $this->attributes['required'] = true;
@@ -20,8 +16,11 @@ class File extends Element
 
     public function __toString()
     {
-        unset($this->attributes['value']);
-        return parent::__toString();
+        $old = $this->value;
+        $this->value = null;
+        $out = parent::__toString();
+        $this->value = $old;
+        return $out;
     }
 }
 
