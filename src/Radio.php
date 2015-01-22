@@ -7,13 +7,17 @@ class Radio extends Element
     protected $attributes = ['type' => 'radio', 'name' => true];
     protected $value = 1;
 
-    public function name()
+    public function id()
     {
-        $name = parent::name();
-        if ($name === true && $this->prefix) {
-            return $this->value;
+        $name = $this->name();
+        if (is_bool($name)) {
+            return null;
         }
-        return $name !== true ? $name : null;
+        $name = preg_replace("@\[\]$@", '', $name);
+        if ($name) {
+            return $name.'-'.$this->value;
+        }
+        return $name;
     }
 
     public function check($value = null)
