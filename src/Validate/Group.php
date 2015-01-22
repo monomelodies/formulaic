@@ -6,6 +6,9 @@ trait Group
 {
     public function valid()
     {
+        if ($this->_errors()) {
+            return false;
+        }
         foreach ((array)$this as $element) {
             if (!$element->valid()) {
                 return false;
@@ -14,12 +17,25 @@ trait Group
         return true;
     }
     
-    public function errors(array $errors = null)
+    public function errors()
     {
-        $errors = [];
+        $errors = $this->_errors();
         foreach ((array)$this as $element) {
             if ($error = $element->errors()) {
                 $errors = array_merge($errors, $error);
+            }
+        }
+        return $errors;
+    }
+
+    private function _errors()
+    {
+        $errors = [];
+        if (isset($this->tests)) {
+            foreach ($this->tests as $error => $test) {
+                if (!$test((array)$this)) {
+                    $errors[] = $error;
+                }
             }
         }
         return $errors;
