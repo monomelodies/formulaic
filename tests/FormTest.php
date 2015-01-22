@@ -125,6 +125,13 @@ EOT
         $form[] = (new Formulaic\Text('foo'))->isRequired();
         $form[] = (new Formulaic\Text('bar'))->isRequired();
         $this->assertNotTrue($form->valid());
+        $this->assertEquals(
+            [
+                'foo' => ['required'],
+                'bar' => ['required'],
+            ],
+            $form->errors()
+        );
         $_POST = ['foo' => 1, 'bar' => 2];
         $form->populate();
         $this->assertTrue($form->valid());
