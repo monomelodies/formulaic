@@ -21,5 +21,18 @@ EOT
         $this->assertEquals('fizzbuz', $form['foo']['bar']['baz']->getValue());
         echo $form;
     }
+
+    public function testCheckboxGroup()
+    {
+        $form = new PostForm;
+        $form[] = (new Formulaic\Checkbox\Group(
+            'test',
+            [1 => 'foo', 2 => 'bar']
+        ))->isRequired();
+        $this->assertNotTrue($form->valid());
+        $_POST['test'] = [1 => 1];
+        $form->populate();
+        $this->assertTrue($form->valid());
+    }
 }
 
