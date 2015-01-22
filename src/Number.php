@@ -41,5 +41,21 @@ class Number extends Text
             return !fmod($value - $offset, $step);
         });
     }
+
+    /** The field must contain an integer. */
+    public function isInteger()
+    {
+        return $this->addTest('integer', function ($value) {
+            return $value === (int)$value;
+        });
+    }
+    
+    /** The field must contain a number greater than zero. */
+    public function isGreaterThanZero()
+    {
+        return $this->addTest('positive', function ($value) {
+            return (float)$value > 0;
+        });
+    }
 }
 
