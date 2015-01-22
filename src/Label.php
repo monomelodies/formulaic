@@ -9,7 +9,7 @@ class Label extends Element
     protected $label;
     protected $element;
 
-    public function __construct($label, Element $element)
+    public function __construct($label, Labelable $element)
     {
         $this->label = $label;
         $this->element = $element;
