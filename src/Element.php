@@ -12,8 +12,8 @@ abstract class Element
     use Validate\Element;
 
     private $tests = [];
-    private $prefix = [];
     private $prefixId = null;
+    protected $prefix = [];
     protected $attributes = [];
     protected $value = null;
 
