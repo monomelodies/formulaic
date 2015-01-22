@@ -52,28 +52,6 @@ abstract class Element
         $this->attributes['tabindex'] = (int)$tabindex;
     }
 
-    /**
-     * {{{ Some default tests, for use in Forms. These can all be chained,
-     *     e.g. $element->isRequired()->isInteger()->isGreaterThanZero();
-     *     The isSomething methods therefore all return $this.
-     */
-
-    /** The field must contain an integer. */
-    public function isInteger()
-    {
-        return $this->addTest('integer', function ($value) {
-            return $value === (int)$value;
-        });
-    }
-
-    /** The field must contain a number greater than zero. */
-    public function isGreaterThanZero()
-    {
-        return $this->addTest('positive', function ($value) {
-            return (float)$value > 0;
-        });
-    }
-
     /** The field must equal the value supplied. */
     public function isEqualTo($test)
     {
@@ -89,31 +67,5 @@ abstract class Element
             return $value != $test;
         });
     }
-
-    /** The field must match the pattern supplied. */
-    public function matchPattern($pattern)
-    {
-        $this->attributes['pattern'] = $pattern;
-        return $this->addTest('pattern', function ($value) use ($pattern) {
-            if (!isset($value)) {
-                return true;
-            }
-            return preg_match("@^$pattern$@", trim($value));
-        });
-    }
-
-    /** The maximum length of the field. */
-    public function maxLength($length, $size = null)
-    {
-        if (!isset($size)) {
-            $size = min(32, $length);
-        }
-        $this->attributes['maxlength'] = (int)$length;
-        $this->attributes['size'] = (int)$size;
-        return $this->addTest('maxlength', function($value) use ($length) {
-            return mb_strlen(trim($value), 'UTF-8') <= (int)$length;
-        });
-    }
-    /** }}} */
 }
 
