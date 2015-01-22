@@ -44,6 +44,11 @@ class Datetime extends Text
 
     public function setMin($min)
     {
+        if (is_int($max)) {
+            $max = date($this->format, $max);
+        } elseif ($time = strtotime($max)) {
+            $max = date($this->format, $time);
+        }
         $this->attributes['min'] = $min;
         return $this->addTest('min', function ($value) use ($min) {
             return $value >= $min;
@@ -52,6 +57,11 @@ class Datetime extends Text
 
     public function setMax($max)
     {
+        if (is_int($max)) {
+            $max = date($this->format, $max);
+        } elseif ($time = strtotime($max)) {
+            $max = date($this->format, $time);
+        }
         $this->attributes['max'] = $max;
         return $this->addTest('max', function ($value) use ($max) {
             return $value <= $max;
