@@ -44,10 +44,10 @@ class Datetime extends Text
 
     public function setMin($min)
     {
-        if (is_int($max)) {
-            $max = date($this->format, $max);
-        } elseif ($time = strtotime($max)) {
-            $max = date($this->format, $time);
+        if (is_int($min)) {
+            $min = date($this->format, $min);
+        } elseif ($time = strtotime($min)) {
+            $min = date($this->format, $time);
         }
         $this->attributes['min'] = $min;
         return $this->addTest('min', function ($value) use ($min) {
