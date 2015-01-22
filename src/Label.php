@@ -40,6 +40,11 @@ class Label extends Element
         return $this->element->valid();
     }
 
+    public function setValue($value)
+    {
+        return $this->element->setValue($value);
+    }
+
     public function getValue()
     {
         return $this->element->getValue();
