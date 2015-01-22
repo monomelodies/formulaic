@@ -34,5 +34,28 @@ EOT
         $form->populate();
         $this->assertTrue($form->valid());
     }
+
+    public function testRadioGroup()
+    {
+        $this->expectOutputString(<<<EOT
+<form method="post">
+<div>
+<label for="test-1"><input checked id="test-1" name="test" type="radio" value="1"> foo</label>
+<label for="test-2"><input id="test-2" name="test" type="radio" value="2"> bar</label>
+</div>
+</form>
+EOT
+        );
+        $form = new PostForm;
+        $form[] = (new Formulaic\Radio\Group(
+            'test',
+            [1 => 'foo', 2 => 'bar']
+        ))->isRequired();
+        $this->assertNotTrue($form->valid());
+        $_POST['test'] = [1 => 1];
+        $form->populate();
+        $this->assertTrue($form->valid());
+        echo $form;
+    }
 }
 
