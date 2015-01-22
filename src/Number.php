@@ -45,9 +45,7 @@ class Number extends Text
     /** The field must contain an integer. */
     public function isInteger()
     {
-        return $this->addTest('integer', function ($value) {
-            return is_int($value);
-        });
+        return $this->addTest('integer', 'is_int');
     }
     
     /** The field must contain a number greater than zero. */
