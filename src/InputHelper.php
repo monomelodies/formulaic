@@ -13,7 +13,7 @@ trait InputHelper
             }
             if ($field instanceof Element) {
                 $field->setValue($value);
-            } elseif ($field instanceof Element\Group && is_array($value)) {
+            } elseif ($field instanceof Element\Group) {
                 $field->source($value);
                 $field->populate();
             }
@@ -31,7 +31,11 @@ trait InputHelper
         if (!is_array($source) && is_object($source)) {
             $source = (array)$source;
         }
-        $this->source = $source + $this->source;
+        if (is_array($source)) {
+            $this->source = $source + $this->source;
+        } else {
+            $this->source = $source;
+        }
         return $this;
     }
 }
