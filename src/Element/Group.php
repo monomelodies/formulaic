@@ -42,6 +42,12 @@ class Group extends ArrayObject
         return isset($this->name) ? $this->name : null;
     }
 
+    public function setValue($value)
+    {
+        $this->source($value);
+        $this->populate();
+    }
+
     public function __toString()
     {
         return trim(implode("\n", (array)$this));

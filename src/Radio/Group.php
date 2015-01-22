@@ -73,6 +73,12 @@ class Group extends Element\Group implements Labelable
             }
         }
     }
+
+    public function setValue($value)
+    {
+        $this->source($value);
+        $this->populate();
+    }
     
     public function isRequired()
     {
