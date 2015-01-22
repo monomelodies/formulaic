@@ -8,6 +8,7 @@ use Formulaic\Attributes;
 use Formulaic\Validate;
 use Formulaic\Checkbox;
 use Formulaic\Label;
+use Formulaic\InputHelper;
 use ArrayObject;
 
 class Group extends Element\Group
@@ -16,9 +17,11 @@ class Group extends Element\Group
     use Validate\Group;
     use Validate\Test;
     use Group\Tostring;
+    use InputHelper;
     
     protected $attributes = [];
     protected $tests = [];
+    protected $source = [];
     private $prefix = [];
     private $prefixId = null;
     
@@ -45,16 +48,35 @@ class Group extends Element\Group
         }
         $this->prefix[] = $name;
     }
+    
+    public function name()
+    {
+        return $this->id();
+    }
 
     public function id()
     {
         return $this->prefix[0];
     }
 
+    public function populate()
+    {
+        parent::populate();
+        foreach ($this->source as $name => $value) {
+            $field = $this[$name];
+            if (!isset($field)) {
+                continue;
+            }
+            if ($value) {
+                $field->check();
+            }
+        }
+    }
+
     public function isRequired()
     {
         return $this->addTest('required', function ($value) {
-            foreach ((array)$this as $option) {
+            foreach ($value as $option) {
                 if ($option->checked()) {
                     return true;
                 }
