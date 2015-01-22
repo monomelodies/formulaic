@@ -118,5 +118,16 @@ EOT
         $form->populate();
         $this->assertEquals('baz', $form['foo']['bar']->getValue());
     }
+
+    public function testErrors()
+    {
+        $form = new PostForm;
+        $form[] = (new Formulaic\Text('foo'))->isRequired();
+        $form[] = (new Formulaic\Text('bar'))->isRequired();
+        $this->assertNotTrue($form->valid());
+        $_POST = ['foo' => 1, 'bar' => 2];
+        $form->populate();
+        $this->assertTrue($form->valid());
+    }
 }
 
