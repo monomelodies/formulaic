@@ -14,9 +14,11 @@ class Group extends Element\Group
 {
     use Attributes;
     use Validate\Group;
+    use Validate\Test;
     use Group\Tostring;
     
     protected $attributes = [];
+    protected $tests = [];
     private $prefix = [];
     private $prefixId = null;
     
@@ -41,11 +43,17 @@ class Group extends Element\Group
                 $this[] = new Label($txt, $option);
             }
         }
+        $this->prefix[] = $name;
+    }
+
+    public function id()
+    {
+        return $this->prefix[0];
     }
 
     public function isRequired()
     {
-        return $this->addTest(function ($value) {
+        return $this->addTest('required', function ($value) {
             foreach ((array)$this as $option) {
                 if ($option->checked()) {
                     return true;
