@@ -13,7 +13,7 @@ trait Element
     {
         $errors = [];
         foreach ($this->tests as $error => $test) {
-            if (!$test($this->value)) {
+            if (!$test($this->getValue())) {
                 $errors[] = $error;
             }
         }
