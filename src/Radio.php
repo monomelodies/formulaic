@@ -4,8 +4,17 @@ namespace Formulaic;
 
 class Radio extends Element
 {
-    protected $attributes = ['type' => 'radio'];
+    protected $attributes = ['type' => 'radio', 'name' => true];
     protected $value = 1;
+
+    public function name()
+    {
+        $name = parent::name();
+        if ($name === true && $this->prefix) {
+            return $this->value;
+        }
+        return $name !== true ? $name : null;
+    }
 
     public function check($value = null)
     {
