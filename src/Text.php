@@ -25,13 +25,9 @@ class Text extends Element
     }
     
     /** The maximum length of the field. */
-    public function maxLength($length, $size = null)
+    public function maxLength($length)
     {
-        if (!isset($size)) {
-            $size = min(32, $length);
-        }
         $this->attributes['maxlength'] = (int)$length;
-        $this->attributes['size'] = (int)$size;
         return $this->addTest('maxlength', function($value) use ($length) {
             return mb_strlen(trim($value), 'UTF-8') <= (int)$length;
         });
