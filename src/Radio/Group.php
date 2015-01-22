@@ -37,18 +37,15 @@ class Group extends Element\Group
         } else {
             foreach ($options as $value => $txt) {
                 if ($this instanceof Checkbox\Group) {
-                    $option = new Checkbox($value);
-                    $idx = count($this);
+                    $option = new Checkbox("{$name}[]");
                 } else {
-                    $option = new Radio;
-                    $idx = $value;
+                    $option = new Radio($name);
                 }
                 $option->setValue($value);
                 foreach ($this->prefix as $prefix) {
                     $option->prefix($prefix);
                 }
-                $option->prefix($name);
-                $this[$idx] = new Label($txt, $option);
+                $this[] = new Label($txt, $option);
             }
         }
         $this->prefix[] = $name;
@@ -67,17 +64,11 @@ class Group extends Element\Group
     public function populate()
     {
         parent::populate();
-        foreach ($this->source as $name => $value) {
-            $field = $this[$name];
-            if (!isset($field)) {
-                continue;
-            }
-            if ($value) {
-                $field->check();
-            }
-            // Radio groups can only have one option selected.
-            if (!($this instanceof Checkbox\Group)) {
-                break;
+        foreach ((array)$this as $element) {
+            if ($this->source == $element->getValue()) {
+                $element->check();
+            } else {
+                $element->check(false);
             }
         }
     }
