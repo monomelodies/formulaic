@@ -18,7 +18,9 @@ trait Group
     {
         $errors = [];
         foreach ((array)$this as $element) {
-            $errors = array_merge($errors, $element->errors());
+            if ($error = $element->errors()) {
+                $errors = array_merge($errors, $error);
+            }
         }
         return $errors;
     }
