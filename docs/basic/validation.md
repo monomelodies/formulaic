@@ -46,8 +46,9 @@ there is also a `Formulaic\Post`. These define `$_GET` and `$_POST` as a
 "source", respectively. For Formulaic forms, a "source" is anything that looks
 like a hash of key/value pairs.
 
-What this means in practice is that for most forms, you won't need to do
-anything for the data to load.
+Whenever you're ready to fill your form with data, call `Form::populate()`. This
+will transfer the current contents of the form source into its elements. Prior
+to population, all elements will be empty.
 
 ## Specifying default values
 
