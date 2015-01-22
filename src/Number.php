@@ -46,7 +46,7 @@ class Number extends Text
     public function isInteger()
     {
         return $this->addTest('integer', function ($value) {
-            return $value === (int)$value;
+            return is_int($value);
         });
     }
     
