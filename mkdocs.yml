@@ -15,5 +15,7 @@ pages:
 
 - [api/forms.md, API reference, Forms]
 - [api/elements.md, API reference, Elements]
+- [api/buttons.md, API reference, Buttons]
+- [api/traits.md, API reference, Traits]
 
 theme: readthedocs
