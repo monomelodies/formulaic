@@ -12,6 +12,7 @@ trait Identify
     public function prefixId($prefix)
     {
         $this->prefixId = $prefix;
+        return $this;
     }
     
     public function name()
