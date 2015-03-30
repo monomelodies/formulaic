@@ -13,7 +13,7 @@ Formulaic forms extend the `ArrayObject` class, so to add fields simply assign
 them (this could also be done "on the fly" after instantiation). Formulaic
 places no restrictions on _what_ you add to the form, but usually you'll want to
 either use or extend one of the supplied types. But in theory it could be
-anything offering a similar interface. Not that some utility methods type check
+anything offering a similar interface. Note that some utility methods type check
 the fields added, though.
 
     <?php
