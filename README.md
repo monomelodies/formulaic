@@ -66,6 +66,7 @@ Forms can contain fieldsets:
     <?php
 
     use Formulaic\Get;
+    use Formulaic\Fieldset;
 
     class MyForm extends Get
     {
