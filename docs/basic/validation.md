@@ -53,7 +53,7 @@ to population, all elements will be empty.
 ## Specifying default values
 
 Another common use-case is to set default values. Imagine a form for an
-authenticated user that allows her to change, say, their date of birth. This is
+authenticated user that allows her to change, say, her date of birth. This is
 where things normally get a bit tricky:
 
 - The default value should be the currently known date of birth;
