@@ -11,7 +11,7 @@ in a form. Formulaic offers classes for these:
     $form[] = new Checkbox\Group('name', [1 => 'Option 1', 2 => 'Option 2']);
     $form[] = new Radio\Group('name', [1 => 'Option 1', 2 => 'Option 2']);
 
-As you can see, they work similar so `Select` elements, and also support the
+As you can see, they work similar to `Select` elements, and also support the
 callback-style instantiation for fine-grained tuning:
 
     <?php
