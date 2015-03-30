@@ -7,7 +7,7 @@ they're supplied as a convenience.
 
 Generic button (`type="button"`).
 
-### `Button::__construct(string $text = null, string $name = null)
+### `Button::__construct(string $text = null, string $name = null)`
 
 A button with the defined `$text` in it, and `name="$name"`.
 
@@ -18,3 +18,4 @@ Submit button.
 ## `Button\Reset`
 
 Reset button. The resetting is purely something client side.
+
