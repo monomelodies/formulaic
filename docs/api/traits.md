@@ -10,7 +10,7 @@ self-explanatory we think.
 Render a string of `name="value"` attributes based on the current element's
 settings. Returns the rendered string.
 
-### `Attributes::attribute(string $name, mixed $value)
+### `Attributes::attribute(string $name, mixed $value)`
 
 Set the attribute `$name` to `$value`. Use `false` to unset the attribute.
 
