@@ -33,9 +33,9 @@ Adding a test is simple:
         }
     );
 
-The callback receives the element's current value and should true if the test
-passes, or else false. The name of the test is the error returned, so you should
-give it a descriptive value. Note that subsequent tests of the same name
+The callback receives the element's current value and should return true if the
+test passes, or else false. The name of the test is the error returned, so you
+should give it a descriptive value. Note that subsequent tests of the same name
 overwrite existing tests.
 
 ## Loading data
