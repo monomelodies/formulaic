@@ -65,11 +65,11 @@ Success when the value of the element is in the past.
 
 Succeeds when the value of the element is in the future.
 
-### `Datetime::setMin(mixed $min)
+### `Datetime::setMin(mixed $min)`
 
 Minimal value for the element. Accepts the same types as `Datetime::setValue`.
 
-### `Datetime::setMax(mixed $max)
+### `Datetime::setMax(mixed $max)`
 
 Maximum value for the element. Accepts the same types as `Datetime::setValue`.
 
