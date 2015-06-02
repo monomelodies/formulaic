@@ -8,12 +8,6 @@ trait Identify
     {
         array_unshift($this->prefix, $prefix);
     }
-
-    public function prefixId($prefix)
-    {
-        $this->prefixId = $prefix;
-        return $this;
-    }
     
     public function name()
     {
@@ -30,9 +24,6 @@ trait Identify
         $id = $name;
         if ($this->prefix) {
             $id = implode('-', $this->prefix)."-$id";
-        }
-        if ($this->prefixId) {
-            $id = $this->prefixId.'-'.$id;
         }
         $id = preg_replace('/[\W]+/', '-', $id);
         return trim(preg_replace('/[-]+/', '-', $id), '-');
