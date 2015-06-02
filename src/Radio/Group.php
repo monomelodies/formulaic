@@ -23,7 +23,6 @@ class Group extends Element\Group implements Labelable
     protected $tests = [];
     protected $source = [];
     private $prefix = [];
-    private $prefixId = null;
     
     public function __construct($name, $options)
     {
