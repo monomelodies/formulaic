@@ -6,7 +6,7 @@ trait Group
 {
     public function valid()
     {
-        if ($this->_errors()) {
+        if ($this->privateErrors()) {
             return false;
         }
         foreach ((array)$this as $element) {
@@ -28,7 +28,7 @@ trait Group
         return $errors;
     }
 
-    private function _errors()
+    private function privateErrors()
     {
         $errors = [];
         if (isset($this->tests)) {
