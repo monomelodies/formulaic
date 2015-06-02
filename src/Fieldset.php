@@ -11,7 +11,6 @@ class Fieldset extends Element\Group
     protected $attributes = [];
     private $legend;
     private $prefix = [];
-    private $prefixId = null;
 
     public function __construct($legend = null, callable $callback)
     {
