@@ -86,7 +86,6 @@ EOT
         );
         $form = new NamedForm;
         $form[] = new Formulaic\Text('bla');
-        $form['bla']->prefixId($form->name());
         echo $form;
     }
 
