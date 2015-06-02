@@ -17,7 +17,6 @@ class Select extends ArrayObject
     protected $value;
     protected $name;
     protected $prefix = [];
-    protected $prefixId;
 
     public function __construct($name, $options)
     {
