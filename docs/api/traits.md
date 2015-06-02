@@ -21,11 +21,6 @@ Set the attribute `$name` to `$value`. Use `false` to unset the attribute.
 Prefix the element name with a string. Useful when grouping elements, but mostly
 should get called automatically.
 
-### `Element\Identify::prefixId(string $prefix)`
-
-Prefix the element ID with a string. Useful to ensure unique IDs on a page,
-usually by prepending the form name.
-
 ### `Element\Identify::name(void)`
 
 Returns the element's name.
