@@ -14,7 +14,6 @@ class Group extends ArrayObject
     use QueryHelper;
 
     private $prefix = [];
-    private $prefixId = null;
     private $source = [];
     private $name;
 
