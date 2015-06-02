@@ -19,7 +19,7 @@ trait Group
     
     public function errors()
     {
-        $errors = $this->_errors();
+        $errors = $this->privateErrors();
         foreach ((array)$this as $element) {
             if ($error = $element->errors()) {
                 $errors = array_merge($errors, [$element->name() => $error]);
