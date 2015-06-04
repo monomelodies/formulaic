@@ -20,5 +20,22 @@ trait QueryHelper
             }
         }
     }
+
+    public function offsetSet($index, $newvalue)
+    {
+        if (!isset($index)) {
+            $index = count((array)$this);
+        }
+        if (isset($this->attributes['id'])) {
+            $newvalue->prefix($this->attributes['id']);
+        }
+        parent::offsetSet($index, $newvalue);
+    }
+    
+    public function append($newvalue)
+    {
+        $index = count((array)$this);
+        return $this->offsetSet($index, $newvalue);
+    }
 }
 
