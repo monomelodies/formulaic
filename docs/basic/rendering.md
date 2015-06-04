@@ -24,7 +24,7 @@ handy like that.
 
 ## Using templates
 
-Formulaic is _not_ a templating engine, but if you prefer to use one from your
+Formulaic is _not_ a templating engine, but if you prefer to use one for your
 `__toString` implementation, be our guest. `__toString` doesn't care either way
 as long as a string is returned. We won't describe how to plugin something like
 Smarty here, but assuming you know your templating engine of choice well it
