@@ -5,12 +5,13 @@ class GroupTest extends PHPUnit_Framework_TestCase
     public function testGroupInGroup()
     {
         $this->expectOutputString(<<<EOT
-<form method="post">
-<input id="foo-bar-baz" name="foo[bar][baz]" type="text" value="fizzbuz">
+<form id="test" method="post">
+<input id="test-foo-bar-baz" name="foo[bar][baz]" type="text" value="fizzbuz">
 </form>
 EOT
         );
         $form = new PostForm;
+        $form->attribute('id', 'test');
         $form[] = new Formulaic\Element\Group('foo', function ($group) {
             $group[] = new Formulaic\Element\Group('bar', function ($group) {
                 $group[] = new Formulaic\Text('baz');
