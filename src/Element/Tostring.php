@@ -9,12 +9,12 @@ trait Tostring
         if ($id = $this->id()) {
             $this->attributes['id'] = $id;
         }
-        if ($this->prefix
-            && isset($this->attributes['name'])
+        if (isset($this->attributes['name'])
             && !is_bool($this->attributes['name'])
         ) {
-            $parts = $this->prefix;
             $old = $this->attributes['name'];
+            $parts = $this->prefix;
+            array_shift($parts);
             $parts[] = $old;
             $start = array_shift($parts);
             $this->attributes['name'] = $start;
