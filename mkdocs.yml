@@ -3,18 +3,18 @@ site_url: http://formulaic.monomelodies.nl/docs/
 repo_url: https://github.com/monomelodies/formulaic
 
 pages:
-Introduction:
+- Introduction:
     - 'Quickstart': 'index.md'
-Basic usage:
+- Basic usage:
     - 'Create forms': 'basic/forms.md'
     - 'Validation': 'basic/validation.md'
     - 'Custom rendering': 'basic/rendering.md'
     - 'Select boxes': 'basic/select.md'
-Advanced topics:
+- Advanced topics:
     - 'Handling complex arrays': 'advances/arrays.md'
     - 'Groups of checkboxes or radio buttons': 'advanced/checkboxes.md'
     - 'Bitflag fields': 'advanced/bitflags.md'
-API reference:
+- API reference:
     - 'Forms': 'api/forms.md'
     - 'Elements': 'api/elements.md'
     - 'Buttons': 'api/buttons.md'
