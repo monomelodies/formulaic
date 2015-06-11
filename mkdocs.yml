@@ -3,19 +3,20 @@ site_url: http://formulaic.monomelodies.nl/docs/
 repo_url: https://github.com/monomelodies/formulaic
 
 pages:
-- [index.md, Introduction, Quickstart]
-
-- [basic/forms.md, "Basic usage", "Create forms"]
-- [basic/validation.md, "Basic usage", "Validation"]
-- [basic/rendering.md, "Basic usage", "Custom rendering"]
-- [basic/select.md, "Basic usage", "Select boxes"]
-
-- [advanced/arrays.md, "Advanced topics", "Handling complex arrays"]
-- [advanced/checkboxes.md, "Advanced topics", "Groups of checkboxes or radio buttons"]
-- [advanced/bitflags.md, "Advanced topics", "Bitflag fields"]
-
-- [api/forms.md, "API reference", Forms]
-- [api/elements.md, "API reference", Elements]
-- [api/buttons.md, "API reference", Buttons]
-- [api/traits.md, "API reference", Traits]
+Introduction:
+    - 'Quickstart': 'index.md'
+Basic usage:
+    - 'Create forms': 'basic/forms.md'
+    - 'Validation': 'basic/validation.md'
+    - 'Custom rendering': 'basic/rendering.md'
+    - 'Select boxes': 'basic/select.md'
+Advanced topics:
+    - 'Handling complex arrays': 'advances/arrays.md'
+    - 'Groups of checkboxes or radio buttons': 'advanced/checkboxes.md'
+    - 'Bitflag fields': 'advanced/bitflags.md'
+API reference:
+    - 'Forms': 'api/forms.md'
+    - 'Elements': 'api/elements.md'
+    - 'Buttons': 'api/buttons.md'
+    - 'Traits': 'api/traits.md'
 
