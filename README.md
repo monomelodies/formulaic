@@ -1,4 +1,4 @@
-# formulaic
+# Formulaic
 Object-oriented form utilities for PHP5.4+
 
 HTML forms suck. Well, no, they're superduper handy, but writing them and

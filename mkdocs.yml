@@ -1,7 +1,10 @@
 site_name: Formulaic
+site_url: http://formulaic.monomelodies.nl/docs/
+repo_url: https://github.com/monomelodies/formulaic
 
 pages:
-- Home: 'index.md'
+- Introduction:
+    - 'Quickstart': 'index.md'
 - Basic usage:
     - 'Create forms': 'basic/forms.md'
     - 'Validation': 'basic/validation.md'
@@ -17,4 +20,3 @@ pages:
     - 'Buttons': 'api/buttons.md'
     - 'Traits': 'api/traits.md'
 
-theme: readthedocs
