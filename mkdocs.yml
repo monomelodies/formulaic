@@ -1,4 +1,6 @@
 site_name: Formulaic
+site_url: http://formulaic.monomelodies.nl/docs/
+repo_url: https://github.com/monomelodies/formulaic
 
 pages:
 - [index.md, Introduction, Quickstart]
