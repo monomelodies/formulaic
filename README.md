@@ -90,4 +90,6 @@ And in your output:
         <?=$form['submit']?>
     </form>
 
-See the full documentation for all other options: http://formulaic.readthedocs.org/en/latest/
+See the [full documentation](http://formulaic.monomelodies.nl/docs/) for all other
+options.
+
