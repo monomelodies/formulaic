@@ -17,10 +17,7 @@ class Button extends Element
 
     public function __toString()
     {
-        return sprintf(
-            '<button'.$this->attributes().'>%s</button>',
-            $this->text
-        );
+        return '<button'.$this->attributes().'>'.$this->text.'</button>';
     }
 }
 
