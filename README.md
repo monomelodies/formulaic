@@ -12,13 +12,15 @@ Define a form with some fields and other requirements:
     <?php
 
     use Formulaic\Get;
+    use Formulaic\Search;
+    use Formulaic\Button\Submit;
 
     class MyForm extends Get
     {
         public function __construct()
         {
             $this[] = (new Search('q'))->isRequired();
-            $this[] = new Submit('submit', 'Go!');
+            $this[] = new Submit('Go!', 'submit');
         }
     }
 
@@ -67,6 +69,8 @@ Forms can contain fieldsets:
 
     use Formulaic\Get;
     use Formulaic\Fieldset;
+    use Formulaic\Search;
+    use Formulaic\Button\Submit;
 
     class MyForm extends Get
     {
