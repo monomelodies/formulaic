@@ -16,19 +16,17 @@ class Number extends Text
     public function setMin($min)
     {
         $this->attributes['min'] = $min;
-        $this->addTest('min', function ($value) use ($min) {
+        return $this->addTest('min', function ($value) use ($min) {
             return $value >= $min;
         });
-        return $this;
     }
 
     public function setMax($max)
     {
         $this->attributes['max'] = $max;
-        $this->addTest('max', function ($value) use ($max) {
+        return $this->addTest('max', function ($value) use ($max) {
             return $value <= $max;
         });
-        return $this;
     }
 
     public function setStep($step)
@@ -37,7 +35,7 @@ class Number extends Text
         $offset = isset($this->attributes['min']) ?
             $this->attributes['min'] :
             0;
-        $this->addTest('step', function ($value) use ($step, $offset) {
+        return $this->addTest('step', function ($value) use ($step, $offset) {
             return !fmod($value - $offset, $step);
         });
     }
