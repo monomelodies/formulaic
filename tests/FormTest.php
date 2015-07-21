@@ -4,7 +4,7 @@ class FormTest extends PHPUnit_Framework_TestCase
 {
     public function testEmptyForm()
     {
-        $this->expectOutputString('<form method="get"></form>');
+        $this->expectOutputString('<form action="" method="get"></form>');
         $form = new Form;
         echo $form;
     }
@@ -12,7 +12,7 @@ class FormTest extends PHPUnit_Framework_TestCase
     public function testFormWithInputAndButton()
     {
         $this->expectOutputString(<<<EOT
-<form method="get">
+<form action="" method="get">
 <div><input type="text"></div>
 <div><button type="submit"></button></div>
 </form>
@@ -27,7 +27,7 @@ EOT
     public function testFormWithFieldset()
     {
         $this->expectOutputString(<<<EOT
-<form method="get">
+<form action="" method="get">
 <fieldset>
 <legend>Hello world!</legend>
 <div><input type="text"></div>
@@ -56,7 +56,7 @@ EOT
     public function testPostForm()
     {
         $this->expectOutputString(<<<EOT
-<form method="post"></form>
+<form action="" method="post"></form>
 EOT
         );
         $form = new PostForm;
@@ -66,7 +66,7 @@ EOT
     public function testPostFormWithFile()
     {
         $this->expectOutputString(<<<EOT
-<form enctype="multipart/form-data" method="post">
+<form action="" enctype="multipart/form-data" method="post">
 <div><input type="file"></div>
 </form>
 EOT
@@ -79,7 +79,7 @@ EOT
     public function testNamedFormInherits()
     {
         $this->expectOutputString(<<<EOT
-<form id="test" method="get" name="test">
+<form action="" id="test" method="get" name="test">
 <div><input id="test-bla" name="bla" type="text"></div>
 </form>
 EOT
