@@ -12,7 +12,7 @@ abstract class Form extends ArrayObject
     use InputHelper;
     use QueryHelper;
 
-    protected $attributes = ['action' => ''];
+    protected $attributes = [];
     private $source = [];
 
     public function name()
