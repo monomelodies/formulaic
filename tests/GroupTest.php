@@ -5,7 +5,7 @@ class GroupTest extends PHPUnit_Framework_TestCase
     public function testGroupInGroup()
     {
         $this->expectOutputString(<<<EOT
-<form id="test" method="post">
+<form action="" id="test" method="post">
 <input id="test-foo-bar-baz" name="foo[bar][baz]" type="text" value="fizzbuz">
 </form>
 EOT
@@ -26,7 +26,7 @@ EOT
     public function testCheckboxGroup()
     {
         $this->expectOutputString(<<<EOT
-<form method="post">
+<form action="" method="post">
 <div>
 <label for="test-1"><input checked id="test-1" name="test[]" type="checkbox" value="1"> foo</label>
 <label for="test-2"><input id="test-2" name="test[]" type="checkbox" value="2"> bar</label>
@@ -49,7 +49,7 @@ EOT
     public function testRadioGroup()
     {
         $this->expectOutputString(<<<EOT
-<form method="post">
+<form action="" method="post">
 <div>
 <label for="test-1"><input checked id="test-1" name="test" type="radio" value="1"> foo</label>
 <label for="test-2"><input id="test-2" name="test" type="radio" value="2"> bar</label>
