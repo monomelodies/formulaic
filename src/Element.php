@@ -24,13 +24,6 @@ abstract class Element implements Labelable
         $this->attributes['value'] =& $this->value;
     }
 
-    public function name()
-    {
-        return isset($this->attributes['name']) ?
-            $this->attributes['name'] :
-            null;
-    }
-
     public function setValue($value)
     {
         $this->value = $value;
