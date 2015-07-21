@@ -40,5 +40,22 @@ class Select extends ArrayObject
             return false;
         });
     }
+
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    public function setValue($value)
+    {
+        $this->value = $value;
+        foreach ((array)$this as $option) {
+            if ($option->getValue() == $value) {
+                $option->selected();
+            } else {
+                $option->unselected();
+            }
+        }
+    }
 }
 
