@@ -9,9 +9,9 @@ pages:
     - 'Create forms': 'basic/forms.md'
     - 'Validation': 'basic/validation.md'
     - 'Custom rendering': 'basic/rendering.md'
-    - 'Select boxes': 'basic/select.md'
 - Advanced topics:
     - 'Handling complex arrays': 'advanced/arrays.md'
+    - 'Select boxes': 'advanced/select.md'
     - 'Groups of checkboxes or radio buttons': 'advanced/checkboxes.md'
     - 'Bitflag fields': 'advanced/bitflags.md'
 - API reference:
