@@ -68,5 +68,22 @@ EOT
         $this->assertTrue($form->valid());
         echo $form;
     }
+
+    public function testBitflag()
+    {
+        $bit = new Formulaic\Bitflag('superhero', [
+            1 => 'Batman',
+            2 => 'Superman',
+            4 => 'Spiderman',
+            8 => 'The Hulk',
+            16 => 'Daredevil',
+        ]);
+        $bit->setValue(7);
+        $this->assertTrue($bit[0]->checked());
+        $this->assertTrue($bit[1]->checked());
+        $this->assertTrue($bit[2]->checked());
+        $this->assertTrue(!$bit[3]->checked());
+        $this->assertTrue(!$bit[4]->checked());
+    }
 }
 
