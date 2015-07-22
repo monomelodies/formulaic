@@ -43,7 +43,12 @@ class Group extends ArrayObject
 
     public function setValue($value)
     {
-        $this->source($value);
+        if (is_object($value) && $value instanceof ArrayObject) {
+            $value = (array)$value;
+        }
+        if (is_array($value)) {
+            $this->source($value);
+        }
         $this->populate();
     }
 
