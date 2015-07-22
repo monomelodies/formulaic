@@ -23,10 +23,13 @@ trait InputHelper
         if (is_callable($source)) {
             $source = $source();
         }
-        if (!is_array($source) && is_object($source)) {
+        if (is_object($source)) {
             $source = (array)$source;
         }
         if (is_array($source)) {
+            if (is_scalar($this->source)) {
+                $this->source = [$this->source];
+            }
             $this->source = $source + $this->source;
         } else {
             $this->source = $source;
