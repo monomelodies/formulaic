@@ -6,7 +6,9 @@ trait QueryHelper
 {
     public function offsetGet($index)
     {
+        $index = (string)$index;
         foreach ((array)$this as $i => $element) {
+            $i = (string)$i;
             if ($element instanceof Label
                 && ($element->getElement()->name() == $index
                     || $i == $index
