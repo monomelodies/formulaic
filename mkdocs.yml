@@ -7,7 +7,7 @@ pages:
     - 'Quickstart': 'index.md'
 - Basic usage:
     - 'Create forms': 'basic/forms.md'
-    - 'Validation': 'basic/validation.md'
+    - 'Input and validation': 'basic/validation.md'
     - 'Custom rendering': 'basic/rendering.md'
 - Advanced topics:
     - 'Handling complex arrays': 'advanced/arrays.md'
