@@ -11,11 +11,12 @@ class Group extends Radio\Group
     public function populate()
     {
         parent::populate();
-        if (!is_array($this->source)) {
+        $source = end($this->source);
+        if (!$source) {
             return;
         }
         foreach ((array)$this as $element) {
-            if (in_array($element->getValue(), $this->source)) {
+            if (in_array($element->getValue(), $source->{$this->name()})) {
                 $element->check();
             } else {
                 $element->check(false);
