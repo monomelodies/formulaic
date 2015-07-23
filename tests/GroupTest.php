@@ -82,8 +82,8 @@ EOT
         $this->assertTrue($bit[0]->checked());
         $this->assertTrue($bit[1]->checked());
         $this->assertTrue($bit[2]->checked());
-        $this->assertTrue(!$bit[3]->checked());
-        $this->assertTrue(!$bit[4]->checked());
+        $this->assertNotTrue($bit[3]->checked());
+        $this->assertNotTrue($bit[4]->checked());
     }
 }
 
