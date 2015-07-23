@@ -29,7 +29,7 @@ abstract class Element implements Labelable
         $this->value = $value;
     }
 
-    public function getValue()
+    public function & getValue()
     {
         return $this->value;
     }
