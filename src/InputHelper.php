@@ -16,7 +16,7 @@ trait InputHelper
                 }
                 $field->setValue($value);
                 if (method_exists($field, 'getValue')) {
-                    $source->$name = &$field->getValue();
+                    $source->$name =& $field->getValue();
                 }
             }
         }
@@ -33,7 +33,7 @@ trait InputHelper
         if (is_scalar($source)) {
             throw new DomainException(
                 <<<EOT
-InputHelper::source must a called with an object, a callable returning an array
+InputHelper::source must be called with an object, a callable returning an array
 or an object, or an array that can be casted to StdClass. The resulting object
 must contain publicly accessible key/value pairs of data.
 EOT
