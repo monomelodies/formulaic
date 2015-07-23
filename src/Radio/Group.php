@@ -64,8 +64,12 @@ class Group extends Element\Group implements Labelable
     public function populate()
     {
         parent::populate();
+        $source = end($this->source);
+        if (!$source) {
+            return;
+        }
         foreach ((array)$this as $element) {
-            if ($this->source == $element->getValue()) {
+            if ($source->{$this->name()} == $element->getValue()) {
                 $element->check();
             } else {
                 $element->check(false);
@@ -75,8 +79,18 @@ class Group extends Element\Group implements Labelable
 
     public function setValue($value)
     {
-        $this->source($value);
+        $this->source([$this->name() => $value]);
         $this->populate();
+    }
+
+    public function getValue()
+    {
+        foreach ((array)$this as $element) {
+            if ($element->checked()) {
+                return $element->getValue();
+            }
+        }
+        return null;
     }
     
     public function isRequired()
