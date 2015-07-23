@@ -24,13 +24,11 @@ class Bitflag extends Checkbox\Group
 
     public function setValue($value)
     {
-        for ($i = 1; $i < $value; $i *= 2) {
-            foreach ((array)$this as $element) {
-                if ($element->getValue() & $value == $value) {
-                    $element->check();
-                } else {
-                    $element->check(false);
-                }
+        foreach ((array)$this as $element) {
+            if ($value & $element->getValue()) {
+                $element->check();
+            } else {
+                $element->check(false);
             }
         }
     }
