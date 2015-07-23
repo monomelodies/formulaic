@@ -135,6 +135,8 @@ EOT
         $_POST = ['foo' => 1, 'bar' => 2];
         $form->populate();
         $this->assertTrue($form->valid());
+        $this->assertEquals(1, $form['foo']->getValue());
+        $this->assertEquals(2, $form['bar']->getValue());
     }
 
     public function testComplexForm()
