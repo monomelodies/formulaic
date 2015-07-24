@@ -34,6 +34,14 @@ abstract class Element implements Labelable
         return $this->value;
     }
 
+    /**
+     * This is here to avoid the need to check instanceof Label.
+     */
+    public function getElement()
+    {
+        return $this;
+    }
+
     public function disabled($set = true)
     {
         $this->attributes['disabled'] = $set;
