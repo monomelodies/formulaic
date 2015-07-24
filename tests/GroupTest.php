@@ -18,7 +18,6 @@ EOT
             });
         });
         $_POST['foo'] = ['bar' => ['baz' => 'fizzbuz']];
-        $form->populate();
         $this->assertEquals('fizzbuz', $form['foo']['bar']['baz']->getValue());
         echo $form;
     }
@@ -41,7 +40,6 @@ EOT
         ))->isRequired();
         $this->assertNotTrue($form->valid());
         $_POST['test'] = [1];
-        $form->populate();
         $this->assertTrue($form->valid());
         echo $form;
     }
@@ -64,7 +62,6 @@ EOT
         ))->isRequired();
         $this->assertNotTrue($form->valid());
         $_POST['test'] = 1;
-        $form->populate();
         $this->assertTrue($form->valid());
         echo $form;
     }
