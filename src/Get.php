@@ -10,10 +10,14 @@ abstract class Get extends Form
         return parent::__toString();
     }
 
-    public function populate()
+    public function offsetGet($index)
     {
-        $this->source($_GET);
-        parent::populate();
+        if ($field = parent::offsetGet($index)
+            and array_key_exists($index, $_GET)
+        ) {
+            $field->setValue($_GET[$index], $index);
+        }
+        return $field;
     }
 }
 
