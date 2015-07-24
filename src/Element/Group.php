@@ -14,8 +14,8 @@ class Group extends ArrayObject
     use QueryHelper;
 
     private $prefix = [];
-    private $source = [];
     private $name;
+    private $value = [];
 
     public function __construct($name = null, callable $callback)
     {
@@ -43,13 +43,20 @@ class Group extends ArrayObject
 
     public function setValue($value)
     {
-        if (is_object($value) && $value instanceof ArrayObject) {
-            $value = (array)$value;
+        foreach ($value as $name => $val) {
+            if ($field = $this[$name]) {
+                $field->setValue($val);
+            }
         }
-        if (is_array($value)) {
-            $this->source($value);
+    }
+
+    public function & getValue()
+    {
+        $this->value = [];
+        foreach ((array)$this as $field) {
+            $this->value[] = $field->getValue();
         }
-        $this->populate();
+        return $this->value;
     }
 
     public function __toString()
