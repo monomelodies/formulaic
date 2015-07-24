@@ -6,22 +6,6 @@ use DomainException;
 
 trait InputHelper
 {
-    public function populate()
-    {
-        foreach ($this->source as &$source) {
-            foreach ($source as $name => &$value) {
-                $field = $this[$name];
-                if (!isset($field)) {
-                    continue;
-                }
-                $field->setValue($value);
-                if (method_exists($field, 'getValue')) {
-                    $source->$name =& $field->getValue();
-                }
-            }
-        }
-    }
-
     public function source($source)
     {
         if (is_null($source)) {
@@ -42,7 +26,11 @@ EOT
         if (is_array($source)) {
             $source = (object)$source;
         }
-        $this->source[] = $source;
+        foreach ($source as $name => $value) {
+            if ($field = $this[$name]) {
+                $source->$name =& $field->getValue($name);
+            }
+        }   
         return $this;
     }
 }
