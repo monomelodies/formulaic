@@ -23,6 +23,7 @@ trait QueryHelper
                 return $element[$index];
             }
         }
+        return null;
     }
 
     public function offsetSet($index, $newvalue)
