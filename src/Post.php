@@ -7,10 +7,7 @@ abstract class Post extends Form
     public function __toString()
     {
         foreach ((array)$this as $field) {
-            if ($field instanceof File
-                or $field instanceof Label
-                    && $field->getElement() instanceof File
-            ) {
+            if ($field->getElement() instanceof File) {
                 $this->attributes['enctype'] = 'multipart/form-data';
             }
         }
@@ -18,21 +15,18 @@ abstract class Post extends Form
         return parent::__toString();
     }
 
-    public function offsetGet($index)
+    public function offsetSet($index, $item)
     {
-        if ($field = parent::offsetGet($index)) {
-            if ($field instanceof File
-                or ($field instanceof Label
-                    && $field->getElement() instanceof File
-                )
-                && array_key_exists($index, $_FILES)
-            ) {
-                $field->setValue($_FILES[$index], $index);
-            } elseif (array_key_exists($index, $_POST)) {
-                $field->setValue($_POST[$index], $index);
+        $name = $item->name();
+        if ($item->getElement() instanceof File) {
+            $this->attributes['enctype'] = 'multipart/form-data';
+            if (array_key_exists($name, $_FILES)) {
+                $item->setValue($_FILES[$name]);
             }
+        } elseif (array_key_exists($name, $_POST)) {
+            $item->setValue($_POST[$name]);
         }
-        return $field;
+        return parent::offsetSet($index, $item);
     }
 }
 
