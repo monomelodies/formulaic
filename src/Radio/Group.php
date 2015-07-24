@@ -61,26 +61,16 @@ class Group extends Element\Group implements Labelable
         return $this->prefix[0];
     }
     
-    public function populate()
+    public function setValue($value)
     {
-        parent::populate();
-        $source = end($this->source);
-        if (!$source) {
-            return;
-        }
+        $this->source([$this->name() => $value]);
         foreach ((array)$this as $element) {
-            if ($source->{$this->name()} == $element->getValue()) {
+            if ($value == $element->getValue()) {
                 $element->check();
             } else {
                 $element->check(false);
             }
         }
-    }
-
-    public function setValue($value)
-    {
-        $this->source([$this->name() => $value]);
-        $this->populate();
     }
 
     public function getValue()
