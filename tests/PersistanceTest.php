@@ -9,7 +9,6 @@ class PersistanceTest extends PHPUnit_Framework_TestCase
         $user = new TestUserModel;
         $this->assertEquals('Marijn', $user->name);
         $form->source($user);
-        $form->populate();
         $this->assertEquals('Linus', $user->name);
     }
 }
