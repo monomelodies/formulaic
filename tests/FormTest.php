@@ -95,7 +95,6 @@ EOT
         $form = new Form;
         $form[] = new Formulaic\Search('q');
         $_GET['q'] = 'query';
-        $form->populate();
         $this->assertEquals('query', $form['q']->getValue());
     }
 
@@ -104,7 +103,6 @@ EOT
         $form = new PostForm;
         $form[] = new Formulaic\Search('q');
         $_POST['q'] = 'query';
-        $form->populate();
         $this->assertEquals('query', $form['q']->getValue());
     }
 
@@ -115,13 +113,13 @@ EOT
             $group[] = new Formulaic\Text('bar');
         });
         $_POST['foo'] = ['bar' => 'baz'];
-        $form->populate();
         $this->assertEquals('baz', $form['foo']['bar']->getValue());
     }
 
     public function testErrors()
     {
         $form = new PostForm;
+        $_POST = [];
         $form[] = (new Formulaic\Text('foo'))->isRequired();
         $form[] = (new Formulaic\Text('bar'))->isRequired();
         $this->assertNotTrue($form->valid());
@@ -133,7 +131,6 @@ EOT
             $form->errors()
         );
         $_POST = ['foo' => 1, 'bar' => 2];
-        $form->populate();
         $this->assertTrue($form->valid());
         $this->assertEquals(1, $form['foo']->getValue());
         $this->assertEquals(2, $form['bar']->getValue());
@@ -143,10 +140,8 @@ EOT
     {
         $form = new ComplexForm;
         $_POST = [];
-        $form->populate();
         $this->assertNotTrue($form->valid());
         $_POST = ['foo' => 'Foo', 'radios' => 1, 'checkboxes' => [2, 3]];
-        $form->populate();
         $this->assertTrue($form->valid());
     }
 }
