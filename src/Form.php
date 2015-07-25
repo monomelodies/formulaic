@@ -72,9 +72,7 @@ EOT
         }
         foreach ($model as $name => $value) {
             if ($field = $this[$name] and $element = $field->getElement()) {
-                if (!$element->valueSuppliedByUser()) {
-                    $element->setValue($value);
-                }
+                $element->setDefaultValue($value);
                 $model->$name =& $field->getValue();
             }
         }
