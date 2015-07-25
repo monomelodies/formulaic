@@ -10,6 +10,8 @@ class PersistanceTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Marijn', $user->name);
         $form->bind($user);
         $this->assertEquals('Linus', $user->name);
+        $form['name']->getElement()->setValue('Chuck Norris');
+        $this->assertEquals('Chuck Norris', $user->name);
     }
 }
 
