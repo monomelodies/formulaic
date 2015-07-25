@@ -10,6 +10,7 @@ class GroupTest extends PHPUnit_Framework_TestCase
 </form>
 EOT
         );
+        $_POST['foo'] = ['bar' => ['baz' => 'fizzbuz']];
         $form = new PostForm;
         $form->attribute('id', 'test');
         $form[] = new Formulaic\Element\Group('foo', function ($group) {
@@ -17,7 +18,6 @@ EOT
                 $group[] = new Formulaic\Text('baz');
             });
         });
-        $_POST['foo'] = ['bar' => ['baz' => 'fizzbuz']];
         $this->assertEquals('fizzbuz', $form['foo']['bar']['baz']->getValue());
         echo $form;
     }
@@ -40,6 +40,11 @@ EOT
         ))->isRequired();
         $this->assertNotTrue($form->valid());
         $_POST['test'] = [1];
+        $form = new PostForm;
+        $form[] = (new Formulaic\Checkbox\Group(
+            'test',
+            [1 => 'foo', 2 => 'bar']
+        ))->isRequired();
         $this->assertTrue($form->valid());
         echo $form;
     }
@@ -62,6 +67,11 @@ EOT
         ))->isRequired();
         $this->assertNotTrue($form->valid());
         $_POST['test'] = 1;
+        $form = new PostForm;
+        $form[] = (new Formulaic\Radio\Group(
+            'test',
+            [1 => 'foo', 2 => 'bar']
+        ))->isRequired();
         $this->assertTrue($form->valid());
         echo $form;
     }
@@ -76,11 +86,11 @@ EOT
             16 => 'Daredevil',
         ]);
         $bit->setValue(7);
-        $this->assertTrue($bit[0]->checked());
-        $this->assertTrue($bit[1]->checked());
-        $this->assertTrue($bit[2]->checked());
-        $this->assertNotTrue($bit[3]->checked());
-        $this->assertNotTrue($bit[4]->checked());
+        $this->assertTrue($bit[0]->getElement()->checked());
+        $this->assertTrue($bit[1]->getElement()->checked());
+        $this->assertTrue($bit[2]->getElement()->checked());
+        $this->assertNotTrue($bit[3]->getElement()->checked());
+        $this->assertNotTrue($bit[4]->getElement()->checked());
     }
 }
 
