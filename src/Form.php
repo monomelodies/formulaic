@@ -73,7 +73,7 @@ EOT
         foreach ($model as $name => $value) {
             if ($field = $this[$name] and $element = $field->getElement()) {
                 $element->setDefaultValue($value);
-                $model->$name =& $field->getValue();
+                $model->$name =& $element->getValue();
             }
         }
         return $this;
