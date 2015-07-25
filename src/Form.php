@@ -43,25 +43,28 @@ abstract class Form extends ArrayObject
         return $copy;
     }
 
+    /**
+     * Binds a $model object to this form.
+     *
+     * $model can be any object. All its public properties are looped over, and
+     * the values are bound to those of the form if they exist on the form.
+     * For form elements that have not been initialized from user input, the
+     * value is set to the current model's value too. This allows you to provide
+     * defaults a user can edit (e.g. update the property "name" on a User
+     * model).
+     *
+     * @param object The model to bind.
+     * @return Form $this
+     */
     public function bind($model)
     {
-        if (is_null($model)) {
-            return $this;
-        }
-        if (is_callable($model)) {
-            $model = $model();
-        }
-        if (is_scalar($model)) {
+        if (!is_object($model)) {
             throw new DomainException(
                 <<<EOT
-Form::bind must be called with an object, a callable returning an array
-or an object, or an array that can be casted to StdClass. The resulting object
-must contain publicly accessible key/value pairs of data.
+Form::bind must be called with an object containing publicly accessible
+key/value pairs of data.
 EOT
             );
-        }
-        if (is_array($model)) {
-            $model = (object)$model;
         }
         foreach ($model as $name => $value) {
             if ($field = $this[$name] and $element = $field->getElement()) {
