@@ -12,8 +12,9 @@ abstract class Get extends Form
 
     public function offsetSet($index, $item)
     {
-        if (array_key_exists($item->name(), $_GET)) {
-            $field->setValue($_GET[$item->name()]);
+        $name = $item->name();
+        if (array_key_exists($name, $_GET)) {
+            $item->setValue($_GET[$name]);
         }
         return parent::offsetSet($index, $item);
     }
