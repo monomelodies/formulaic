@@ -3,15 +3,18 @@
 When dealing with form data, you'll often encounter complex arrays in, let's
 say, a `$_POST`. Consider the following real-world example:
 
-    <form method="post">
-        <input type="checkbox" name="interests[movies][]" value="action"> Action
-        <input type="checkbox" name="interests[movies][]" value="comedy"> Comedy
-        <input type="checkbox" name="interests[movies][]" value="romantic"> Romantic
+```html
+<form method="post">
+    <input type="checkbox" name="interests[movies][]" value="action"> Action
+    <input type="checkbox" name="interests[movies][]" value="comedy"> Comedy
+    <input type="checkbox" name="interests[movies][]" value="romantic"> Romantic
 
-        <input type="checkbox" name="interests[music][]" value="rock"> Rock
-        <input type="checkbox" name="interests[music][]" value="pop"> Pop
-        <input type="checkbox" name="interests[music][]" value="hiphop"> Hiphop
-    </form>
+    <input type="checkbox" name="interests[music][]" value="rock"> Rock
+    <input type="checkbox" name="interests[music][]" value="pop"> Pop
+    <input type="checkbox" name="interests[music][]" value="hiphop"> Hiphop
+</form>
+
+```
 
 In our form, we want to logically group the interests in "movies" and "music",
 since they're all types of interest.
@@ -33,36 +36,39 @@ Instead, Formulaic supplies a special `Group` class you can use for this.
 
 Onwards, then:
 
-    <?php
+```
+<?php
 
-    use Formulaic\Post;
-    use Formulaic\Element;
-    use Formulaic\Checkbox;
+use Formulaic\Post;
+use Formulaic\Element;
+use Formulaic\Checkbox;
 
-    class MyForm extends Post
+class MyForm extends Post
+{
+    public function __construct()
     {
-        public function __construct()
-        {
-            $this[] = new Element\Group('interests', function($group) {
-                $group[] = new Checkbox\Group(
-                    'movies',
-                    [
-                        'action' => 'Action',
-                        'comedy' => 'Comedy',
-                        'romantic' => 'Romantic',
-                    ]
-                );
-                $group[] = new Checkbox\Group(
-                    'music',
-                    [
-                        'rock' => 'Rock',
-                        'pop' => 'Pop',
-                        'hiphop' => 'Hiphop',
-                    ]
-                );
-            });
-        }
+        $this[] = new Element\Group('interests', function($group) {
+            $group[] = new Checkbox\Group(
+                'movies',
+                [
+                    'action' => 'Action',
+                    'comedy' => 'Comedy',
+                    'romantic' => 'Romantic',
+                ]
+            );
+            $group[] = new Checkbox\Group(
+                'music',
+                [
+                    'rock' => 'Rock',
+                    'pop' => 'Pop',
+                    'hiphop' => 'Hiphop',
+                ]
+            );
+        });
     }
+}
+
+```
 
 Now, when Formulaic sees `$_POST['interests']['movies'][] = 'action'`, it
 knows which group to map it to.
@@ -76,7 +82,10 @@ first-found, first-returned manner.
 
 Hence:
 
-    <?php
+```
+<?php
 
-    $form['interestes']['movies'] === $form['movies']; // true.
+$form['interestes']['movies'] === $form['movies']; // true.
+
+```
 
