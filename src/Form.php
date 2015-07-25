@@ -22,22 +22,56 @@ abstract class Form extends ArrayObject
             null;
     }
 
+    /**
+     * Returns the current form as an array of key/value pairs with data.
+     *
+     * @return array
+     */
     public function getArrayCopy()
     {
         $copy = [];
         foreach ((array)$this as $key => $value) {
-            if ($value instanceof Label) {
-                $value = $value->getElement();
-            }
-            if (is_object($value)
-                and method_exists($value, 'name')
-                and $name = $value->name()
-                and !($value instanceof Button)
+            $element = $value->getElement();
+            if (is_object($element)
+                and method_exists($element, 'name')
+                and $name = $element->name()
+                and !($element instanceof Button)
             ) {
-                $copy[$name] = $value->getValue();
+                $copy[$name] = $element->getValue();
             }
         }
         return $copy;
+    }
+
+    public function bind($model)
+    {
+        if (is_null($model)) {
+            return $this;
+        }
+        if (is_callable($model)) {
+            $model = $model();
+        }
+        if (is_scalar($model)) {
+            throw new DomainException(
+                <<<EOT
+Form::bind must be called with an object, a callable returning an array
+or an object, or an array that can be casted to StdClass. The resulting object
+must contain publicly accessible key/value pairs of data.
+EOT
+            );
+        }
+        if (is_array($model)) {
+            $model = (object)$model;
+        }
+        foreach ($model as $name => $value) {
+            if ($field = $this[$name] and $element = $field->getElement()) {
+                if (!$element->valueSuppliedByUser()) {
+                    $element->setValue($value);
+                }
+                $model->$name =& $field->getValue();
+            }
+        }
+        return $this;
     }
 }
 
