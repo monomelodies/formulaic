@@ -43,6 +43,9 @@ class Group extends ArrayObject
 
     public function setValue($value)
     {
+        if (is_scalar($value)) {
+            return;
+        }
         foreach ($value as $name => $val) {
             if ($field = $this[$name]) {
                 $field->setValue($val);
@@ -57,6 +60,14 @@ class Group extends ArrayObject
             $this->value[] = $field->getValue();
         }
         return $this->value;
+    }
+
+    /**
+     * Convenience method to keep our interface consistent.
+     */
+    public function getElement()
+    {
+        return $this;
     }
 
     public function __toString()
