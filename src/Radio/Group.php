@@ -63,21 +63,20 @@ class Group extends Element\Group implements Labelable
     
     public function setValue($value)
     {
-        $this->source([$this->name() => $value]);
         foreach ((array)$this as $element) {
-            if ($value == $element->getValue()) {
-                $element->check();
+            if ($value == $element->getElement()->getValue()) {
+                $element->getElement()->check();
             } else {
-                $element->check(false);
+                $element->getElement()->check(false);
             }
         }
     }
 
-    public function getValue()
+    public function & getValue()
     {
         foreach ((array)$this as $element) {
-            if ($element->checked()) {
-                return $element->getValue();
+            if ($element->getElement()->checked()) {
+                return $element->getElement()->getValue();
             }
         }
         return null;
@@ -87,7 +86,7 @@ class Group extends Element\Group implements Labelable
     {
         return $this->addTest('required', function ($value) {
             foreach ($value as $option) {
-                if ($option->checked()) {
+                if ($option->getElement()->checked()) {
                     return true;
                 }
             }
