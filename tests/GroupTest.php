@@ -86,7 +86,7 @@ EOT
             16 => 'Daredevil',
         ]);
         $bit->setValue(7);
-        $this->assertTrue($bit[0]->getElement()->checked());
+        $this->assertTrue($bit['Batman']->getElement()->checked());
         $this->assertTrue($bit[1]->getElement()->checked());
         $this->assertTrue($bit[2]->getElement()->checked());
         $this->assertNotTrue($bit[3]->getElement()->checked());
