@@ -92,34 +92,34 @@ EOT
 
     public function testPopulateGet()
     {
+        $_GET['q'] = 'query';
         $form = new Form;
         $form[] = new Formulaic\Search('q');
-        $_GET['q'] = 'query';
         $this->assertEquals('query', $form['q']->getValue());
     }
 
     public function testPopulatePost()
     {
+        $_POST['q'] = 'query';
         $form = new PostForm;
         $form[] = new Formulaic\Search('q');
-        $_POST['q'] = 'query';
         $this->assertEquals('query', $form['q']->getValue());
     }
 
     public function testPopulateGrouped()
     {
+        $_POST['foo'] = ['bar' => 'baz'];
         $form = new PostForm;
         $form[] = new Formulaic\Element\Group('foo', function($group) {
             $group[] = new Formulaic\Text('bar');
         });
-        $_POST['foo'] = ['bar' => 'baz'];
         $this->assertEquals('baz', $form['foo']['bar']->getValue());
     }
 
     public function testErrors()
     {
-        $form = new PostForm;
         $_POST = [];
+        $form = new PostForm;
         $form[] = (new Formulaic\Text('foo'))->isRequired();
         $form[] = (new Formulaic\Text('bar'))->isRequired();
         $this->assertNotTrue($form->valid());
@@ -131,6 +131,9 @@ EOT
             $form->errors()
         );
         $_POST = ['foo' => 1, 'bar' => 2];
+        $form = new PostForm;
+        $form[] = (new Formulaic\Text('foo'))->isRequired();
+        $form[] = (new Formulaic\Text('bar'))->isRequired();
         $this->assertTrue($form->valid());
         $this->assertEquals(1, $form['foo']->getValue());
         $this->assertEquals(2, $form['bar']->getValue());
@@ -138,10 +141,11 @@ EOT
 
     public function testComplexForm()
     {
-        $form = new ComplexForm;
         $_POST = [];
+        $form = new ComplexForm;
         $this->assertNotTrue($form->valid());
         $_POST = ['foo' => 'Foo', 'radios' => 1, 'checkboxes' => [2, 3]];
+        $form = new ComplexForm;
         $this->assertTrue($form->valid());
     }
 }
