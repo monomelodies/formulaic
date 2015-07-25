@@ -10,22 +10,6 @@ class Group extends Radio\Group
 
     private $value;
 
-    public function populate()
-    {
-        parent::populate();
-        $source = end($this->source);
-        if (!$source) {
-            return;
-        }
-        foreach ((array)$this as $element) {
-            if (in_array($element->getValue(), $source->{$this->name()})) {
-                $element->check();
-            } else {
-                $element->check(false);
-            }
-        }
-    }
-
     public function setValue($value)
     {
         if (is_scalar($value)) {
