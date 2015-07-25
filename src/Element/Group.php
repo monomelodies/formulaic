@@ -48,7 +48,7 @@ class Group extends ArrayObject
         }
         foreach ($value as $name => $val) {
             if ($field = $this[$name]) {
-                $field->setValue($val);
+                $field->getElement()->setValue($val);
             }
         }
     }
@@ -57,7 +57,7 @@ class Group extends ArrayObject
     {
         $this->value = [];
         foreach ((array)$this as $field) {
-            $this->value[] = $field->getValue();
+            $this->value[] = $field->getElement()->getValue();
         }
         return $this->value;
     }
@@ -73,6 +73,20 @@ class Group extends ArrayObject
     public function __toString()
     {
         return trim(implode("\n", (array)$this));
+    }
+
+    public function valueSuppliedByUser($status = null)
+    {
+        $is = false;
+        foreach ((array)$this as $field) {
+            if (isset($status)) {
+                $field->getElement()->valueSuppliedByUser($status);
+            }
+            if ($field->getElement()->valueSuppliedByUser()) {
+                $is = true;
+            }
+        }
+        return $is;
     }
 }
 
