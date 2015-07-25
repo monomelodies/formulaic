@@ -38,3 +38,16 @@ class ComplexForm extends Post
     }
 }
 
+class PersistantForm extends Post
+{
+    public function __construct()
+    {
+        $this[] = (new Formulaic\Text('name'))->isRequired();
+    }
+}
+
+class TestUserModel
+{
+    public $name = 'Marijn';
+}
+

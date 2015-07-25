@@ -1,21 +1,24 @@
-# Validation
+# Input and validation
 
 Before doing anything to your form's contents on page load, you'll want to
 validate the data passed in. _Never trust user input._ Form validation can
 normally be a quite tedious process, but Formulaic makes it easy.
 
-    <?php
+```php
+<?php
 
-    //...inside constructor...
-    $this[] = (new Formulaic\Text('mytextfield'))->isRequired();
+//...inside constructor...
+$this[] = (new Formulaic\Text('mytextfield'))->isRequired();
 
-    //...inside handling code, e.g. a Model of sorts:
-    if ($form->valid()) {
-        // All okay! Do something with the form data...
-    } else {
-        $errors = $form->errors();
-        // $errors is now an array of errors you can handle accordingly.
-    }
+//...inside handling code, e.g. a Model of sorts:
+if ($form->valid()) {
+    // All okay! Do something with the form data...
+} else {
+    $errors = $form->errors();
+    // $errors is now an array of errors you can handle accordingly.
+}
+
+```
 
 Some tests are shared among all elements, some are element-specific. Refer to
 the API documentation for a list of all options.
@@ -24,14 +27,17 @@ Tests are added to elements using the `Element::addTest` method, which you can
 also call directly to write custom tests with your specific business logic.
 Adding a test is simple:
 
-    <?php
+```php
+<?php
 
-    $this[] = (new Formulaic\Text('mycustomlogic'))->addTest(
-        'notokay',
-        function($value) {
-            return isThisOkay();
-        }
-    );
+$this[] = (new Formulaic\Text('mycustomlogic'))->addTest(
+    'notokay',
+    function($value) {
+        return isThisOkay();
+    }
+);
+
+```
 
 The callback receives the element's current value and should return true if the
 test passes, or else false. The name of the test is the error returned, so you
@@ -65,11 +71,14 @@ where things normally get a bit tricky:
 Instead of forcing you to write complicated `if/then/else` statements
 everywhere, Formulaic allows you to add your own sources to a form.
 
-    <?php
+```php
+<?php
 
-    $usermodel = new UserModel;
-    $myuserform = new UserForm;
-    $myuserform->source((array)$usermodel);
+$usermodel = new UserModel;
+$myuserform = new UserForm;
+$myuserform->source($usermodel);
+
+```
 
 Formulaic doesn't add its default sources `$_GET` and `$_POST` until the very
 last second, so you can add as much custom sources as you like. The elements
@@ -77,10 +86,32 @@ will get populated with values in order.
 
 You can also specify default values directly when defining the form:
 
-    <?php
+```php
+<?php
 
-    $this[] = (new Formulaic\Date('dob'))->setValue('1978-07-13');
+$this[] = (new Formulaic\Date('dob'))->setValue('1978-07-13');
+
+```
 
 This could be useful for some sort of "ueber-default". Note that the `source`
 method _will_ override this if supplied with an identical key and an empty
 value.
+
+## Persisting data
+When adding your own models as sources, you'll typically also want to push the
+submitted form data back so you can save it. Formulaic handles this
+automatically for you (well, not the saving, but the persistance):
+
+```php
+<?php
+
+$form = new MyForm;
+$user = new UserModel($id); // Assuming the constructor loads data for $id
+$form->source($user);
+// Assuming $user has a $name propery containing "Marijn"
+$_POST['name'] = 'Linus';
+$form->populate();
+echo $user->name; // "Linus"
+
+```
+

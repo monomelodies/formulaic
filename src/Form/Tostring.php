@@ -11,6 +11,10 @@ trait Tostring
         if ($name = $this->name()) {
             $this->attributes['id'] = $name;
         }
+        if (!isset($this->attributes['action'])) {
+            $this->attributes['action'] = '';
+        }
+        ksort($this->attributes);
         $out = '<form'.$this->attributes().'>';
         $fields = (array)$this;
         if ($fields) {

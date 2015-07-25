@@ -25,31 +25,6 @@ class Label extends Element
         return $this->element;
     }
 
-    public function __call($function, array $arguments)
-    {
-        return call_user_func_array([$this->element, $function], $arguments);
-    }
-
-    public function errors()
-    {
-        return $this->element->errors();
-    }
-    
-    public function valid()
-    {
-        return $this->element->valid();
-    }
-
-    public function setValue($value)
-    {
-        return $this->element->setValue($value);
-    }
-
-    public function getValue()
-    {
-        return $this->element->getValue();
-    }
-
     public function raw()
     {
         return $this->txt;

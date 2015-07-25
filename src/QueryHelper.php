@@ -6,19 +6,24 @@ trait QueryHelper
 {
     public function offsetGet($index)
     {
-        foreach ((array)$this as $element) {
-            if ($element->name() == $index) {
+        $index = (string)$index;
+        foreach ((array)$this as $i => $element) {
+            $i = (string)$i;
+            if ($element instanceof Label
+                && ($element->getElement()->name() == $index
+                    || $i == $index
+                )
+            ) { 
                 return $element;
             }
-            if ($element instanceof Label
-                && $element->getElement()->name() == $index
-            ) { 
+            if ($element->name() == $index || $i == $index) {
                 return $element;
             }
             if ($element instanceof Element\Group && isset($element[$index])) {
                 return $element[$index];
             }
         }
+        return null;
     }
 
     public function offsetSet($index, $newvalue)

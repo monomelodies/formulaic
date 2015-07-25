@@ -25,6 +25,11 @@ class Option extends Element
         $this->attributes['selected'] = null;
     }
 
+    public function unselected()
+    {
+        unset($this->attributes['selected']);
+    }
+
     public function __toString()
     {
         return '<option'.$this->attributes().'>'.$this->label.'</option>';

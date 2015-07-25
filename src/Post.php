@@ -6,40 +6,28 @@ abstract class Post extends Form
 {
     public function __toString()
     {
-        if ($this->hasFiles()) {
-            $this->attributes['enctype'] = 'multipart/form-data';
+        foreach ((array)$this as $field) {
+            if ($field->getElement() instanceof File) {
+                $this->attributes['enctype'] = 'multipart/form-data';
+            }
         }
         $this->attributes['method'] = 'post';
         return parent::__toString();
     }
 
-    public function populate()
+    public function offsetSet($index, $item)
     {
-        $this->source($_POST);
-        if ($this->hasFiles()) {
-            $this->source($_FILES);
-        }
-        parent::populate();
-    }
-
-    private function hasFiles()
-    {
-        foreach ((array)$this as $element) {
-            if (is_array($element)) {
-                foreach ((array)$element as $field) {
-                    if ($field instanceof File) {
-                        return true;
-                    }
-                }
-            } elseif ($element instanceof Label
-                && $element->getElement() instanceof File
-            ) {
-                return true;
-            } elseif ($element instanceof File) {
-                return true;
+        $name = $item->getElement()->name();
+        if ($item->getElement() instanceof File) {
+            if (array_key_exists($name, $_FILES)) {
+                $item->getElement()->setValue($_FILES[$name]);
+                $item->getElement()->valueSuppliedByUser(true);
             }
+        } elseif (array_key_exists($name, $_POST)) {
+            $item->getElement()->setValue($_POST[$name]);
+            $item->getElement()->valueSuppliedByUser(true);
         }
-        return false;
+        return parent::offsetSet($index, $item);
     }
 }
 

@@ -10,7 +10,7 @@ trait Group
             return false;
         }
         foreach ((array)$this as $element) {
-            if (!$element->valid()) {
+            if (!$element->getElement()->valid()) {
                 return false;
             }
         }
@@ -21,8 +21,11 @@ trait Group
     {
         $errors = $this->privateErrors();
         foreach ((array)$this as $element) {
-            if ($error = $element->errors()) {
-                $errors = array_merge($errors, [$element->name() => $error]);
+            if ($error = $element->getElement()->errors()) {
+                $errors = array_merge(
+                    $errors,
+                    [$element->getElement()->name() => $error]
+                );
             }
         }
         return $errors;

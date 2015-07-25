@@ -61,29 +61,32 @@ class Group extends Element\Group implements Labelable
         return $this->prefix[0];
     }
     
-    public function populate()
+    public function setValue($value)
     {
-        parent::populate();
         foreach ((array)$this as $element) {
-            if ($this->source == $element->getValue()) {
-                $element->check();
+            if ($value == $element->getElement()->getValue()) {
+                $element->getElement()->check();
             } else {
-                $element->check(false);
+                $element->getElement()->check(false);
             }
         }
     }
 
-    public function setValue($value)
+    public function & getValue()
     {
-        $this->source($value);
-        $this->populate();
+        foreach ((array)$this as $element) {
+            if ($element->getElement()->checked()) {
+                return $element->getElement()->getValue();
+            }
+        }
+        return null;
     }
     
     public function isRequired()
     {
         return $this->addTest('required', function ($value) {
             foreach ($value as $option) {
-                if ($option->checked()) {
+                if ($option->getElement()->checked()) {
                     return true;
                 }
             }
