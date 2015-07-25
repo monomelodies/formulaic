@@ -17,10 +17,10 @@ class Bitflag extends Checkbox\Group
         }
         $this->value = $value;
         foreach ((array)$this as $element) {
-            if ($value & $element->getValue()) {
-                $element->check();
+            if ($value & $element->getElement()->getValue()) {
+                $element->getElement()->check();
             } else {
-                $element->check(false);
+                $element->getElement()->check(false);
             }
         }
     }
