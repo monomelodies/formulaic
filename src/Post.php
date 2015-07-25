@@ -17,14 +17,14 @@ abstract class Post extends Form
 
     public function offsetSet($index, $item)
     {
-        $name = $item->name();
+        $name = $item->getElement()->name();
         if ($item->getElement() instanceof File) {
             $this->attributes['enctype'] = 'multipart/form-data';
             if (array_key_exists($name, $_FILES)) {
-                $item->setValue($_FILES[$name]);
+                $item->getElement()->setValue($_FILES[$name]);
             }
         } elseif (array_key_exists($name, $_POST)) {
-            $item->setValue($_POST[$name]);
+            $item->getElement()->setValue($_POST[$name]);
         }
         return parent::offsetSet($index, $item);
     }
