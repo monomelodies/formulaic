@@ -13,9 +13,12 @@ project-specific custom trait before autoloading the default one.
 
 You can also use PHP's `class_alias` method to accomplish this:
 
-    <?php
+```php
+<?php
 
-    class_alias('My\Custom\Fieldset', 'Formulaic\Fieldset\Tostring');
+class_alias('My\Custom\Fieldset', 'Formulaic\Fieldset\Tostring');
+
+```
 
 For more complicated projects with multiple default `__toString`
 implementations, simply `use` the toString-trait you need on a per-form basis,
@@ -23,9 +26,12 @@ optionally also overriding the default for all other forms. PHP traits are
 handy like that.
 
 ## Using templates
-
 Formulaic is _not_ a templating engine, but if you prefer to use one for your
 `__toString` implementation, be our guest. `__toString` doesn't care either way
 as long as a string is returned. We won't describe how to plugin something like
-Smarty here, but assuming you know your templating engine of choice well it
-should be trivial.
+Twig or Smarty here, but assuming you know your templating engine of choice well
+it should be trivial.
+
+Alternatively, you could write a template (e.g. in Twig) and include it with a
+`form` variable or such.
+
