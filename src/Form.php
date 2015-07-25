@@ -15,6 +15,11 @@ abstract class Form extends ArrayObject
     protected $attributes = [];
     private $source = [];
 
+    /**
+     * Return the form name if set, or null.
+     *
+     * @return string|null The name, or null.
+     */
     public function name()
     {
         return isset($this->attributes['name']) ?
