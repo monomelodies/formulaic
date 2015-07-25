@@ -8,21 +8,20 @@ class Bitflag extends Checkbox\Group
 
     public function setValue($value)
     {
-        if (is_array($value)) {
-            $bit = 0;
-            foreach ($value as $one) {
-                $bit |= $one;
-            }
-            $value = $bit;
-        }
-        $this->value = $value;
+        $this->value |= $value;
         foreach ((array)$this as $element) {
             if ($value & $element->getElement()->getValue()) {
                 $element->getElement()->check();
             } else {
                 $element->getElement()->check(false);
+                $this->value &= ~$element->getElement()->getValue();
             }
         }
+    }
+
+    public function & getValue()
+    {
+        return $this->value;
     }
 }
 

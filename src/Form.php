@@ -9,7 +9,6 @@ abstract class Form extends ArrayObject
     use Attributes;
     use Form\Tostring;
     use Validate\Group;
-    use InputHelper;
     use QueryHelper;
 
     protected $attributes = [];
@@ -73,9 +72,7 @@ EOT
         }
         foreach ($model as $name => $value) {
             if ($field = $this[$name] and $element = $field->getElement()) {
-                if (!$element->valueSuppliedByUser()) {
-                    $element->setValue($value);
-                }
+                $element->setDefaultValue($value);
                 $model->$name =& $field->getValue();
             }
         }

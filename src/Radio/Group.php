@@ -9,7 +9,6 @@ use Formulaic\Checkbox;
 use Formulaic\Element;
 use Formulaic\Label;
 use Formulaic\Labelable;
-use Formulaic\InputHelper;
 
 class Group extends Element\Group implements Labelable
 {
@@ -17,7 +16,6 @@ class Group extends Element\Group implements Labelable
     use Validate\Group;
     use Validate\Test;
     use Group\Tostring;
-    use InputHelper;
     
     protected $attributes = [];
     protected $tests = [];

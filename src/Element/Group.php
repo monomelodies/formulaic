@@ -4,13 +4,11 @@ namespace Formulaic\Element;
 
 use Formulaic\Validate;
 use ArrayObject;
-use Formulaic\InputHelper;
 use Formulaic\QueryHelper;
 
 class Group extends ArrayObject
 {
     use Validate\Group;
-    use InputHelper;
     use QueryHelper;
 
     private $prefix = [];
@@ -51,6 +49,15 @@ class Group extends ArrayObject
                 $field->getElement()->setValue($val);
             }
         }
+        return $this;
+    }
+
+    public function setDefaultValue($value)
+    {
+        if (!$this->valueSuppliedByUser()) {
+            $this->setValue($value);
+        }
+        return $this;
     }
 
     public function & getValue()
