@@ -49,6 +49,15 @@ class Group extends ArrayObject
                 $field->getElement()->setValue($val);
             }
         }
+        return $this;
+    }
+
+    public function setDefaultValue($value)
+    {
+        if (!$this->valueSuppliedByUser()) {
+            $this->setValue($value);
+        }
+        return $this;
     }
 
     public function & getValue()
