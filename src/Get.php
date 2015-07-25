@@ -15,6 +15,7 @@ abstract class Get extends Form
         $name = $item->getElement()->name();
         if (array_key_exists($name, $_GET)) {
             $item->getElement()->setValue($_GET[$name]);
+            $item->getElement()->valueSuppliedByUser(true);
         }
         return parent::offsetSet($index, $item);
     }
