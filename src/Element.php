@@ -40,6 +40,21 @@ abstract class Element implements Labelable
     public function setValue($value)
     {
         $this->value = $value;
+        return $this;
+    }
+
+    /**
+     * Sets the current value of this element, but only if not yet supplied.
+     *
+     * @param mixed $value The new (default) value.
+     * @return Element $this
+     */
+    public function setDefaultValue($value)
+    {
+        if (!$this->userInput) {
+            $this->value = $value;
+        }
+        return $this;
     }
 
     /**
