@@ -32,7 +32,7 @@ class Group extends Radio\Group
                 $this->value[] = $element->getElement()->getValue();
             }
         }
-        return $this->value ? $this->value : null;
+        return $this->value;
     }
 }
 
