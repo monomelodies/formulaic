@@ -19,12 +19,13 @@ abstract class Post extends Form
     {
         $name = $item->getElement()->name();
         if ($item->getElement() instanceof File) {
-            $this->attributes['enctype'] = 'multipart/form-data';
             if (array_key_exists($name, $_FILES)) {
                 $item->getElement()->setValue($_FILES[$name]);
+                $item->getElement()->valueSuppliedByUser(true);
             }
         } elseif (array_key_exists($name, $_POST)) {
             $item->getElement()->setValue($_POST[$name]);
+            $item->getElement()->valueSuppliedByUser(true);
         }
         return parent::offsetSet($index, $item);
     }
