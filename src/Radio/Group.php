@@ -21,6 +21,7 @@ class Group extends Element\Group implements Labelable
     protected $tests = [];
     protected $source = [];
     private $prefix = [];
+    private $value = null;
     
     public function __construct($name, $options)
     {
@@ -77,7 +78,7 @@ class Group extends Element\Group implements Labelable
                 return $element->getElement()->getValue();
             }
         }
-        return null;
+        return $this->value;
     }
     
     public function isRequired()
