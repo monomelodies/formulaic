@@ -30,7 +30,9 @@ trait Tostring
             $old = $this->attributes['name'];
             unset($this->attributes['name']);
         }
-        $out = '<input'.$this->attributes().'>';
+        $out = $this->htmlBefore;
+        $out .= '<input'.$this->attributes().'>';
+        $out .= $this->htmlAfter;
         if (isset($old)) {
             $this->attributes['name'] = $old;
         }

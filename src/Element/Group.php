@@ -11,9 +11,16 @@ class Group extends ArrayObject
     use Validate\Group;
     use QueryHelper;
 
+    const WRAP_GROUP = 1;
+    const WRAP_LABEL = 2;
+    const WRAP_ELEMENT = 4;
+
     private $prefix = [];
     private $name;
     private $value = [];
+    protected $htmlBefore = null;
+    protected $htmlAfter = null;
+    protected $htmlGroup = 4;
 
     public function __construct($name = null, callable $callback)
     {
@@ -79,7 +86,23 @@ class Group extends ArrayObject
 
     public function __toString()
     {
-        return trim(implode("\n", (array)$this));
+        $out = '';
+        if ($this->htmlGroup & self::WRAP_GROUP) {
+            $out .= $this->htmlBefore;
+        }
+        foreach ((array)$this as $field) {
+            if ($this->htmlGroup & self::WRAP_LABEL) {
+                $field->wrap($this->htmlBefore, $this->htmlAfter);
+            }
+            if ($this->htmlGroup & self::WRAP_ELEMENT) {
+                $field->getElement()->wrap($this->htmlBefore, $this->htmlAfter);
+            }
+        }
+        $out .= trim(implode("\n", (array)$this));
+        if ($this->htmlGroup & self::WRAP_GROUP) {
+            $out .= $this->htmlAfter;
+        }
+        return $out;
     }
 
     public function valueSuppliedByUser($status = null)
@@ -94,6 +117,29 @@ class Group extends ArrayObject
             }
         }
         return $is;
+    }
+
+    /**
+     * Specify HTML to wrap this element in. Sometimes this is needed for
+     * fine-grained output control, e.g. when styling checkboxes.
+     *
+     * @param string $before HTML to prepend.
+     * @param string $after HTML to append.
+     * @param boolean $group Bitflag stating what to wrap. Use any of the
+     *                       Element\Group::WRAP_* constants. Defaults to
+     *                       WRAP_ELEMENT.
+     * @return Element $this
+     * @see Element::wrap
+     */
+    public function wrap($before, $after, $group = null)
+    {
+        if (!isset($group)) {
+            $group = self::WRAP_ELEMENT;
+        }
+        $this->htmlBefore = $before;
+        $this->htmlAfter = $after;
+        $this->htmlGroup = $group;
+        return $this;
     }
 }
 
