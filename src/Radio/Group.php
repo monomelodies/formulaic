@@ -83,6 +83,12 @@ class Group extends Element\Group implements Labelable
     
     public function isRequired()
     {
+        foreach ((array)$this as $el) {
+            if (!is_object($el)) {
+                continue;
+            }
+            $el->getElement()->attribute('required', 1);
+        }
         return $this->addTest('required', function ($value) {
             foreach ($value as $option) {
                 if ($option->getElement()->checked()) {
