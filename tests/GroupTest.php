@@ -54,8 +54,8 @@ EOT
         $this->expectOutputString(<<<EOT
 <form action="" method="post">
 <div>
-<label for="test-1"><input checked id="test-1" name="test" type="radio" value="1"> foo</label>
-<label for="test-2"><input id="test-2" name="test" type="radio" value="2"> bar</label>
+<label for="test-1"><input checked id="test-1" name="test" required="1" type="radio" value="1"> foo</label>
+<label for="test-2"><input id="test-2" name="test" required="1" type="radio" value="2"> bar</label>
 </div>
 </form>
 EOT
