@@ -10,10 +10,10 @@ abstract class Element implements Labelable
     use Validate\Test;
     use Validate\Required;
     use Validate\Element;
+    use Bindable;
 
     private $tests = [];
     private $userInput = false;
-    private $model;
     protected $prefix = [];
     protected $attributes = [];
     protected $value = null;
@@ -105,14 +105,6 @@ abstract class Element implements Labelable
     public function getElement()
     {
         return $this;
-    }
-
-    /**
-     * Binds the element to a model.
-     */
-    public function bind($model)
-    {
-        $this->model = $model;
     }
 
     /**
