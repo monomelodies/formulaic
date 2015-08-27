@@ -1,22 +1,100 @@
 site_name: Formulaic
-site_url: http://formulaic.monomelodies.nl/docs/
-repo_url: https://github.com/monomelodies/formulaic
-
+site_url: 'http://formulaic.monomelodies.nl/docs/'
+repo_url: 'https://github.com/monomelodies/formulaic'
 pages:
-- Introduction:
-    - 'Quickstart': 'index.md'
-- Basic usage:
-    - 'Create forms': 'basic/forms.md'
-    - 'Input and validation': 'basic/validation.md'
-    - 'Custom rendering': 'basic/rendering.md'
-- Advanced topics:
-    - 'Handling complex arrays': 'advanced/arrays.md'
-    - 'Select boxes': 'advanced/select.md'
-    - 'Groups of checkboxes or radio buttons': 'advanced/checkboxes.md'
-    - 'Bitflag fields': 'advanced/bitflags.md'
-- API reference:
-    - 'Forms': 'api/forms.md'
-    - 'Elements': 'api/elements.md'
-    - 'Buttons': 'api/buttons.md'
-    - 'Traits': 'api/traits.md'
-
+    -
+        Introduction:
+            -
+                Quickstart: index.md
+    -
+        'Basic usage':
+            -
+                'Create forms': basic/forms.md
+            -
+                'Input and validation': basic/validation.md
+            -
+                'Custom rendering': basic/rendering.md
+    -
+        'Advanced topics':
+            -
+                'Handling complex arrays': advanced/arrays.md
+            -
+                'Select boxes': advanced/select.md
+            -
+                'Groups of checkboxes or radio buttons': advanced/checkboxes.md
+            -
+                'Bitflag fields': advanced/bitflags.md
+    -
+        'API reference':
+            -
+                Forms: api/forms.md
+            -
+                Elements: api/elements.md
+            -
+                Buttons: api/buttons.md
+            -
+                Traits: api/traits.md
+            -
+                Formulaic\Get: api/Formulaic-Get.md
+            -
+                Formulaic\Radio: api/Formulaic-Radio.md
+            -
+                Formulaic\Email: api/Formulaic-Email.md
+            -
+                Formulaic\Select: api/Formulaic-Select.md
+            -
+                Formulaic\File: api/Formulaic-File.md
+            -
+                Formulaic\Textarea: api/Formulaic-Textarea.md
+            -
+                Formulaic\Tel: api/Formulaic-Tel.md
+            -
+                Formulaic\Labelable: api/Formulaic-Labelable.md
+            -
+                Formulaic\Hidden: api/Formulaic-Hidden.md
+            -
+                Formulaic\Text: api/Formulaic-Text.md
+            -
+                Formulaic\Button: api/Formulaic-Button.md
+            -
+                Formulaic\Label: api/Formulaic-Label.md
+            -
+                Formulaic\Checkbox: api/Formulaic-Checkbox.md
+            -
+                Formulaic\Select\Option: api/Formulaic-Select-Option.md
+            -
+                Formulaic\Bitflag: api/Formulaic-Bitflag.md
+            -
+                'API Index': api/ApiIndex.md
+            -
+                Formulaic\Date: api/Formulaic-Date.md
+            -
+                Formulaic\Search: api/Formulaic-Search.md
+            -
+                Formulaic\Form: api/Formulaic-Form.md
+            -
+                Formulaic\Button\Submit: api/Formulaic-Button-Submit.md
+            -
+                Formulaic\Post: api/Formulaic-Post.md
+            -
+                Formulaic\Radio\Group: api/Formulaic-Radio-Group.md
+            -
+                Formulaic\Time: api/Formulaic-Time.md
+            -
+                Formulaic\Number: api/Formulaic-Number.md
+            -
+                Formulaic\Fieldset: api/Formulaic-Fieldset.md
+            -
+                Formulaic\Url: api/Formulaic-Url.md
+            -
+                Formulaic\Password: api/Formulaic-Password.md
+            -
+                Formulaic\Element: api/Formulaic-Element.md
+            -
+                Formulaic\Checkbox\Group: api/Formulaic-Checkbox-Group.md
+            -
+                Formulaic\Element\Group: api/Formulaic-Element-Group.md
+            -
+                Formulaic\Button\Reset: api/Formulaic-Button-Reset.md
+            -
+                Formulaic\Datetime: api/Formulaic-Datetime.md
