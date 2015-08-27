@@ -72,8 +72,12 @@ EOT
         }
         foreach ($model as $name => $value) {
             if ($field = $this[$name] and $element = $field->getElement()) {
-                $element->setDefaultValue($value);
-                $model->$name =& $element->getValue();
+                if ($element->valueSuppliedByUser()) {
+                    $model->$name = $element->getValue();
+                } else {
+                    $element->setDefaultValue($value);
+                }
+                $element->bind($model);
             }
         }
         return $this;
