@@ -13,6 +13,7 @@ abstract class Element implements Labelable
 
     private $tests = [];
     private $userInput = false;
+    private $model;
     protected $prefix = [];
     protected $attributes = [];
     protected $value = null;
@@ -33,6 +34,13 @@ abstract class Element implements Labelable
         $this->attributes['value'] =& $this->value;
     }
 
+    public function getName()
+    {
+        return isset($this->attributes['name']) ?
+            $this->attributes['name'] :
+            'UNNAMED';
+    }
+
     /**
      * Sets the current value of this element.
      *
@@ -42,6 +50,9 @@ abstract class Element implements Labelable
     public function setValue($value)
     {
         $this->value = $value;
+        if (isset($this->model)) {
+            $this->model->{$this->attributes['name']} = $value;
+        }
         return $this;
     }
 
@@ -54,7 +65,7 @@ abstract class Element implements Labelable
     public function setDefaultValue($value)
     {
         if (!$this->userInput) {
-            $this->value = $value;
+            $this->setValue($value);
         }
         return $this;
     }
@@ -94,6 +105,14 @@ abstract class Element implements Labelable
     public function getElement()
     {
         return $this;
+    }
+
+    /**
+     * Binds the element to a model.
+     */
+    public function bind($model)
+    {
+        $this->model = $model;
     }
 
     /**
