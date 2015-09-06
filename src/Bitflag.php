@@ -4,8 +4,6 @@ namespace Formulaic;
 
 class Bitflag extends Checkbox\Group
 {
-    use Bindable;
-
     protected $value = 0;
 
     public function setValue($value)
