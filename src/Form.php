@@ -3,6 +3,7 @@
 namespace Formulaic;
 
 use ArrayObject;
+use DomainException;
 
 abstract class Form extends ArrayObject
 {
