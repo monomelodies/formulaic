@@ -25,6 +25,11 @@ class Label extends Element
         return $this->element;
     }
 
+    public function & getValue()
+    {
+        return $this->element->getValue();
+    }
+
     public function raw()
     {
         return $this->txt;
