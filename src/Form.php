@@ -73,10 +73,13 @@ EOT
         }
         foreach ($model as $name => $value) {
             if ($field = $this[$name] and $element = $field->getElement()) {
+                $curr = $element->getValue();
+                $userSupplied = $element->valueSuppliedByUser();
                 if ($value) {
                     $element->setValue($value);
                 }
-                if ($element->valueSuppliedByUser()) {
+                if ($userSupplied) {
+                    $element->setValue($curr);
                     $model->$name = $element->getValue();
                 }
                 $element->bind($model);
