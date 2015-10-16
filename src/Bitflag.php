@@ -12,6 +12,16 @@ class Bitflag extends Checkbox\Group
     public function setValue($value)
     {
         if (is_object($value)) {
+            if (isset($this->value)) {
+                $old = clone $this->value;
+                $work = clone $value;
+                if ($work instanceof JsonSerializable) {
+                    $work = $work->jsonSerialize();
+                }
+                foreach ($work as $prop => $status) {
+                    $value->$prop = isset($old->$prop) ? $old->$prop : false;
+                }
+            }
             $this->value = $value;
         }
         if (!isset($this->value)) {
@@ -31,7 +41,7 @@ class Bitflag extends Checkbox\Group
         }
         foreach ((array)$this as $element) {
             $check = $element->getElement()->getValue();
-            if ($this->value->$check) {
+            if (isset($this->value->$check) && $this->value->$check) {
                 $element->getElement()->check();
             } else {
                 $element->getElement()->check(false);
