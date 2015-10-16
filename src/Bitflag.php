@@ -36,9 +36,12 @@ class Bitflag extends Checkbox\Group
                 $this->value->$prop = false;
             }
             foreach ($value as $prop) {
-                $this->value->$prop = true;
+                if ($this->hasBit($prop)) {
+                    $this->value->$prop = true;
+                }
             }
         }
+        $found = [];
         foreach ((array)$this as $element) {
             $check = $element->getElement()->getValue();
             if (isset($this->value->$check) && $this->value->$check) {
@@ -46,12 +49,23 @@ class Bitflag extends Checkbox\Group
             } else {
                 $element->getElement()->check(false);
             }
+            $found[] = $check;
         }
     }
 
     public function & getValue()
     {
         return $this->value;
+    }
+
+    public function hasBit($name)
+    {
+        foreach ((array)$this as $element) {
+            if ($element->getElement()->getValue() == $name) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 
