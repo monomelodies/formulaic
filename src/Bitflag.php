@@ -2,28 +2,39 @@
 
 namespace Formulaic;
 
+use StdClass;
+use JsonSerializable;
+
 class Bitflag extends Checkbox\Group
 {
-    protected $value = 0;
+    protected $value = null;
 
     public function setValue($value)
     {
-        if (is_array($value)) {
-            $value = array_reduce(
-                $value,
-                function ($carry, $item) {
-                    return $carry | $item;
-                },
-                0
-            );
+        if (is_object($value)) {
+            $this->value = $value;
         }
-        $this->value |= $value;
+        if (!isset($this->value)) {
+            $this->value = new StdClass;
+        }
+        if (is_array($value)) {
+            $work = clone $this->value;
+            if ($work instanceof JsonSerializable) {
+                $work = $work->jsonSerialize();
+            }
+            foreach ($work as $prop => $status) {
+                $this->value->$prop = false;
+            }
+            foreach ($value as $prop) {
+                $this->value->$prop = true;
+            }
+        }
         foreach ((array)$this as $element) {
-            if ($value & $element->getElement()->getValue()) {
+            $check = $element->getElement()->getValue();
+            if ($this->value->$check) {
                 $element->getElement()->check();
             } else {
                 $element->getElement()->check(false);
-                $this->value &= ~$element->getElement()->getValue();
             }
         }
     }
