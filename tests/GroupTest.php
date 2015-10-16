@@ -85,7 +85,7 @@ EOT
             8 => 'The Hulk',
             16 => 'Daredevil',
         ]);
-        $bit->setValue(7);
+        $bit->setValue([1, 2, 4]);
         $this->assertTrue($bit['Batman']->getElement()->checked());
         $this->assertTrue($bit[1]->getElement()->checked());
         $this->assertTrue($bit[2]->getElement()->checked());
@@ -96,13 +96,14 @@ EOT
     public function testNonsuppliedBitflagsAreLeftAlone()
     {
         $bit = new Formulaic\Bitflag('superhero', [
-            4 => 'Spiderman',
-            8 => 'The Hulk',
-            16 => 'Daredevil',
+            'spidey' => 'Spiderman',
+            'hulk' => 'The Hulk',
+            'daredevil' => 'Daredevil',
         ]);
-        $bit->setDefaultValue(7);
-        $bit->setValue(8);
-        $this->assertEquals(11, $bit->getValue());
+        $bit->setDefaultValue(['superman']);
+        $bit->setValue(['hulk']);
+        $this->assertTrue($bit->getValue()->hulk);
+        $this->assertFalse(isset($bit->getValue()->superman));
     }
 }
 
