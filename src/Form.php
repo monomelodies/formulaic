@@ -4,8 +4,9 @@ namespace Formulaic;
 
 use ArrayObject;
 use DomainException;
+use JsonSerializable;
 
-abstract class Form extends ArrayObject
+abstract class Form extends ArrayObject implements JsonSerializable
 {
     use Attributes;
     use Form\Tostring;
@@ -44,6 +45,27 @@ abstract class Form extends ArrayObject
             ) {
                 $copy[$name] = $element->getValue();
             }
+        }
+        return $copy;
+    }
+
+    /**
+     * Returns a `json_encode`able hash.
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        $copy = [];
+        foreach ((array)$this as $key => $value) {
+            $element = $value->getElement();
+            if (is_object($element)
+                and method_exists($element, 'name')
+                and $name = $element->name()
+            ) {
+                $copy[$name] = $value;
+            }
+            $copy[$key] = $value;
         }
         return $copy;
     }
