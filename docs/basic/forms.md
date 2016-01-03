@@ -121,3 +121,10 @@ $this[] = (new Text)->attribute('data-something', 'foo');
 Most helper methods are _chainable_, meaning they simply return `$this`. (The
 validation test methods are a notable exception.)
 
+For attributes on forms - where they're particularly useful, like `action` and
+so on - you may use the `$attributes` property. It is a hash of key/value pairs.
+
+> To output the attribute without any value - e.g. `<form novalidate>` - use
+> the value `null`. To specifically disable an attribute, use `false`. This is
+> mostly useful if you want to suppress the default empty `action` attribute.
+
