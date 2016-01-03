@@ -13,7 +13,6 @@ say, a `$_POST`. Consider the following real-world example:
     <input type="checkbox" name="interests[music][]" value="pop"> Pop
     <input type="checkbox" name="interests[music][]" value="hiphop"> Hiphop
 </form>
-
 ```
 
 In our form, we want to logically group the interests in "movies" and "music",
@@ -36,7 +35,7 @@ Instead, Formulaic supplies a special `Group` class you can use for this.
 
 Onwards, then:
 
-```
+```php
 <?php
 
 use Formulaic\Post;
@@ -67,7 +66,6 @@ class MyForm extends Post
         });
     }
 }
-
 ```
 
 Now, when Formulaic sees `$_POST['interests']['movies'][] = 'action'`, it
@@ -82,7 +80,7 @@ first-found, first-returned manner.
 
 Hence:
 
-```
+```php
 <?php
 
 $form['interestes']['movies'] === $form['movies']; // true.
