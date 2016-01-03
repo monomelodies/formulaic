@@ -32,7 +32,6 @@ class MyForm extends Post
         ]);
     }
 }
-
 ```
 
 With the above example, you could do the following in your code:
@@ -46,7 +45,6 @@ $form['superhero']->setValue([1, 2, 4]);
 $form['superhero'][0]->checked(); // true
 // Or reference by label:
 $form['superhero']['Batman']->checked(); // true
-
 ```
 
 ## Binding models
@@ -60,7 +58,6 @@ After form submit, `$_POST` or `$_GET` would be passed like so:
 <?php
 
 $_POST['superhero'] = [1, 2, 4];
-
 ```
 
 It is a good idea for the model to be leading in this conversion so the rest of
@@ -93,7 +90,6 @@ $form = new PollForm;
 // Assuming the user previously selected Batman, Superman and Spiderman:
 $form['superhero']->setValue(['batman', 'superman', 'spiderman']);
 var_dump(isset($form['superhero']->getValue()->spiderman)); // false
-
 ```
 
 The underlying idea is that typically a bitflag will contain multiple yes/no
