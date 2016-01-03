@@ -17,7 +17,6 @@ You can also use PHP's `class_alias` method to accomplish this:
 <?php
 
 class_alias('My\Custom\Fieldset', 'Formulaic\Fieldset\Tostring');
-
 ```
 
 For more complicated projects with multiple default `__toString`
