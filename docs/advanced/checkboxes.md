@@ -11,7 +11,6 @@ use Formulaic\Radio;
 
 $form[] = new Checkbox\Group('name', [1 => 'Option 1', 2 => 'Option 2']);
 $form[] = new Radio\Group('name', [1 => 'Option 1', 2 => 'Option 2']);
-
 ```
 
 As you can see, they work similar to `Select` elements, and also support the
@@ -31,7 +30,6 @@ $form[] = new Checkbox\Group('name', function ($checkboxes) {
     $checkbox->setValue(2);
     $this[] = new Label('Option 2', $checkbox);
 });
-
 ```
 
 Note that Formulaic does _not_ verify if entries in a `Checkbox\Group` or
@@ -40,7 +38,7 @@ container.
 
 We can now perform validation on the group:
 
-```
+```php
 <?php
 
 $form['name']->isRequired();
@@ -51,6 +49,5 @@ $form['name']->valid();
 
 $form['name']->setValue(3);
 $form['name']->valid(); // False; we only had values 1 or 2.
-
 ```
 

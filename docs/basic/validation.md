@@ -17,7 +17,6 @@ if ($form->valid()) {
     $errors = $form->errors();
     // $errors is now an array of errors you can handle accordingly.
 }
-
 ```
 
 Some tests are shared among all elements, some are element-specific. Refer to
@@ -36,7 +35,6 @@ $this[] = (new Formulaic\Text('mycustomlogic'))->addTest(
         return isThisOkay();
     }
 );
-
 ```
 
 The callback receives the element's current value and should return true if the
@@ -86,7 +84,6 @@ $myuserform = new UserForm;
 // Assuming this exists:
 $name = $myuserform['name']->getElement();
 $name->setDefaultValue('Marijn');
-
 ```
 
 In the above example, the value of the `$name` element will only be set to
@@ -98,7 +95,6 @@ You can of course also specify default values directly when defining the form:
 <?php
 
 $this[] = (new Formulaic\Date('dob'))->setDefaultValue('1978-07-13');
-
 ```
 
 This method is mostly useful for some sort of "ueber-default" that is
@@ -130,7 +126,6 @@ $form->bind($user);
 // Assuming $user had a $name propery containing "Marijn", it will now
 // contain the new value "Linus"!
 echo $user->name; // "Linus"
-
 ```
 
 The binding is by reference, so the following would also be true extending the
@@ -141,7 +136,6 @@ above example:
 
 $form['name']->getElement()->setValue('Chuck Norris');
 echo $user->name; // "Chuck Norris"
-
 ```
 
 ...and it goes both ways:
@@ -150,7 +144,6 @@ echo $user->name; // "Chuck Norris"
 
 $user->name = 'Santa';
 echo $form['name']->getValue(); // "Santa"
-
 ```
 
 > Note that for forms with default values supplied using the `setDefaultValue`
@@ -184,7 +177,6 @@ $name->save(); // Update name record
 
 echo $contact->email; // "santa@claus.com";
 $contact->save(); // Update contact record
-
 ```
 
 (The `save` method used above is just an example; how your models work

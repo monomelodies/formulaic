@@ -3,11 +3,13 @@
 namespace Formulaic;
 
 use ArrayObject;
+use DomainException;
+use JsonSerializable;
 
 /**
  * The base Form class.
  */
-abstract class Form extends ArrayObject
+abstract class Form extends ArrayObject implements JsonSerializable
 {
     use Attributes;
     use Form\Tostring;
@@ -53,6 +55,27 @@ abstract class Form extends ArrayObject
     }
 
     /**
+     * Returns a `json_encode`able hash.
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        $copy = [];
+        foreach ((array)$this as $key => $value) {
+            $element = $value->getElement();
+            if (is_object($element)
+                and method_exists($element, 'name')
+                and $name = $element->name()
+            ) {
+                $copy[$name] = $value;
+            }
+            $copy[$key] = $value;
+        }
+        return $copy;
+    }
+
+    /**
      * Binds a $model object to this form.
      *
      * $model can be any object. All its public properties are looped over, and
@@ -77,10 +100,14 @@ EOT
         }
         foreach ($model as $name => $value) {
             if ($field = $this[$name] and $element = $field->getElement()) {
-                if ($element->valueSuppliedByUser()) {
+                $curr = $element->getValue();
+                $userSupplied = $element->valueSuppliedByUser();
+                if ($value) {
+                    $element->setValue($value);
+                }
+                if ($userSupplied) {
+                    $element->setValue($curr);
                     $model->$name = $element->getValue();
-                } else {
-                    $element->setDefaultValue($value);
                 }
                 $element->bind($model);
             }

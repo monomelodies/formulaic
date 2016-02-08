@@ -15,6 +15,9 @@ trait Attributes
                 }
                 $return[] = $name;
             } else {
+                if ($value === false) {
+                    continue;
+                }
                 if ($name == 'name') {
                     $value = preg_replace("@^\[(.*?)\]@", '$1', $value);
                 }
