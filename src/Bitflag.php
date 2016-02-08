@@ -20,6 +20,9 @@ class Bitflag extends Checkbox\Group
         if (isset($class)) {
             $this->class = $class;
         }
+        foreach ($options as $key => $value) {
+            $this->class->$key = false;
+        }
     }
 
     public function setValue($value)
@@ -50,7 +53,7 @@ class Bitflag extends Checkbox\Group
                 $this->value->$prop = false;
             }
             foreach ($value as $prop) {
-                if ($this->hasBit($prop)) {
+                if ($this->hasBit($prop) && isset($this->value->$prop)) {
                     $this->value->$prop = true;
                 }
             }
