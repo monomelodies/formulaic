@@ -8,10 +8,24 @@ use JsonSerializable;
 class Bitflag extends Checkbox\Group
 {
     protected $value = null;
+    protected $class = null;
+
+    public function __construct($label, $options, $class = null)
+    {
+        parent::__construct($label, $options);
+        $default = new Hidden("{$label}[]");
+        $default->setValue(0);
+        $this[] = $default;
+        $this->class = new StdClass;
+        if (isset($class)) {
+            $this->class = $class;
+        }
+    }
 
     public function setValue($value)
     {
         if (is_object($value)) {
+            $this->class = $value;
             if (isset($this->value)) {
                 $old = clone $this->value;
                 $work = clone $value;
@@ -25,7 +39,7 @@ class Bitflag extends Checkbox\Group
             $this->value = $value;
         }
         if (!isset($this->value)) {
-            $this->value = new StdClass;
+            $this->value = clone $this->class;
         }
         if (is_array($value)) {
             $work = clone $this->value;
@@ -43,6 +57,9 @@ class Bitflag extends Checkbox\Group
         }
         $found = [];
         foreach ((array)$this as $element) {
+            if ($element->getElement() instanceof Hidden) {
+                continue;
+            }
             $check = $element->getElement()->getValue();
             if (isset($this->value->$check) && $this->value->$check) {
                 $element->getElement()->check();
