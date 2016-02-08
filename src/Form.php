@@ -4,6 +4,9 @@ namespace Formulaic;
 
 use ArrayObject;
 
+/**
+ * The base Form class.
+ */
 abstract class Form extends ArrayObject
 {
     use Attributes;
@@ -11,8 +14,10 @@ abstract class Form extends ArrayObject
     use Validate\Group;
     use QueryHelper;
 
+    /**
+     * Hash of key/value pairs for HTML attributes.
+     */
     protected $attributes = [];
-    private $source = [];
 
     /**
      * Return the form name if set, or null.
