@@ -2,8 +2,19 @@
 
 namespace Formulaic;
 
+/**
+ * Implements a POST-form. The method and source default to that. You could
+ * override the method, but that would not make sense. Elements are
+ * automatically populated from `$_POST` and/or `$_FILES`.
+ */
 abstract class Post extends Form
 {
+    /**
+     * Returns the default string representation of this form.
+     *
+     * @return string The form as '<form>...</form>'.
+     * @see Formulaic\Form::__toString
+     */
     public function __toString()
     {
         foreach ((array)$this as $field) {
@@ -15,6 +26,14 @@ abstract class Post extends Form
         return parent::__toString();
     }
 
+    /**
+     * Adds an item to the form, checking to see if its $_POST or $_FILES
+     * variant exists and if so, uses that as the value.
+     *
+     * @param integer|string|null $index The index to set the new item at.
+     * @param mixed $item An element or a label containing one.
+     * @return void
+     */
     public function offsetSet($index, $item)
     {
         $name = $item->getElement()->name();
@@ -27,7 +46,7 @@ abstract class Post extends Form
             $item->getElement()->setValue($_POST[$name]);
             $item->getElement()->valueSuppliedByUser(true);
         }
-        return parent::offsetSet($index, $item);
+        parent::offsetSet($index, $item);
     }
 }
 

@@ -24,11 +24,11 @@ class MyForm extends Post
     public function __construct()
     {
         $this[] = new Bitflag('superhero', [
-            1 => 'Batman',
-            2 => 'Superman',
-            4 => 'Spiderman',
-            8 => 'The Hulk',
-            16 => 'Daredevil',
+            'batman' => 'Batman',
+            'superman' => 'Superman',
+            'spiderman' => 'Spiderman',
+            'hulk' => 'The Hulk',
+            'daredevil' => 'Daredevil',
         ]);
     }
 }
@@ -40,8 +40,7 @@ With the above example, you could do the following in your code:
 <?php
 
 $form = new MyForm;
-// Bits 1, 2 and 4 are on:
-$form['superhero']->setValue([1, 2, 4]);
+$form['superhero']->setValue(['batman', 'superman', 'hulk']);
 $form['superhero'][0]->checked(); // true
 // Or reference by label:
 $form['superhero']['Batman']->checked(); // true
@@ -49,19 +48,30 @@ $form['superhero']['Batman']->checked(); // true
 
 ## Binding models
 If a model was bound, it is its own responsibility to convert the bound
-`superhero` back into a byte if needed (Formulaic doesn't actually care about
-bit values, you could use `'batman'` etc. as keys just as well).
+`superhero` back into a byte if needed. Formulaic doesn't care about the mapping
+of readable names to bits. The optional third parameter passed to the `Bitflag`
+constructor can be a "model"-type object to use internally. The implementation
+is up to you, but the assumption is that the checked keys are `true` whilst
+unchecked keys are `false`.
 
-After form submit, `$_POST` or `$_GET` would be passed like so:
+> If no binding was specified, Formulaic will use a `StdClass`.
+
+Hence, building on our previous example:
 
 ```php
 <?php
 
-$_POST['superhero'] = [1, 2, 4];
+$model = new Superhero;
+$form = new MyForm;
+$form->bind($model);
+// If "Batman" was checked:
+var_dump($model->superhero->batman); // true
+var_dump($model->superhero->daredevil); // false
 ```
 
-It is a good idea for the model to be leading in this conversion so the rest of
-your code doesn't have to worry about "magic" numbers.
+It's up to your code to actually convert the checked bits into a byte again;
+Formulaic by design doesn't care about bit values since they would amount to
+"magic numbers" outside of the model context.
 
 ## Undefined values
 A bitflag element silently ignores unknown values tossed at it:
