@@ -1,152 +1,231 @@
 <?php
 
-class FormTest extends PHPUnit_Framework_TestCase
+namespace Formulaic\Test;
+
+use Formulaic\Get;
+use Formulaic\Post;
+use Formulaic\Text;
+use Formulaic\Button\Submit;
+use Formulaic\Fieldset;
+use Formulaic\File;
+use Formulaic\Search;
+use Formulaic\Element\Group;
+use Formulaic\Label;
+use Formulaic\Checkbox;
+use Formulaic\Radio;
+
+/**
+ * Global form tests
+ */
+class FormTest
 {
+    /**
+     * A basic form without any elements should render just the form tags.
+     */
     public function testEmptyForm()
     {
-        $this->expectOutputString('<form action="" method="get"></form>');
-        $form = new Form;
-        echo $form;
+        $form = new class extends Get {};
+        yield assert("$form" == '<form action="" method="get"></form>');
     }
 
+    /**
+     * A basic form with input and button should render correctly.
+     */
     public function testFormWithInputAndButton()
     {
-        $this->expectOutputString(<<<EOT
+        $out = <<<EOT
 <form action="" method="get">
 <div><input type="text"></div>
 <div><button type="submit"></button></div>
 </form>
-EOT
-        );
-        $form = new Form;
-        $form[] = new Formulaic\Text;
-        $form[] = new Formulaic\Button\Submit;
-        echo $form;
+EOT;
+        $form = new class extends Get {};
+        $form[] = new Text;
+        $form[] = new Submit;
+        yield assert("$form" == $out);
     }
 
+    /**
+     * Forms can also have fieldsets.
+     */
     public function testFormWithFieldset()
     {
-        $this->expectOutputString(<<<EOT
+        $out = <<<EOT
 <form action="" method="get">
 <fieldset>
 <legend>Hello world!</legend>
 <div><input type="text"></div>
 </fieldset>
 </form>
-EOT
-        );
-        $form = new Form;
-        $form[] = new Formulaic\Fieldset('Hello world!', function($fieldset) {
-            $fieldset[] = new Formulaic\Text;
+EOT;
+        $form = new class extends Get {};
+        $form[] = new Fieldset('Hello world!', function($fieldset) {
+            $fieldset[] = new Text;
         });
-        echo $form;
+        yield assert("$form" == $out);
     }
 
+    /**
+     * Fields in a form can be referenced by name.
+     */
     public function testReferenceByName()
     {
-        $this->expectOutputString(<<<EOT
-<input id="mytextfield" name="mytextfield" type="text">
-EOT
-        );
-        $form = new Form;
-        $form[] = new Formulaic\Text('mytextfield');
-        echo $form['mytextfield'];
+        $form = new class extends Get {};
+        $form[] = new Text('mytextfield');
+        yield assert($form['mytextfield'] instanceof Text);
     }
 
+    /**
+     * Forms can be of type POST.
+     */
     public function testPostForm()
     {
-        $this->expectOutputString(<<<EOT
-<form action="" method="post"></form>
-EOT
-        );
-        $form = new PostForm;
-        echo $form;
+        $form = new class extends Post {};
+        yield assert("$form" == '<form action="" method="post"></form>');
     }
 
+    /**
+     * Post forms can contain files.
+     */
     public function testPostFormWithFile()
     {
-        $this->expectOutputString(<<<EOT
+        $out = <<<EOT
 <form action="" enctype="multipart/form-data" method="post">
 <div><input type="file"></div>
 </form>
-EOT
-        );
-        $form = new PostForm;
-        $form[] = new Formulaic\File;
-        echo $form;
+EOT;
+        $form = new class extends Post {};
+        $form[] = new File;
+        yield assert("$form" == $out);
     }
 
+    /**
+     * Named forms cause elements to inherit the name.
+     */
     public function testNamedFormInherits()
     {
-        $this->expectOutputString(<<<EOT
+        $out = <<<EOT
 <form action="" id="test" method="get" name="test">
 <div><input id="test-bla" name="bla" type="text"></div>
 </form>
-EOT
-        );
-        $form = new NamedForm;
-        $form[] = new Formulaic\Text('bla');
+EOT;
+        $form = new class extends Get {
+            protected $attributes = ['name' => 'test'];
+        };
+        $form[] = new Text('bla');
         $form[0]->prefix('test');
-        echo $form;
+        yield assert("$form" == $out);
     }
 
+    /**
+     * $_GET auto-populates a GET form.
+     */
     public function testPopulateGet()
     {
         $_GET['q'] = 'query';
-        $form = new Form;
-        $form[] = new Formulaic\Search('q');
-        $this->assertEquals('query', $form['q']->getValue());
+        $form = new class Extends Get {};
+        $form[] = new Search('q');
+        yield assert('query' ==  $form['q']->getValue());
     }
 
+    /**
+     * $_POST auto-populates a POST form.
+     */
     public function testPopulatePost()
     {
         $_POST['q'] = 'query';
-        $form = new PostForm;
-        $form[] = new Formulaic\Search('q');
-        $this->assertEquals('query', $form['q']->getValue());
+        $form = new class extends Post {};
+        $form[] = new Search('q');
+        yield assert('query' == $form['q']->getValue());
     }
 
+    /**
+     * Groups also get auto-populated.
+     */
     public function testPopulateGrouped()
     {
         $_POST['foo'] = ['bar' => 'baz'];
-        $form = new PostForm;
-        $form[] = new Formulaic\Element\Group('foo', function($group) {
-            $group[] = new Formulaic\Text('bar');
+        $form = new class extends Post {};
+        $form[] = new Group('foo', function($group) {
+            $group[] = new Text('bar');
         });
-        $this->assertEquals('baz', $form['foo']['bar']->getValue());
+        yield assert('baz' == $form['foo']['bar']->getValue());
     }
 
+    /**
+     * Forms with conditions validate correctly.
+     */
     public function testErrors()
     {
         $_POST = [];
-        $form = new PostForm;
-        $form[] = (new Formulaic\Text('foo'))->isRequired();
-        $form[] = (new Formulaic\Text('bar'))->isRequired();
-        $this->assertNotTrue($form->valid());
-        $this->assertEquals(
-            [
-                'foo' => ['required'],
-                'bar' => ['required'],
-            ],
-            $form->errors()
-        );
+        $form = new class extends Post {};
+        $form[] = (new Text('foo'))->isRequired();
+        $form[] = (new Text('bar'))->isRequired();
+        yield assert($form->valid() != true);
+        yield assert($form->errors() == [
+            'foo' => ['required'],
+            'bar' => ['required'],
+        ]);
         $_POST = ['foo' => 1, 'bar' => 2];
-        $form = new PostForm;
-        $form[] = (new Formulaic\Text('foo'))->isRequired();
-        $form[] = (new Formulaic\Text('bar'))->isRequired();
-        $this->assertTrue($form->valid());
-        $this->assertEquals(1, $form['foo']->getValue());
-        $this->assertEquals(2, $form['bar']->getValue());
+        $form = new class extends Post {};
+        $form[] = (new Text('foo'))->isRequired();
+        $form[] = (new Text('bar'))->isRequired();
+        yield assert($form->valid());
+        yield assert(1 == $form['foo']->getValue());
+        yield assert(2 == $form['bar']->getValue());
     }
 
+    /**
+     * More complex forms also get filled correctly.
+     */
     public function testComplexForm()
     {
         $_POST = [];
-        $form = new ComplexForm;
-        $this->assertNotTrue($form->valid());
+        $form = new class extends Post {
+            public function __construct()
+            {
+                $this[] = new Label(
+                    'Test',
+                    (new Text('foo'))->isRequired()
+                );
+                $this[] = new Label(
+                    'Group of radio buttons',
+                    (new Radio\Group('radios', [1 => 'foo', 2 => 'bar']))
+                );
+                $this[] = new Label(
+                    'Group of checkboxes',
+                    (new Checkbox\Group(
+                        'checkboxes',
+                        [1 => 'foo', 2 => 'bar', 3 => 'baz']
+                    ))
+                );
+            }
+        };
+        yield assert($form->valid() != true);
         $_POST = ['foo' => 'Foo', 'radios' => 1, 'checkboxes' => [2, 3]];
-        $form = new ComplexForm;
-        $this->assertTrue($form->valid());
+        $form = new class extends Post {
+            public function __construct()
+            {
+                $this[] = new Fieldset('Test', function ($fieldset) {
+                    $fieldset[] = new Label(
+                        'Test',
+                        (new Text('foo'))->isRequired()
+                    );
+                    $fieldset[] = new Label(
+                        'Group of radio buttons',
+                        (new Radio\Group('radios', [1 => 'foo', 2 => 'bar']))
+                    );
+                    $fieldset[] = new Label(
+                        'Group of checkboxes',
+                        (new Checkbox\Group(
+                            'checkboxes',
+                            [1 => 'foo', 2 => 'bar', 3 => 'baz']
+                        ))
+                    );
+                });
+            }
+        };
+        yield assert($form->valid());
     }
 }
 

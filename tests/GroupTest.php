@@ -1,30 +1,55 @@
 <?php
 
-class GroupTest extends PHPUnit_Framework_TestCase
+namespace Formulaic\Test;
+
+use Formulaic;
+
+/**
+ * Test element groups
+ */
+class GroupTest
 {
+    /**
+     * Groups can contain groups
+     */
     public function testGroupInGroup()
     {
-        $this->expectOutputString(<<<EOT
-<form action="" id="test" method="post">
-<input id="test-foo-bar-baz" name="foo[bar][baz]" type="text" value="fizzbuz">
-</form>
-EOT
-        );
         $_POST['foo'] = ['bar' => ['baz' => 'fizzbuz']];
-        $form = new PostForm;
+        $form = new class extends Formulaic\Post {};
         $form->attribute('id', 'test');
         $form[] = new Formulaic\Element\Group('foo', function ($group) {
             $group[] = new Formulaic\Element\Group('bar', function ($group) {
                 $group[] = new Formulaic\Text('baz');
             });
         });
-        $this->assertEquals('fizzbuz', $form['foo']['bar']['baz']->getValue());
-        echo $form;
+        yield assert('fizzbuz' == $form['foo']['bar']['baz']->getValue());
+        yield assert("$form" == <<<EOT
+<form action="" id="test" method="post">
+<input id="test-foo-bar-baz" name="foo[bar][baz]" type="text" value="fizzbuz">
+</form>
+EOT
+        );
     }
 
+    /**
+     * Groups of checkboxes.
+     */
     public function testCheckboxGroup()
     {
-        $this->expectOutputString(<<<EOT
+        $form = new class extends Formulaic\Post {};
+        $form[] = (new Formulaic\Checkbox\Group(
+            'test',
+            [1 => 'foo', 2 => 'bar']
+        ))->isRequired();
+        yield assert($form->valid() != true);
+        $_POST['test'] = [1];
+        $form = new class extends Formulaic\Post {};
+        $form[] = (new Formulaic\Checkbox\Group(
+            'test',
+            [1 => 'foo', 2 => 'bar']
+        ))->isRequired();
+        yield assert($form->valid());
+        yield assert("$form" == <<<EOT
 <form action="" method="post">
 <div>
 <label for="test-1"><input checked id="test-1" name="test[]" type="checkbox" value="1"> foo</label>
@@ -33,25 +58,27 @@ EOT
 </form>
 EOT
         );
-        $form = new PostForm;
-        $form[] = (new Formulaic\Checkbox\Group(
-            'test',
-            [1 => 'foo', 2 => 'bar']
-        ))->isRequired();
-        $this->assertNotTrue($form->valid());
-        $_POST['test'] = [1];
-        $form = new PostForm;
-        $form[] = (new Formulaic\Checkbox\Group(
-            'test',
-            [1 => 'foo', 2 => 'bar']
-        ))->isRequired();
-        $this->assertTrue($form->valid());
-        echo $form;
     }
 
+    /**
+     * Groups of radio buttons.
+     */
     public function testRadioGroup()
     {
-        $this->expectOutputString(<<<EOT
+        $form = new class extends Formulaic\Post {};
+        $form[] = (new Formulaic\Radio\Group(
+            'test',
+            [1 => 'foo', 2 => 'bar']
+        ))->isRequired();
+        yield assert($form->valid() != true);
+        $_POST['test'] = 1;
+        $form = new class extends Formulaic\Post {};
+        $form[] = (new Formulaic\Radio\Group(
+            'test',
+            [1 => 'foo', 2 => 'bar']
+        ))->isRequired();
+        yield assert($form->valid());
+        yield assert("$form" == <<<EOT
 <form action="" method="post">
 <div>
 <label for="test-1"><input checked id="test-1" name="test" required="1" type="radio" value="1"> foo</label>
@@ -60,22 +87,11 @@ EOT
 </form>
 EOT
         );
-        $form = new PostForm;
-        $form[] = (new Formulaic\Radio\Group(
-            'test',
-            [1 => 'foo', 2 => 'bar']
-        ))->isRequired();
-        $this->assertNotTrue($form->valid());
-        $_POST['test'] = 1;
-        $form = new PostForm;
-        $form[] = (new Formulaic\Radio\Group(
-            'test',
-            [1 => 'foo', 2 => 'bar']
-        ))->isRequired();
-        $this->assertTrue($form->valid());
-        echo $form;
     }
 
+    /**
+     * Bitflags.
+     */
     public function testBitflag()
     {
         $bit = new Formulaic\Bitflag('superhero', [
@@ -86,13 +102,16 @@ EOT
             16 => 'Daredevil',
         ]);
         $bit->setValue([1, 2, 4]);
-        $this->assertTrue($bit['Batman']->getElement()->checked());
-        $this->assertTrue($bit[1]->getElement()->checked());
-        $this->assertTrue($bit[2]->getElement()->checked());
-        $this->assertNotTrue($bit[3]->getElement()->checked());
-        $this->assertNotTrue($bit[4]->getElement()->checked());
+        yield assert($bit['Batman']->getElement()->checked());
+        yield assert($bit[1]->getElement()->checked());
+        yield assert($bit[2]->getElement()->checked());
+        yield assert(!$bit[3]->getElement()->checked());
+        yield assert(!$bit[4]->getElement()->checked());
     }
 
+    /**
+     * Non-supplied bitflags are left alone.
+     */
     public function testNonsuppliedBitflagsAreLeftAlone()
     {
         $bit = new Formulaic\Bitflag('superhero', [
@@ -102,8 +121,8 @@ EOT
         ]);
         $bit->setDefaultValue(['superman']);
         $bit->setValue(['hulk']);
-        $this->assertTrue($bit->getValue()->hulk);
-        $this->assertFalse(isset($bit->getValue()->superman));
+        yield assert($bit->getValue()->hulk);
+        yield assert(!isset($bit->getValue()->superman));
     }
 }
 
