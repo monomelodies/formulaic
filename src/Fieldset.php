@@ -7,6 +7,7 @@ class Fieldset extends Element\Group
     use Attributes;
     use Fieldset\Tostring;
     use Element\Identify;
+    use Bindable;
 
     protected $attributes = [];
     private $legend;
@@ -21,6 +22,11 @@ class Fieldset extends Element\Group
     public function name()
     {
         return isset($this->legend) ? $this->legend : null;
+    }
+
+    public function bind($model)
+    {
+        return $this->bindGroup($model);
     }
 }
 
