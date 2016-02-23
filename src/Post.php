@@ -36,6 +36,18 @@ abstract class Post extends Form
      */
     public function offsetSet($index, $item)
     {
+        if ($item instanceof Fieldset) {
+            foreach ($item as $subitem) {
+                $this->setValue($subitem);
+            }
+        } else {
+            $this->setValue($item);
+        }
+        parent::offsetSet($index, $item);
+    }
+
+    private function setValue($item)
+    {
         $name = $item->getElement()->name();
         if ($item->getElement() instanceof File) {
             if (array_key_exists($name, $_FILES)) {
@@ -46,7 +58,6 @@ abstract class Post extends Form
             $item->getElement()->setValue($_POST[$name]);
             $item->getElement()->valueSuppliedByUser(true);
         }
-        parent::offsetSet($index, $item);
     }
 }
 

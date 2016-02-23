@@ -31,12 +31,23 @@ abstract class Get extends Form
      */
     public function offsetSet($index, $item)
     {
+        if ($item instanceof Fieldset) {
+            foreach ($item as $subitem) {
+                $this->setValue($subitem);
+            }
+        } else {
+            $this->setValue($item);
+        }
+        parent::offsetSet($index, $item);
+    }
+
+    private function setValue($item)
+    {
         $name = $item->getElement()->name();
         if (array_key_exists($name, $_GET)) {
             $item->getElement()->setValue($_GET[$name]);
             $item->getElement()->valueSuppliedByUser(true);
         }
-        parent::offsetSet($index, $item);
     }
 }
 
