@@ -13,11 +13,17 @@
         "php": ">=5.4"
     },
     "require-dev": {
-        "phpunit/phpunit": "4.0.*"
+        "php": ">=7.0",
+        "monomelodies/gentry": "^0.7.5"
     },
     "autoload": {
         "psr-4": {
             "Formulaic\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Formulaic\\Test\\": "tests"
         }
     }
 }
