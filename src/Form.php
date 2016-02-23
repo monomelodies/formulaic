@@ -15,6 +15,7 @@ abstract class Form extends ArrayObject implements JsonSerializable
     use Form\Tostring;
     use Validate\Group;
     use QueryHelper;
+    use Bindable;
 
     /**
      * Hash of key/value pairs for HTML attributes.
@@ -76,43 +77,15 @@ abstract class Form extends ArrayObject implements JsonSerializable
     }
 
     /**
-     * Binds a $model object to this form.
-     *
-     * $model can be any object. All its public properties are looped over, and
-     * the values are bound to those of the form if they exist on the form.
-     * For form elements that have not been initialized from user input, the
-     * value is set to the current model's value too. This allows you to provide
-     * defaults a user can edit (e.g. update the property "name" on a User
-     * model).
+     * Binds a $model object to this form by proxying Bindable::bindGroup.
      *
      * @param object The model to bind.
-     * @return Form $this
+     * @see Formulaic\Bindable::bindGroup
+     * @return static $this
      */
     public function bind($model)
     {
-        if (!is_object($model)) {
-            throw new DomainException(
-                <<<EOT
-Form::bind must be called with an object containing publicly accessible
-key/value pairs of data.
-EOT
-            );
-        }
-        foreach ($model as $name => $value) {
-            if ($field = $this[$name] and $element = $field->getElement()) {
-                $curr = $element->getValue();
-                $userSupplied = $element->valueSuppliedByUser();
-                if ($value) {
-                    $element->setValue($value);
-                }
-                if ($userSupplied) {
-                    $element->setValue($curr);
-                    $model->$name = $element->getValue();
-                }
-                $element->bind($model);
-            }
-        }
-        return $this;
+        return $this->bindGroup($model);
     }
 }
 
