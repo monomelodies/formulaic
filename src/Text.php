@@ -17,9 +17,6 @@ class Text extends Element
     {
         $this->attributes['pattern'] = $pattern;
         return $this->addTest('pattern', function ($value) use ($pattern) {
-            if (!isset($value)) {
-                return true;
-            }
             return preg_match("@^$pattern$@", trim($value));
         });
     }
