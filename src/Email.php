@@ -10,9 +10,6 @@ class Email extends Text
     {
         parent::__construct($name);
         $this->addTest('valid', function ($value) {
-            if (is_null($value)) {
-                return true;
-            }
             return filter_var($value, FILTER_VALIDATE_EMAIL)
                 && preg_match("/.*@.*\..*/", $value);
         });
