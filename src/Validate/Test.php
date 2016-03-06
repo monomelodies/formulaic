@@ -7,7 +7,10 @@ trait Test
     public function addTest($name, callable $fn)
     {
         $this->tests[$name] = function ($value) use ($name, $fn) {
-            if (strlen(trim($value)) || $name == 'required') {
+            if (is_string($value) && !strlen(trim($value))) {
+                $value = null;
+            }
+            if ($value || $name == 'required') {
                 return $fn($value);
             }
             return true;
