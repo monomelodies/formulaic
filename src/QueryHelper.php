@@ -19,8 +19,10 @@ trait QueryHelper
             if ($element->name() == $index || $i == $index) {
                 return $element;
             }
-            if ($element instanceof Element\Group && isset($element[$index])) {
-                return $element[$index];
+            if ($element instanceof Element\Group
+                and $found = $element[$index]
+            ) {
+                return $found;
             }
         }
         return null;
