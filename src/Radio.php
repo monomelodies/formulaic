@@ -42,16 +42,5 @@ class Radio extends Element
             return $this->checked();
         });
     }
-
-    public function setValue($value)
-    {
-        if ($this->value == $value
-            || (is_array($value) && in_array($this->value, $value))
-        ) {
-            $this->check();
-        } else {
-            $this->check(false);
-        }
-    }
 }
 
