@@ -48,15 +48,28 @@ abstract class Post extends Form
 
     private function setValue($item)
     {
-        $name = $item->getElement()->name();
-        if ($item->getElement() instanceof File) {
+        $element = $item->getElement();
+        $name = $element->name();
+        if ($element instanceof File) {
             if (array_key_exists($name, $_FILES)) {
-                $item->getElement()->setValue($_FILES[$name]);
-                $item->getElement()->valueSuppliedByUser(true);
+                $element->setValue($_FILES[$name]);
+                $element->valueSuppliedByUser(true);
             }
         } elseif (array_key_exists($name, $_POST)) {
-            $item->getElement()->setValue($_POST[$name]);
-            $item->getElement()->valueSuppliedByUser(true);
+            if ($element instanceof Radio) {
+                if ($_POST[$name] == $element->getValue()
+                    || (is_array($_POST[$name])
+                        && in_array($element->getValue(), $_POST[$name])
+                    )
+                ) {
+                   $element->check();
+                } else {
+                    $element->check(false);
+                }
+            } else {
+                $element->setValue($_POST[$name]);
+            }
+            $element->valueSuppliedByUser(true);
         }
     }
 }

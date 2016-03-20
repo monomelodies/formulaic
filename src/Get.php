@@ -43,10 +43,22 @@ abstract class Get extends Form
 
     private function setValue($item)
     {
-        $name = $item->getElement()->name();
+        $element = $item->getElement();
+        $name = $element->name();
         if (array_key_exists($name, $_GET)) {
-            $item->getElement()->setValue($_GET[$name]);
-            $item->getElement()->valueSuppliedByUser(true);
+            if ($element instanceof Radio) {
+                if ($element->getValue() == $_GET[$name]
+                    || (is_array($_GET[$name])
+                        && in_array($element->getValue(), $_GET[$name])
+                    )
+                ) {
+                    $element->check();
+                } else {
+                    $element->check(false);
+                }
+            }
+            $element->setValue($_GET[$name]);
+            $element->valueSuppliedByUser(true);
         }
     }
 }
