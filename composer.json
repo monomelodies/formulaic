@@ -13,7 +13,6 @@
         "php": ">=5.4"
     },
     "require-dev": {
-        "php": ">=7.0",
         "monomelodies/gentry": "^0.7.5"
     },
     "autoload": {
