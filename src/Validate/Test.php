@@ -4,8 +4,6 @@ namespace Formulaic\Validate;
 
 trait Test
 {
-    private $tests = [];
-
     public function addTest($name, callable $fn)
     {
         $this->tests[$name] = function ($value) use ($name, $fn) {
