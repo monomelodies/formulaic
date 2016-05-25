@@ -12,6 +12,7 @@ abstract class Element implements Labelable
     use Validate\Element;
     use Bindable;
 
+    private $tests = [];
     private $userInput = false;
     protected $prefix = [];
     protected $attributes = [];
