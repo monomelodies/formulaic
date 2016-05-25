@@ -20,6 +20,7 @@ class Group extends Element\Group implements Labelable
     use Bindable;
     
     protected $attributes = [];
+    protected $tests = [];
     protected $source = [];
     private $prefix = [];
     private $value = null;
