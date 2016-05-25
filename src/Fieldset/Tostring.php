@@ -15,7 +15,7 @@ trait Tostring
             $out .= "\n";
             foreach ($fields as $field) {
                 if (isset($this->prefix)) {
-                    $field->prefix($this->prefix);
+                    $field->prefix(implode('-', $this->prefix));
                 }
                 $out .= "<div>$field</div>\n";
             }
