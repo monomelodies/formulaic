@@ -58,6 +58,7 @@ class Bitflag extends Checkbox\Group
                 }
             }
         }
+        $found = [];
         foreach ((array)$this as $element) {
             if ($element->getElement() instanceof Hidden) {
                 continue;
@@ -68,6 +69,7 @@ class Bitflag extends Checkbox\Group
             } else {
                 $element->getElement()->check(false);
             }
+            $found[] = $check;
         }
     }
 
