@@ -12,6 +12,7 @@ class Select extends ArrayObject
     use Validate\Required;
     use Validate\Element;
     use Select\Tostring;
+    use Bindable;
 
     private $userInput = false;
     protected $attributes = [];
