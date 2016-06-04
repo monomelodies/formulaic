@@ -4,7 +4,7 @@ namespace Formulaic;
 
 use ArrayObject;
 
-class Select extends ArrayObject
+class Select extends ArrayObject implements Labelable
 {
     use Attributes;
     use Element\Identify;
