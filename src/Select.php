@@ -8,6 +8,7 @@ class Select extends ArrayObject implements Labelable
 {
     use Attributes;
     use Element\Identify;
+    use Element\Wrap;
     use Validate\Test;
     use Validate\Required;
     use Validate\Element;
