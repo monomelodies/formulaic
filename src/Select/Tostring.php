@@ -10,7 +10,7 @@ trait Tostring
             $this->attributes['id'] = $id;
         }
         $out = $this->htmlBefore;
-        $out. = '<select'.$this->attributes().'>';
+        $out .= '<select'.$this->attributes().'>';
         if (count((array)$this)) {
             $out .= "\n";
             foreach ((array)$this as $option) {
