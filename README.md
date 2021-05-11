@@ -1,6 +1,9 @@
 # Formulaic
 Object-oriented form utilities for PHP5.4+
 
+## This project is discontinued
+Please see its successor: monolyth/formulaic
+
 HTML forms suck. Well, no, they're superduper handy, but writing them and
 validating them server-side can be a pain. Formulaic offers a set of utilities
 to ease that pain.
